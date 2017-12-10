@@ -1,0 +1,167 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="giovanni.tradingtoolkit.calculator.CalculatorFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp">
+
+        <EditText
+            android:id="@+id/editCurrentUnitPrice"
+            android:layout_width="154dp"
+            android:layout_height="42dp"
+            android:ems="10"
+            android:hint="prezzo di 1 ฿"
+            android:inputType="numberDecimal"
+            android:layout_marginStart="21dp"
+            android:layout_below="@+id/textView1"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/editExpectedUnitPrice"
+            android:layout_width="154dp"
+            android:layout_height="42dp"
+            android:ems="10"
+            android:hint="prezzo di 1 ฿"
+            android:inputType="numberDecimal"
+            android:layout_marginEnd="16dp"
+            android:layout_below="@+id/textView2"
+            android:layout_alignParentEnd="true" />
+
+        <EditText
+            android:id="@+id/editBudget"
+            android:layout_width="154dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="€"
+            android:inputType="numberDecimal"
+            android:layout_marginTop="53dp"
+            android:layout_below="@+id/editCurrentUnitPrice"
+            android:layout_alignStart="@+id/editCurrentUnitPrice" />
+
+        <TextView
+            android:id="@+id/textViewNetGainResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="฿/€"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_alignTop="@+id/editBudget"
+            android:layout_alignStart="@+id/editExpectedUnitPrice"
+            android:layout_alignBottom="@+id/editBudget"
+            android:layout_alignEnd="@+id/editExpectedUnitPrice" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="Calcola"
+            android:textColor="@android:color/white"
+            android:background="@color/colorPrimary"
+            android:layout_below="@+id/editBudget"
+            android:layout_alignEnd="@+id/textViewNetGainResult"
+            android:layout_alignStart="@+id/editBudget" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Guadagno:"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_above="@+id/textViewNetGainResult"
+            android:layout_alignStart="@+id/textViewNetGainResult"
+            android:layout_alignEnd="@+id/textViewNetGainResult" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textViewNetGainResult"
+            android:layout_alignStart="@+id/editBudget"
+            android:text="Da investire:"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_alignEnd="@+id/editBudget" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Costo unitario previsto:"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_alignEnd="@+id/editExpectedUnitPrice"
+            android:layout_alignStart="@+id/editExpectedUnitPrice" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Costo unitario attuale:"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/editCurrentUnitPrice"
+            android:layout_alignEnd="@+id/editCurrentUnitPrice" />
+
+        <TextView
+            android:id="@+id/textViewCurrentQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/editCurrentUnitPrice"
+            android:layout_below="@+id/editCurrentUnitPrice"
+            android:layout_toEndOf="@+id/textView6"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textViewExpectedQuantity"
+            android:layout_alignStart="@+id/editCurrentUnitPrice"
+            android:text="Q.tà: " />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textViewExpectedQuantity"
+            android:layout_alignStart="@+id/editExpectedUnitPrice"
+            android:text="Q.tà: " />
+
+        <TextView
+            android:id="@+id/textViewExpectedQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/editExpectedUnitPrice"
+            android:layout_below="@+id/editExpectedUnitPrice"
+            android:layout_toEndOf="@+id/textView7"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textViewNetGainResult"
+            android:layout_below="@+id/textViewNetGainResult"
+            android:text="Tot. " />
+
+        <TextView
+            android:id="@+id/textTotalGrossResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView9"
+            android:layout_alignBottom="@+id/textView9"
+            android:layout_alignEnd="@+id/textViewNetGainResult"
+            android:layout_toEndOf="@+id/textView9"
+            android:text="" />
+    </RelativeLayout>
+
+</ScrollView>
