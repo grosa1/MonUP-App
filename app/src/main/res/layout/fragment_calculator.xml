@@ -36,14 +36,14 @@
             android:layout_width="154dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="€"
+            android:hint="฿/€"
             android:inputType="numberDecimal"
             android:layout_marginTop="53dp"
             android:layout_below="@+id/editCurrentUnitPrice"
             android:layout_alignStart="@+id/editCurrentUnitPrice" />
 
         <TextView
-            android:id="@+id/textViewNetGainResult"
+            android:id="@+id/textViewRevenue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="฿/€"
@@ -64,7 +64,7 @@
             android:textColor="@android:color/white"
             android:background="@color/colorPrimary"
             android:layout_below="@+id/editBudget"
-            android:layout_alignEnd="@+id/textViewNetGainResult"
+            android:layout_alignEnd="@+id/textViewRevenue"
             android:layout_alignStart="@+id/editBudget" />
 
         <TextView
@@ -74,17 +74,17 @@
             android:text="Guadagno:"
             android:textStyle="bold"
             android:gravity="center"
-            android:layout_above="@+id/textViewNetGainResult"
-            android:layout_alignStart="@+id/textViewNetGainResult"
-            android:layout_alignEnd="@+id/textViewNetGainResult" />
+            android:layout_above="@+id/textViewRevenue"
+            android:layout_alignStart="@+id/textViewRevenue"
+            android:layout_alignEnd="@+id/textViewRevenue" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/textViewNetGainResult"
+            android:layout_above="@+id/textViewRevenue"
             android:layout_alignStart="@+id/editBudget"
-            android:text="Da investire:"
+            android:text="Budget:"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_alignEnd="@+id/editBudget" />
@@ -149,8 +149,8 @@
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textViewNetGainResult"
-            android:layout_below="@+id/textViewNetGainResult"
+            android:layout_alignStart="@+id/textViewRevenue"
+            android:layout_below="@+id/textViewRevenue"
             android:text="Tot. " />
 
         <TextView
@@ -159,7 +159,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textView9"
             android:layout_alignBottom="@+id/textView9"
-            android:layout_alignEnd="@+id/textViewNetGainResult"
+            android:layout_alignEnd="@+id/textViewRevenue"
             android:layout_toEndOf="@+id/textView9"
             android:text="" />
     </RelativeLayout>
