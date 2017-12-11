@@ -6,24 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import giovanni.tradingtoolkit.marketprices.CoinPriceFragment.OnListFragmentInteractionListener;
+import giovanni.tradingtoolkit.data.model.CoinPriceResponse;
+import giovanni.tradingtoolkit.marketprices.dummy.DummyContent;
 import giovanni.tradingtoolkit.marketprices.dummy.DummyContent.DummyItem;
+import giovanni.tradingtoolkit.R;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
+
 public class MyCoinPriceRecyclerViewAdapter extends RecyclerView.Adapter<MyCoinPriceRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private List<DummyItem> mValues;
+    private List<CoinPriceResponse> pricesList;
 
-    public MyCoinPriceRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyCoinPriceRecyclerViewAdapter(List<DummyItem> items) {
         mValues = items;
-        mListener = listener;
     }
 
     @Override
@@ -42,11 +39,6 @@ public class MyCoinPriceRecyclerViewAdapter extends RecyclerView.Adapter<MyCoinP
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
             }
         });
     }
@@ -73,5 +65,11 @@ public class MyCoinPriceRecyclerViewAdapter extends RecyclerView.Adapter<MyCoinP
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
         }
+    }
+
+
+    public void updatePriceList(List<DummyItem> items) {
+        mValues = items;
+        notifyDataSetChanged();
     }
 }
