@@ -1,7 +1,9 @@
 package giovanni.tradingtoolkit.marketprices;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,12 +76,12 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
     public void onBindViewHolder(CoinsListAdapter.ViewHolder holder, int position) {
         Coin coin = coinList.get(position);
 
-        String coinName = coin.getEur().getFromSymbol().toLowerCase();
-        Drawable d = DrawableLoader.getDrawable(context, coinName);
-        if (d != null) {
+        try {
+            Drawable d = context.getDrawable(coin.getIconId());
             holder.coinIcon.setImageDrawable(d);
+        } catch (Resources.NotFoundException e) {
+            Log.e("RES_ERROR", "Icon not found");
         }
-
         holder.coinName.setText(coin.getEur().getFromSymbol());
         holder.coinPrice.setText(String.format("%.2f", coin.getEur().getPrice()));
     }
@@ -89,7 +92,8 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
     }
 
     public void updateCoinsList(List<Coin> items) {
-        coinList.addAll(items);
+        //coinList = new ArrayList<>();
+        coinList = items;
         notifyDataSetChanged();
     }
 

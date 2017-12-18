@@ -1,7 +1,11 @@
 package giovanni.tradingtoolkit.data.model;
 
+import android.graphics.drawable.Drawable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import giovanni.tradingtoolkit.main.DrawableLoader;
 
 /**
  * Created by giiio on 17/12/2017.
@@ -17,6 +21,8 @@ public class Coin {
     @SerializedName("EUR")
     @Expose
     private EUR eur;
+
+    private int iconId;
 
     public Coin(BTC btc, USD usd, EUR eur) {
         this.btc = btc;
@@ -34,5 +40,13 @@ public class Coin {
 
     public EUR getEur() {
         return eur;
+    }
+
+    public int getIconId() {
+        return iconId;
+    }
+
+    public void setIconId(int iconId) {
+        this.iconId = iconId;
     }
 }

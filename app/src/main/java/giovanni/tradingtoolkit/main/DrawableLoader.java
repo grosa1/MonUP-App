@@ -26,4 +26,11 @@ public class DrawableLoader {
 
         return d;
     }
+
+    public static int getResourceId(Context c, String name) {
+        Context context = c;
+        int resourceId;
+
+        return resourceId = context.getResources().getIdentifier(name, "drawable", c.getPackageName());
+    }
 }
