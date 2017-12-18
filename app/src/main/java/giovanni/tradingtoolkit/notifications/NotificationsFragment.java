@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import giovanni.tradingtoolkit.R;
+import giovanni.tradingtoolkit.main.ProgressDialogManager;
 
 public class NotificationsFragment extends Fragment {
 

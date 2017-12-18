@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:id="@+id/settings"
+        android:title="Update"
+        android:icon="@drawable/ic_update"
+        app:showAsAction="always"/>
 
     <item
-        android:id="@+id/navigation_market_prices"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:id="@+id/settings"
+        android:title="Settings"
+        app:showAsAction="never"/>
 
     <item
-        android:id="@+id/navigation_tools"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:id="@+id/about"
+        android:title="About"
+        app:showAsAction="never"/>
 
 </menu>
