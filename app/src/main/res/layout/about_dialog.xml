@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingRight="20dp"
+    android:paddingLeft="20dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:gravity="center"
+        android:text="Trading wallet tools - BETA"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:gravity="left|center_vertical"
+        android:text="Grazie a:" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:gravity="left|center_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textView5"
+            android:layout_alignParentStart="true"
+            android:gravity="left|center_vertical"
+            android:text="CryptoCompare public APIs" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:layout_alignParentBottom="true"
+            android:autoLink="web"
+            android:text="https://www.cryptocompare.com/"
+            android:id="@+id/textView5" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:gravity="left|center_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textView6"
+            android:layout_alignParentStart="true"
+            android:gravity="left|center_vertical"
+            android:text="Cryptocurrency icons" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:layout_alignParentBottom="true"
+            android:autoLink="web"
+            android:text="https://github.com/cjdowner/cryptocurrency-icons"
+            android:id="@+id/textView6" />
+
+    </RelativeLayout>
+</LinearLayout>

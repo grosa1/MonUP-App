@@ -1,10 +1,13 @@
 package giovanni.tradingtoolkit.main;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -64,9 +67,14 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.update:
+                Dialog dialog;
+                dialog = new Dialog(this);
+                dialog.setContentView(R.layout.about_dialog);
+                dialog.show();
                 return true;
 
             case R.id.about:
+                new DialogFragment();
             default:
                 return super.onOptionsItemSelected(item);
         }
