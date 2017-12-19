@@ -79,7 +79,7 @@ public class CalculatorFragment extends Fragment {
                     if (calc.getRevenue() < 0) {
                         revenue.setBackgroundColor(getResources().getColor(R.color.materialRed));
                     } else {
-                        revenue.setBackgroundColor(getResources().getColor(R.color.materialGreen));
+                        revenue.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                     }
                     revenue.setTextColor(Color.WHITE);
                     String strRevenue = String.format("%.2f", calc.getRevenue());

@@ -22,14 +22,18 @@ import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.calculator.CalculatorFragment;
 import giovanni.tradingtoolkit.marketprices.CoinsFragment;
 import giovanni.tradingtoolkit.notifications.NotificationsFragment;
+import giovanni.tradingtoolkit.settings.AboutFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.tabs)
+    TabLayout tabLayout;
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
     private int[] tabIcons = {
-            R.drawable.ic_notifications_black_24dp,
+            //R.drawable.ic_notifications_black_24dp,
             R.drawable.ic_marketplace_black_24dp,
             R.drawable.ic_tools_black_24dp
     };
@@ -38,15 +42,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
-        viewPager.setCurrentItem(1);
+        //viewPager.setCurrentItem(1);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
     }
@@ -62,8 +64,9 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.update:
-                ToastManager.create(getApplicationContext(), "test");
                 return true;
+
+            case R.id.about:
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -72,14 +75,18 @@ public class MainActivity extends AppCompatActivity {
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+        //tabLayout.getTabAt(2).setIcon(tabIcons[2]);
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(NotificationsFragment.newInstance(), "Notifications");
-        adapter.addFrag(CoinsFragment.newInstance(""), "Market prices");
-        adapter.addFrag(CalculatorFragment.newInstance(), "Tools");
+        //adapter.addFrag(NotificationsFragment.newInstance(), "Notifications");
+//        adapter.addFrag(CoinsFragment.newInstance(""), "Market prices");
+//        adapter.addFrag(CalculatorFragment.newInstance(), "Tools");
+
+        adapter.addFrag(CoinsFragment.newInstance(""), "Prezzi di mercato");
+        adapter.addFrag(CalculatorFragment.newInstance(), "Strumenti");
+
         viewPager.setAdapter(adapter);
     }
 
@@ -111,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
+
 }
 
 

@@ -7,8 +7,8 @@
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
 
-    <color name="materialRed">#F44336</color>
-    <color name="materialGreen">#009688</color>
+    <color name="materialRed">#FF1744</color>
+    <color name="materialGreen">#2E7D32</color>
     <color name="materialWhite">#FAFAFA</color>
     <color name="lightGreyMaterial">#E0E0E0</color>
 </resources>
