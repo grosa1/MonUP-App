@@ -53,7 +53,7 @@
             android:id="@+id/percentage_variation"
             android:layout_width="65dp"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:padding="3dp"
             android:gravity="center"
             android:layout_gravity="center_vertical"
             android:layout_centerVertical="true"

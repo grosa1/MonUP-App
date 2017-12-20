@@ -137,9 +137,11 @@ public class CoinsFragment extends Fragment {
                         String key = (String) jsonIterator.next();
                         JSONObject j = (JSONObject) coinsJson.get(key);
                         if ((j.getInt("SortOrder")) < 68) {
-                            coinNames.add(new Dummy(j.get("FullName").toString(), j.getInt("SortOrder")));
+                            coinNames.add(new Dummy(j.getString("FullName"), j.getInt("SortOrder")));
                             name = j.get("Name").toString();
                             buffer = buffer + name + ",";
+
+                            //Log.d("IMG", "https://www.cryptocompare.com" + j.getString("ImageUrl"));
                         }
                     }
 
