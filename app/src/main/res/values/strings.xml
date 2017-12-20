@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Trading toolkit</string>
+    <string name="app_name">CryptoTrading toolkit</string>
     <string name="title_home">Tools</string>
     <string name="title_dashboard">Market Prices</string>
     <string name="title_notifications">Notifications</string>
