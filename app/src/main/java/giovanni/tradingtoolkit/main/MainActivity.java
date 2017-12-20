@@ -67,14 +67,17 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.update:
+                return true;
+
+            case R.id.settings:
+                return true;
+
+            case R.id.about:
                 Dialog dialog;
                 dialog = new Dialog(this);
                 dialog.setContentView(R.layout.about_dialog);
                 dialog.show();
-                return true;
-
-            case R.id.about:
-                new DialogFragment();
+                
             default:
                 return super.onOptionsItemSelected(item);
         }
