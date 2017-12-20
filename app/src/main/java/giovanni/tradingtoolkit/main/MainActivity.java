@@ -66,18 +66,18 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.update:
-                return true;
-
-            case R.id.settings:
-                return true;
+//            case R.id.update:
+//                return true;
+//
+//            case R.id.settings:
+//                return true;
 
             case R.id.about:
                 Dialog dialog;
                 dialog = new Dialog(this);
                 dialog.setContentView(R.layout.about_dialog);
                 dialog.show();
-                
+
             default:
                 return super.onOptionsItemSelected(item);
         }
