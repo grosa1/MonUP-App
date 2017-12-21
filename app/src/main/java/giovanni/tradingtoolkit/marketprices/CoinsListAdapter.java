@@ -52,7 +52,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         Drawable drawable;
 
         try {
-            drawable = ResourcesLoader.getDrawable(context, coin.getFromSymbol().toLowerCase());
+            drawable = ResourcesLoader.getDrawable(context, coin.getSymbol().toLowerCase());
         } catch (Resources.NotFoundException e) {
             Log.e("RES_ERROR", "Icon not found, set default");
             drawable = ResourcesLoader.getDrawableFromId(context, R.drawable.ic_no_image);
@@ -60,10 +60,12 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         holder.coinIcon.setImageDrawable(drawable);
 
         holder.coinPosition.setText(String.valueOf(position + 1) + ".");
-        holder.coinName.setText(coin.getFullName());
-        holder.coinPrice.setText(String.format("%.2f", coin.getPrice()) + " €");
+        holder.coinName.setText(coin.getName() + " (" + coin.getSymbol() + ")");
 
-        Double priceStatus = this.computePercentageVariation(coin.getOpen24Hour(), coin.getPrice());
+        Double price = coin.getPriceEur();
+        holder.coinPrice.setText(String.format("%.2f", roundToDecimalPlaces(price, 2)) + " €");
+
+        Double priceStatus = Double.parseDouble(coin.getPercentChange24h());
         int colorId;
         String perc;
         if(priceStatus < 0) {
@@ -102,7 +104,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
     }
 
     public interface CoinItemListener {
-        void onCoinClick(double priceBtc);
+        void onCoinClick(String priceBtc);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -129,24 +131,24 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         @Override
         public void onClick(View view) {
             Coin coin = getItem(getAdapterPosition());
-            itemListener.onCoinClick(coin.getPrice());
+            itemListener.onCoinClick(String.valueOf(coin.getPriceBtc()));
             notifyDataSetChanged();
         }
     }
 
-    private Double computePercentageVariation(Double openPrice, Double currentPrice) {
-        Double result = 0d;
-        if(openPrice != null && currentPrice != null) {
-            result = ((currentPrice - openPrice)/currentPrice)*100;
-            //result = roundToDecimalPlaces(result, 2);
-        }
-        return result;
-    }
-
-//    private Double roundToDecimalPlaces(Double value, int decimalPlaces) {
-//        Double shift = Math.pow(10,decimalPlaces);
-//        return Math.round(value*shift)/shift;
+//    private Double computePercentageVariation(Double openPrice, Double currentPrice) {
+//        Double result = 0d;
+//        if(openPrice != null && currentPrice != null) {
+//            result = ((currentPrice - openPrice)/currentPrice)*100;
+//            //result = roundToDecimalPlaces(result, 2);
+//        }
+//        return result;
 //    }
+
+    private Double roundToDecimalPlaces(Double value, int decimalPlaces) {
+        Double shift = Math.pow(10,decimalPlaces);
+        return Math.round(value*shift)/shift;
+    }
 }
 
 

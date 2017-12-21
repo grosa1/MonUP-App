@@ -8,138 +8,169 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Coin {
-    //    @SerializedName("TYPE")
-//    @Expose
-//    private String type;
-//    @SerializedName("MARKET")
-//    @Expose
-//    private String market;
-    @SerializedName("FROMSYMBOL")
+    @SerializedName("id")
     @Expose
-    private String fromSymbol;
-//    @SerializedName("TOSYMBOL")
-//    @Expose
-//    private String toSymbol;
-    //    @SerializedName("FLAGS")
-//    @Expose
-//    private String fLAGS;
-    @SerializedName("PRICE")
+    private String id;
+    @SerializedName("name")
     @Expose
-    private Double price;
-    //    @SerializedName("LASTUPDATE")
-//    @Expose
-//    private Integer lASTUPDATE;
-//    @SerializedName("LASTVOLUME")
-//    @Expose
-//    private Double lASTVOLUME;
-//    @SerializedName("LASTVOLUMETO")
-//    @Expose
-//    private Double lASTVOLUMETO;
-//    @SerializedName("LASTTRADEID")
-//    @Expose
-//    private String lASTTRADEID;
-//    @SerializedName("VOLUMEDAY")
-//    @Expose
-//    private Double vOLUMEDAY;
-//    @SerializedName("VOLUMEDAYTO")
-//    @Expose
-//    private Double vOLUMEDAYTO;
-//    @SerializedName("VOLUME24HOUR")
-//    @Expose
-//    private Double vOLUME24HOUR;
-//    @SerializedName("VOLUME24HOURTO")
-//    @Expose
-//    private Double vOLUME24HOURTO;
-//    @SerializedName("OPENDAY")
-//    @Expose
-//    private Double oPENDAY;
-//    @SerializedName("HIGHDAY")
-//    @Expose
-//    private Double hIGHDAY;
-//    @SerializedName("LOWDAY")
-//    @Expose
-//    private Double lOWDAY;
-    @SerializedName("OPEN24HOUR")
+    private String name;
+    @SerializedName("symbol")
     @Expose
-    private Double open24Hour;
-    @SerializedName("HIGH24HOUR")
+    private String symbol;
+    @SerializedName("rank")
     @Expose
-    private Double high24Hour;
-    @SerializedName("LOW24HOUR")
+    private int rank;
+    @SerializedName("price_usd")
     @Expose
-    private Double low24Hour;
-//    @SerializedName("LASTMARKET")
-//    @Expose
-//    private String lASTMARKET;
-//    @SerializedName("CHANGE24HOUR")
-//    @Expose
-//    private Double cHANGE24HOUR;
-//    @SerializedName("CHANGEPCT24HOUR")
-//    @Expose
-//    private Double cHANGEPCT24HOUR;
-//    @SerializedName("CHANGEDAY")
-//    @Expose
-//    private Double cHANGEDAY;
-//    @SerializedName("CHANGEPCTDAY")
-//    @Expose
-//    private Double cHANGEPCTDAY;
-//    @SerializedName("SUPPLY")
-//    @Expose
-//    private Double sUPPLY;
-//    @SerializedName("MKTCAP")
-//    @Expose
-//    private Double mktcap;
-//    @SerializedName("TOTALVOLUME24H")
-//    @Expose
-//    private Double totalvolume24H;
-//    @SerializedName("TOTALVOLUME24HTO")
-//    @Expose
-//    private Double totalvolume24Hto;
+    private Double priceUsd;
+    @SerializedName("price_btc")
+    @Expose
+    private String priceBtc;
+    @SerializedName("24h_volume_usd")
+    @Expose
+    private String _24hVolumeUsd;
+    @SerializedName("market_cap_usd")
+    @Expose
+    private String marketCapUsd;
+    @SerializedName("available_supply")
+    @Expose
+    private String availableSupply;
+    @SerializedName("total_supply")
+    @Expose
+    private String totalSupply;
+    @SerializedName("max_supply")
+    @Expose
+    private String maxSupply;
+    @SerializedName("percent_change_1h")
+    @Expose
+    private String percentChange1h;
+    @SerializedName("percent_change_24h")
+    @Expose
+    private String percentChange24h;
+    @SerializedName("percent_change_7d")
+    @Expose
+    private String percentChange7d;
+    @SerializedName("last_updated")
+    @Expose
+    private String lastUpdated;
+    @SerializedName("price_eur")
+    @Expose
+    private Double priceEur;
+    @SerializedName("24h_volume_eur")
+    @Expose
+    private String _24hVolumeEur;
+    @SerializedName("market_cap_eur")
+    @Expose
+    private String marketCapEur;
 
-    private String fullName;
-    private int sort;
+    public Coin(String id,
+                String name,
+                String symbol,
+                int rank,
+                Double priceUsd,
+                String priceBtc,
+                String _24hVolumeUsd,
+                String marketCapUsd,
+                String availableSupply,
+                String totalSupply,
+                String maxSupply,
+                String percentChange1h,
+                String percentChange24h,
+                String percentChange7d,
+                String lastUpdated,
+                Double priceEur,
+                String _24hVolumeEur,
+                String marketCapEur) {
 
-    public Coin(String fromSymbol, Double price, Double open24Hour, Double high24Hour, Double low24Hour) {
-        this.fromSymbol = fromSymbol;
-        this.price = price;
-        this.open24Hour = open24Hour;
-        this.high24Hour = high24Hour;
-        this.low24Hour = low24Hour;
+        this.id = id;
+        this.name = name;
+        this.symbol = symbol;
+        this.rank = rank;
+        this.priceUsd = priceUsd;
+        this.priceBtc = priceBtc;
+        this._24hVolumeUsd = _24hVolumeUsd;
+        this.marketCapUsd = marketCapUsd;
+        this.availableSupply = availableSupply;
+        this.totalSupply = totalSupply;
+        this.maxSupply = maxSupply;
+        this.percentChange1h = percentChange1h;
+        this.percentChange24h = percentChange24h;
+        this.percentChange7d = percentChange7d;
+        this.lastUpdated = lastUpdated;
+        this.priceEur = priceEur;
+        this._24hVolumeEur = _24hVolumeEur;
+        this.marketCapEur = marketCapEur;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getId() {
+        return id;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public String getName() {
+        return name;
     }
 
-    public int getSort() {
-        return sort;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public void setSort(int sort) {
-        this.sort = sort;
+    public int getRank() {
+        return rank;
     }
 
-    public String getFromSymbol() {
-        return fromSymbol;
+    public Double getPriceUsd() {
+        return priceUsd;
     }
 
-    public Double getPrice() {
-        return price;
+    public String getPriceBtc() {
+        return priceBtc;
     }
 
-    public Double getOpen24Hour() {
-        return open24Hour;
+    public String get_24hVolumeUsd() {
+        return _24hVolumeUsd;
     }
 
-    public Double getHigh24Hour() {
-        return high24Hour;
+    public String getMarketCapUsd() {
+        return marketCapUsd;
     }
 
-    public Double getLow24Hour() {
-        return low24Hour;
+    public String getAvailableSupply() {
+        return availableSupply;
+    }
+
+    public String getTotalSupply() {
+        return totalSupply;
+    }
+
+    public String getMaxSupply() {
+        return maxSupply;
+    }
+
+    public String getPercentChange1h() {
+        return percentChange1h;
+    }
+
+    public String getPercentChange24h() {
+        return percentChange24h;
+    }
+
+    public String getPercentChange7d() {
+        return percentChange7d;
+    }
+
+    public String getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public Double getPriceEur() {
+        return priceEur;
+    }
+
+    public String get_24hVolumeEur() {
+        return _24hVolumeEur;
+    }
+
+    public String getMarketCapEur() {
+        return marketCapEur;
     }
 }
