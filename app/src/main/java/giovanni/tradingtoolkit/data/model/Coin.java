@@ -146,16 +146,16 @@ public class Coin {
         return maxSupply;
     }
 
-    public String getPercentChange1h() {
-        return percentChange1h;
+    public double getPercentChange1h() {
+        return null != percentChange1h ? Double.parseDouble(percentChange1h) : 0D;
     }
 
-    public String getPercentChange24h() {
-        return percentChange24h;
+    public double getPercentChange24h() {
+        return null != percentChange24h ?  Double.parseDouble(percentChange24h) : 0D;
     }
 
-    public String getPercentChange7d() {
-        return percentChange7d;
+    public double getPercentChange7d() {
+        return null != percentChange7d ?  Double.parseDouble(percentChange7d) : 0D;
     }
 
     public String getLastUpdated() {
@@ -172,5 +172,20 @@ public class Coin {
 
     public String getMarketCapEur() {
         return marketCapEur;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Coin coin = (Coin) o;
+
+        return id != null ? id.equals(coin.id) : coin.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

@@ -10,11 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,13 +25,12 @@ import giovanni.tradingtoolkit.main.ResourcesLoader;
 
 public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.ViewHolder> {
 
-    private List<Coin> coinList = new ArrayList<>();
+    private List<Coin> coins;
     private Context context;
     private CoinItemListener itemListener;
 
-    //ADAPTER
-    public CoinsListAdapter(Context context, List<Coin> coins, CoinItemListener itemListener) {
-        coinList = coins;
+    CoinsListAdapter(Context context, List<Coin> coins, CoinItemListener itemListener) {
+        this.coins = coins;
         this.context = context;
         this.itemListener = itemListener;
     }
@@ -39,16 +39,13 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
     public CoinsListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-
         View view = inflater.inflate(R.layout.coin_list_item, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view, this.itemListener);
-        return viewHolder;
+        return new ViewHolder(view, this.itemListener);
     }
 
-    //VIEW HOLDER
     @Override
     public void onBindViewHolder(CoinsListAdapter.ViewHolder holder, int position) {
-        Coin coin = coinList.get(position);
+        Coin coin = coins.get(position);
         Drawable drawable;
 
         try {
@@ -59,28 +56,56 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         }
         holder.coinIcon.setImageDrawable(drawable);
 
-        holder.coinPosition.setText(String.valueOf(position + 1) + ".");
-        holder.coinName.setText(coin.getName() + " (" + coin.getSymbol() + ")");
+        holder.coinPosition.setText(String.format("%s", String.valueOf(coin.getRank())));
+        holder.coinName.setText(String.format("%s (%s)", coin.getName(), coin.getSymbol()));
 
         Double price = coin.getPriceEur();
-        holder.coinPrice.setText(String.format("%.2f", roundToDecimalPlaces(price, 2)) + " €");
+        holder.coinPrice.setText(String.format(Locale.getDefault(), "%.2f €", roundToDecimalPlaces(price, 2)));
 
-        Double priceStatus = Double.parseDouble(coin.getPercentChange24h());
+        // Set percentage 1 hour
+        Double variation = coin.getPercentChange1h();
         int colorId;
         String perc;
-        if(priceStatus < 0) {
+        if (variation < 0) {
             colorId = R.color.materialRed;
-            perc = String.format("%.2f", priceStatus) + "%";
+            perc = String.format(Locale.getDefault(), "- %.2f%s", Math.abs(variation), "%");
         } else {
             colorId = R.color.materialGreen;
-            perc = "+" + String.format("%.2f", priceStatus) + "%";
+            perc = String.format(Locale.getDefault(), "+ %.2f%s", variation, "%");
         }
-        holder.percentageVariation.setBackgroundColor(context.getResources().getColor(colorId));
-        holder.percentageVariation.setText(perc);
-        holder.percentageVariation.setTextColor(Color.WHITE);
+        holder.percentageVariation1h.setBackgroundColor(context.getResources().getColor(colorId));
+        holder.percentageVariation1h.setText(perc);
+        holder.percentageVariation1h.setTextColor(Color.WHITE);
+
+        // Set percentage 1 day
+        variation = coin.getPercentChange24h();
+        if (variation < 0) {
+            colorId = R.color.materialRed;
+            perc = String.format(Locale.getDefault(), "- %.2f%s", Math.abs(variation), "%");
+        } else {
+            colorId = R.color.materialGreen;
+            perc = String.format(Locale.getDefault(), "+ %.2f%s", variation, "%");
+        }
+        holder.percentageVariation1d.setBackgroundColor(context.getResources().getColor(colorId));
+        holder.percentageVariation1d.setText(perc);
+        holder.percentageVariation1d.setTextColor(Color.WHITE);
+
+
+        // Set percentage 1 week
+        variation = coin.getPercentChange7d();
+        if (variation < 0) {
+            colorId = R.color.materialRed;
+            perc = String.format(Locale.getDefault(), "- %.2f%s", Math.abs(variation), "%");
+        } else {
+            colorId = R.color.materialGreen;
+            perc = String.format(Locale.getDefault(), "+ %.2f%s", variation, "%");
+        }
+        holder.percentageVariation1w.setBackgroundColor(context.getResources().getColor(colorId));
+        holder.percentageVariation1w.setText(perc);
+        holder.percentageVariation1w.setTextColor(Color.WHITE);
 
         int background;
-        if(position%2 == 0) {
+        if (position % 2 == 0) {
             background = ResourcesLoader.getColorFromId(context, R.color.lightGreyMaterial);
         } else {
             background = ResourcesLoader.getColorFromId(context, R.color.materialWhite);
@@ -91,16 +116,16 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
 
     @Override
     public int getItemCount() {
-        return coinList.size();
+        return coins.size();
     }
 
-    public void updateCoinsList(List<Coin> items) {
-        coinList = items;
+    void updateCoinsList(List<Coin> items) {
+        coins = items;
         notifyDataSetChanged();
     }
 
     private Coin getItem(int adapterPosition) {
-        return coinList.get(adapterPosition);
+        return coins.get(adapterPosition);
     }
 
     public interface CoinItemListener {
@@ -108,14 +133,18 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.list_item)
-        public RelativeLayout listItem;
+        @BindView(R.id.coin_list_item)
+        public LinearLayout listItem;
         @BindView(R.id.list_position)
         public TextView coinPosition;
         @BindView(R.id.coin_name)
         public TextView coinName;
-        @BindView(R.id.percentage_variation)
-        public TextView percentageVariation;
+        @BindView(R.id.percentage_variation_1h)
+        public TextView percentageVariation1d;
+        @BindView(R.id.percentage_variation_1d)
+        public TextView percentageVariation1w;
+        @BindView(R.id.percentage_variation_1w)
+        public TextView percentageVariation1h;
         @BindView(R.id.price)
         public TextView coinPrice;
         @BindView(R.id.icon)
@@ -146,8 +175,8 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
 //    }
 
     private Double roundToDecimalPlaces(Double value, int decimalPlaces) {
-        Double shift = Math.pow(10,decimalPlaces);
-        return Math.round(value*shift)/shift;
+        Double shift = Math.pow(10, decimalPlaces);
+        return Math.round(value * shift) / shift;
     }
 }
 

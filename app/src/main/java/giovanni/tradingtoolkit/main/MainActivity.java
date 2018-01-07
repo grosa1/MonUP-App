@@ -92,11 +92,11 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         //adapter.addFrag(NotificationsFragment.newInstance(), "Notifications");
-//        adapter.addFrag(CoinsFragment.newInstance(""), "Market prices");
-//        adapter.addFrag(CalculatorFragment.newInstance(), "Tools");
+        //adapter.addFrag(CoinsFragment.newInstance(""), "Market prices");
+        //adapter.addFrag(CalculatorFragment.newInstance(), "Tools");
 
-        adapter.addFrag(CoinsFragment.newInstance(""), "Prezzi di mercato");
-        adapter.addFrag(CalculatorFragment.newInstance(), "Strumenti");
+        adapter.addFrag(CoinsFragment.newInstance(""), getResources().getString(R.string.coins));
+        adapter.addFrag(CalculatorFragment.newInstance(), getResources().getString(R.string.tools));
 
         viewPager.setAdapter(adapter);
     }
