@@ -1,20 +1,16 @@
 package giovanni.tradingtoolkit.main;
 
-import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +20,7 @@ import butterknife.ButterKnife;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.calculator.CalculatorFragment;
 import giovanni.tradingtoolkit.marketprices.CoinsFragment;
-import giovanni.tradingtoolkit.notifications.NotificationsFragment;
-import giovanni.tradingtoolkit.settings.AboutFragment;
+import giovanni.tradingtoolkit.settings.AboutActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -73,10 +68,8 @@ public class MainActivity extends AppCompatActivity {
 //                return true;
 
             case R.id.about:
-                Dialog dialog;
-                dialog = new Dialog(this);
-                dialog.setContentView(R.layout.about_dialog);
-                dialog.show();
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -95,8 +88,11 @@ public class MainActivity extends AppCompatActivity {
         //adapter.addFrag(CoinsFragment.newInstance(""), "Market prices");
         //adapter.addFrag(CalculatorFragment.newInstance(), "Tools");
 
-        adapter.addFrag(CoinsFragment.newInstance(""), getResources().getString(R.string.coins));
-        adapter.addFrag(CalculatorFragment.newInstance(), getResources().getString(R.string.tools));
+//        adapter.addFrag(CoinsFragment.newInstance(), getResources().getString(R.string.coins));
+//        adapter.addFrag(CalculatorFragment.newInstance(), getResources().getString(R.string.tools));
+
+        adapter.addFrag(CoinsFragment.newInstance(), "");
+        adapter.addFrag(CalculatorFragment.newInstance(), "");
 
         viewPager.setAdapter(adapter);
     }

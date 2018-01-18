@@ -1,5 +1,6 @@
 package giovanni.tradingtoolkit.marketprices;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,17 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.Coin;
 import giovanni.tradingtoolkit.data.model.Variation;
-import giovanni.tradingtoolkit.data.remote.ApiService;
+import giovanni.tradingtoolkit.data.remote.CoinMarketCapService;
 import giovanni.tradingtoolkit.data.remote.RetrofitClient;
 import giovanni.tradingtoolkit.main.ProgressDialogManager;
 import giovanni.tradingtoolkit.main.ToastManager;
@@ -31,14 +33,27 @@ import retrofit2.Response;
 
 public class CoinsFragment extends Fragment {
 
-    private static final String ARG_COINS = "COINS";
-    private static final String currency = "EUR";
-    private static final String limit = "200";
+    public static final String ARG_PRICE_DATA = "price_data";
+    public static final String DEFAULT_CURRENCY = "EUR";
+    public static final String LIST_LIMIT = "200";
 
+    @BindView(R.id.list)
+    RecyclerView recyclerView;
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout pullDown;
+    @BindView(R.id.tv_rank)
+    TextView tvRank;
+    @BindView(R.id.tv_coin_name)
+    TextView tvCoin;
+    @BindView(R.id.tv_price)
+    TextView tvPrice;
+    @BindView(R.id.tv_percentage_variation)
+    TextView tvVariation;
+
+    public static final String ARG_COINS = "COINS";
     private List<Coin> coins;
     private CoinsListAdapter listAdapter;
-    private SwipeRefreshLayout pullDown;
-    private ApiService restService;
+    private CoinMarketCapService coinDataService;
 
     private Variation currentVariation;
     private boolean sortPriceAsc, sortNameAsc, sortRankAsc;
@@ -48,18 +63,16 @@ public class CoinsFragment extends Fragment {
         currentVariation = Variation.Daily;
     }
 
-    public static CoinsFragment newInstance(String coins) {
+    public static CoinsFragment newInstance() {
         CoinsFragment fragment = new CoinsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_COINS, coins);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.restService = RetrofitClient.getRestService();
+        this.coinDataService = RetrofitClient.getCoinMarketCapService();
 
         if (getArguments() != null) {
             //TODO:
@@ -70,38 +83,32 @@ public class CoinsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.coins_list_fragment, container, false);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        ButterKnife.bind(this, view);
 
-        listAdapter = new CoinsListAdapter(getContext(), coins, priceBtc -> {
-            // TODO andare in fragment visualizzazione coin
-            ToastManager.create(getContext(), "Ƀ = " + priceBtc);
+        listAdapter = new CoinsListAdapter(getContext(), coins, coinSym -> {
+//            ToastManager.create(getContext(), "Ƀ = " + priceBtc);
+            this.showChart(coinSym);
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(listAdapter);
 
         try {
-            loadCoinList(currency, limit);
+            loadCoinList(DEFAULT_CURRENCY, LIST_LIMIT);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        pullDown = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         pullDown.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 try {
-                    loadCoinList(currency, limit);
+                    loadCoinList(DEFAULT_CURRENCY, LIST_LIMIT);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
-
-        TextView tvRank = (TextView) view.findViewById(R.id.tv_rank);
-        TextView tvCoin = (TextView) view.findViewById(R.id.tv_coin_name);
-        TextView tvPrice = (TextView) view.findViewById(R.id.tv_price);
-        TextView tvVariation = (TextView) view.findViewById(R.id.tv_percentage_variation);
 
         String variation = "";
         switch (currentVariation) {
@@ -209,9 +216,10 @@ public class CoinsFragment extends Fragment {
         ProgressDialogManager.open(getContext());
     }
 
+    //TODO fixare costanti
     public void loadCoinList(String currency, String limit) throws IOException {
 
-        this.restService.getList(currency, limit).enqueue(new Callback<List<Coin>>() {
+        this.coinDataService.getList(currency, limit).enqueue(new Callback<List<Coin>>() {
             @Override
             public void onResponse(Call<List<Coin>> call, Response<List<Coin>> response) {
 
@@ -253,6 +261,12 @@ public class CoinsFragment extends Fragment {
                 Log.e("REQUEST_ERROR", t.toString());
             }
         });
+    }
+
+    public void showChart(String data) {
+        Intent intent = new Intent(getActivity(), ChartActivity.class);
+        intent.putExtra(ARG_PRICE_DATA, data);
+        startActivity(intent);
     }
 
 }

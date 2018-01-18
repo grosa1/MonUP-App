@@ -23,6 +23,10 @@
     <string name="sorting_hour">Ordinato per variazione dell\'ultima ora</string>
     <string name="sorting_daily">Ordinato per variazione ultimo giorno</string>
     <string name="sorting_weekly">Ordinato per variazione ultima settimana</string>
+    <string name="title_activity_chart">ChartActivity</string>
+    <string name="title_activity_about">Crypto trading tools - v1.3</string>
+
+    <string name="action_settings">Settings</string>
 
 
 </resources>

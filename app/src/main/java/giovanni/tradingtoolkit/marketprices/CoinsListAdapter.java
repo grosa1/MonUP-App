@@ -160,7 +160,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         @Override
         public void onClick(View view) {
             Coin coin = getItem(getAdapterPosition());
-            itemListener.onCoinClick(String.valueOf(coin.getPriceBtc()));
+            itemListener.onCoinClick(String.valueOf(coin.getSymbol()));
             notifyDataSetChanged();
         }
     }

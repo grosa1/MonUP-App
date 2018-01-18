@@ -13,7 +13,7 @@ import retrofit2.http.Query;
  * Created by giiio on 21/12/2017.
  */
 
-public interface ApiService {
+public interface CoinMarketCapService {
 
     @GET("/v1/ticker/")
     Call<List<Coin>> getList(@Query("convert") String currency, @Query("limit") String listLimit);
