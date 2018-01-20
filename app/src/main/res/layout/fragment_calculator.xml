@@ -14,7 +14,7 @@
             android:layout_width="154dp"
             android:layout_height="42dp"
             android:ems="10"
-            android:hint="es. BTC= 15000"
+            android:hint="ex. BTC= 15000"
             android:inputType="numberDecimal"
             android:layout_marginStart="21dp"
             android:layout_below="@+id/textView1"
@@ -25,7 +25,7 @@
             android:layout_width="154dp"
             android:layout_height="42dp"
             android:ems="10"
-            android:hint="es. BTC= 17000"
+            android:hint="ex. BTC= 17000"
             android:inputType="numberDecimal"
             android:layout_marginEnd="16dp"
             android:layout_below="@+id/textView2"
@@ -36,7 +36,7 @@
             android:layout_width="154dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="q.tà da investire"
+            android:hint="ex. 1000€"
             android:inputType="numberDecimal"
             android:layout_marginTop="53dp"
             android:layout_below="@+id/editCurrentUnitPrice"
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
-            android:text="Calcola"
+            android:text=""
             android:textColor="@android:color/white"
             android:background="@color/colorPrimary"
             android:layout_below="@+id/editBudget"
@@ -71,7 +71,7 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Guadagno netto:"
+            android:text="@string/calculator_net_revenue"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_above="@+id/textViewRevenue"
@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textViewExpectedQuantity"
             android:layout_alignStart="@+id/editCurrentUnitPrice"
-            android:text="Q.tà: " />
+            android:text="Qt: " />
 
         <TextView
             android:id="@+id/textView7"
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textViewExpectedQuantity"
             android:layout_alignStart="@+id/editExpectedUnitPrice"
-            android:text="Q.tà: " />
+            android:text="Qt: " />
 
         <TextView
             android:id="@+id/textViewExpectedQuantity"
@@ -151,7 +151,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/textViewRevenue"
             android:layout_below="@+id/textViewRevenue"
-            android:text="Lordo: " />
+            android:text="@string/calculator_income" />
 
         <TextView
             android:id="@+id/textTotalGrossResult"

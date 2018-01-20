@@ -1,11 +1,16 @@
 <resources>
-    <string name="title_activity_about" translatable="false">Crypto trading tools - v1.4</string>
+    <string name="title_activity_about" translatable="false">Crypto trading tools - v1.5</string>
     <string name="app_name" translatable="false">CryptoTrading toolkit</string>
     <string name="action_settings" translatable="false">About</string>
 
     <!-- calcualtor -->
     <string name="title_calculator" translatable="false">Tools</string>
     <string name="calculator_error">Please fill in all the fields</string>
+    <string name="calculator_net_revenue">Revenue:</string>
+    <string name="calculator_income">Income: </string>
+    <string name="calculator_calculate">Calculate</string>
+
+
 
     <!-- chart -->
     <string name="title_activity_chart" translatable="false">ChartActivity</string>

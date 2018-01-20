@@ -15,4 +15,8 @@
     <string name="coin_name">Moneta</string>
     <string name="about_thanks">Grazie a:</string>
     <string name="about_support">Se l\'app ti piace, supportala con una piccola donazione!</string>
+    <string name="calculator_net_revenue">Guadagno netto:</string>
+    <string name="calculator_income">Lordo: </string>
+    <string name="calculator_calculate">Calcola</string>
+
 </resources>

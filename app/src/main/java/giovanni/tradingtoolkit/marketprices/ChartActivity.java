@@ -64,6 +64,7 @@ public class ChartActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         String coin = getIntent().getStringExtra(CoinsFragment.ARG_PRICE_DATA);
         toolbar.setTitle(coin);
+        getSupportActionBar().setTitle(coin);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.hystoService = RetrofitClient.getCryptoCompareService();
