@@ -16,6 +16,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +47,7 @@ public class ChartActivity extends AppCompatActivity {
 
     private final int WEEK = 7;
     private final int MONTH = 30;
+    private final int REQUEST_DAYS = 90;
     private CryptoCompareService hystoService;
     private List<Entry> weekEntry;
     private List<Entry> monthEntry;
@@ -70,6 +72,7 @@ public class ChartActivity extends AppCompatActivity {
         lineChart.setTouchEnabled(true);
         lineChart.setMarker(new ChartMakerView(this, R.layout.chart_popup));
         lineChart.getAxisRight().setEnabled(false);
+        lineChart.getXAxis().setEnabled(false);
         lineChart.getAxisLeft().setLabelCount(5, true);
         lineChart.setHighlightPerDragEnabled(true);
         lineChart.setDrawBorders(false);
@@ -77,13 +80,13 @@ public class ChartActivity extends AppCompatActivity {
         desc.setText(coin + "/EUR");
         desc.setTextSize(13);
         lineChart.setDescription(desc);
-        lineChart.setNoDataText("Dati non disponibili");
+        lineChart.setNoDataText(getResources().getString(R.string.chart_data_error));
 
         ProgressDialogManager.open(this);
 
         //TODO fixare costanti
         String coinCurrency = CoinsFragment.DEFAULT_CURRENCY;
-        loadData(coin, coinCurrency, "90");
+        loadData(coin, coinCurrency, String.valueOf(REQUEST_DAYS));
 
         tv7gg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +118,8 @@ public class ChartActivity extends AppCompatActivity {
 
     public void setDataset(List<Entry> entries) {
         //DATASET SETTINGS
-        LineDataSet dataset = new LineDataSet(entries, "Prezzo: EUR");
+        String labelDesc = getResources().getString(R.string.chart_price_label);
+        LineDataSet dataset = new LineDataSet(entries, labelDesc + " " + "EUR");
         dataset.setValueTextSize(13);
         dataset.setDrawValues(false);
         dataset.setHighlightEnabled(true);
@@ -136,15 +140,17 @@ public class ChartActivity extends AppCompatActivity {
         this.fullEntry = new ArrayList<>();
 
         ArrayList<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < prices.size(); i++) {
+        int size = prices.size();
+        for (int i = 0; i < size; i++) {
             entries.add(new Entry(i, prices.get(i).getClose().floatValue()));
 
-            if(i == WEEK - 1)
-                this.weekEntry.addAll(entries);
+            if(size - i <= WEEK)
+                this.weekEntry.add(entries.get(i));
 
-            if(i == MONTH - 1)
-                this.monthEntry.addAll(entries);
+            if(size - i <= MONTH)
+                this.monthEntry.add(entries.get(i));
         }
+
         this.fullEntry = entries;
     }
 
@@ -153,10 +159,14 @@ public class ChartActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<HystoPriceResponse> call, Response<HystoPriceResponse> response) {
 
-                String responseStatus = response.body().getResponse();
-                if (responseStatus.equals("Success")) {
-                    setChartData(response.body().getData());
-                    setDataset(weekEntry);
+                if(response.body() != null) {
+                    String responseStatus = response.body().getResponse();
+                    if (responseStatus.equals("Success")) {
+                        setChartData(response.body().getData());
+                        setDataset(weekEntry);
+                    } else {
+                        showError();
+                    }
                 } else {
                     showError();
                 }
@@ -173,7 +183,7 @@ public class ChartActivity extends AppCompatActivity {
     }
 
     private void showError() {
-        ToastManager.create(this, "Dati non disponibili");
+        ToastManager.create(this, getResources().getString(R.string.chart_data_error));
     }
 
 }

@@ -16,12 +16,11 @@
 
         <TextView
             android:id="@+id/textView1"
-            android:layout_below="@id/textView"
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_above="@id/textView2"
             android:gravity="center"
-            android:text="Grazie a:"
+            android:text="@string/about_thanks"
             android:textStyle="bold" />
 
         <RelativeLayout
@@ -124,7 +123,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:gravity="center"
-            android:text="Se l'app ti piace, supportala con una piccola donazione!"
+            android:text="@string/about_support"
             android:textStyle="bold" />
 
         <TextView
@@ -136,7 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:gravity="left|center_vertical"
-            android:text="BTC: 14gfwxxJ4BMG6RdnU8WegpCz9ZFqvxhcuw"
+            android:text="@string/about_wallet_BTC"
             android:textIsSelectable="true" />
 
         <TextView
@@ -146,8 +145,9 @@
             android:layout_marginRight="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="13sp"
             android:gravity="left|center_vertical"
-            android:text="ETH: 0x552C3C3cA11b365b6D234b58C3E58A3f944dFE81"
+            android:text="@string/about_wallet_ETH"
             android:textIsSelectable="true" />
 
         <ImageView

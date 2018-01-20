@@ -1,32 +1,40 @@
 <resources>
-    <string name="app_name">CryptoTrading toolkit</string>
-    <string name="title_home">Tools</string>
-    <string name="title_dashboard">Market Prices</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_about" translatable="false">Crypto trading tools - v1.4</string>
+    <string name="app_name" translatable="false">CryptoTrading toolkit</string>
+    <string name="action_settings" translatable="false">About</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="list_position_place_holder">n.</string>
-    <string name="coin_name_place_holder">Coin name</string>
-    <string name="price_place_holder">000000</string>
-    <string name="percentage_variation_place_holder">+100.00%</string>
-    <string name="imageView_content_description" />
-    <string name="coins">Monete</string>
-    <string name="tools">Strumenti</string>
-    <string name="price_title">Prezzo</string>
-    <string name="coin_name">Moneta</string>
-    <string name="percentage_variation_title">Variazione %s</string>
-    <string name="rank">Rank</string>
-    <string name="hour">ora</string>
-    <string name="daily">giornaliera</string>
-    <string name="weekly">settimanale</string>
-    <string name="sorting_hour">Ordinato per variazione dell\'ultima ora</string>
-    <string name="sorting_daily">Ordinato per variazione ultimo giorno</string>
-    <string name="sorting_weekly">Ordinato per variazione ultima settimana</string>
-    <string name="title_activity_chart">ChartActivity</string>
-    <string name="title_activity_about">Crypto trading tools - v1.3</string>
+    <!-- calcualtor -->
+    <string name="title_calculator" translatable="false">Tools</string>
+    <string name="calculator_error">Please fill in all the fields</string>
 
-    <string name="action_settings">Settings</string>
+    <!-- chart -->
+    <string name="title_activity_chart" translatable="false">ChartActivity</string>
+    <string name="chart_button_7gg">7 days</string>
+    <string name="chart_button_90gg">90 days</string>
+    <string name="chart_data_error">Data not available</string>
+    <string name="chart_button_30gg">30 days</string>
+    <string name="chart_price_label">Price:</string>
 
+    <!-- coins list -->
+    <string name="title_dashboard" translatable="false">Market Prices</string>
+    <string name="coins_request_error">Error: please try later</string>
+    <string name="daily">daily</string>
+    <string name="weekly">weekly</string>
+    <string name="list_position_place_holder" translatable="false">n.</string>
+    <string name="coin_name_place_holder" translatable="false">Coin name</string>
+    <string name="price_place_holder" translatable="false">000000</string>
+    <string name="percentage_variation_place_holder" translatable="false">+100.00%</string>
+    <string name="imageView_content_description" translatable="false" />
+    <string name="rank" translatable="false">Rank</string>
+    <string name="hour">hour</string>
+    <string name="percentage_variation_title">change %s</string>
+    <string name="price_title">Price</string>
+    <string name="coin_name">Coin</string>
+
+    <!-- about -->
+    <string name="about_wallet_BTC" translatable="false">BTC: 14gfwxxJ4BMG6RdnU8WegpCz9ZFqvxhcuw</string>
+    <string name="about_wallet_ETH" translatable="false">ETH: 0x552C3C3cA11b365b6D234b58C3E58A3f944dFE81</string>
+    <string name="about_thanks">Thanks to:</string>
+    <string name="about_support">Support the app</string>
 
 </resources>

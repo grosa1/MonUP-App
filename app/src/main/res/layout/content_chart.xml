@@ -21,7 +21,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="7 giorni"
+            android:text="@string/chart_button_7gg"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
@@ -31,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="30 giorni"
+            android:text="@string/chart_button_30gg"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="end"
-            android:text="90 giorni"
+            android:text="@string/chart_button_90gg"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="14sp" />

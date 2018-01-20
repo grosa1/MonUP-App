@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.main.NullValueException;
+import giovanni.tradingtoolkit.main.ToastManager;
 
 public class CalculatorFragment extends Fragment {
 
@@ -96,8 +97,7 @@ public class CalculatorFragment extends Fragment {
     }
 
     private void showValuesError() {
-        Toast toast = Toast.makeText(getContext(), "Compila tutti i campi!", Toast.LENGTH_SHORT);
-        toast.show();
+        ToastManager.create(getContext(), getResources().getString(R.string.calculator_error));
     }
 
 }

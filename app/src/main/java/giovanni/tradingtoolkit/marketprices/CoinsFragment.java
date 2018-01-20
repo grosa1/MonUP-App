@@ -248,7 +248,7 @@ public class CoinsFragment extends Fragment {
                         pullDown.setRefreshing(false);
                     int statusCode = response.code();
                     Log.e("ERROR_CODE", String.valueOf(statusCode));
-                    ToastManager.create(getContext(), "Errore: riprova più tardi");
+                    ToastManager.create(getContext(), getResources().getString(R.string.coins_request_error));
                 }
             }
 
@@ -257,7 +257,7 @@ public class CoinsFragment extends Fragment {
                 ProgressDialogManager.close();
                 if (pullDown != null)
                     pullDown.setRefreshing(false);
-                ToastManager.create(getContext(), "Errore, riprova più tardi");
+                ToastManager.create(getContext(), getResources().getString(R.string.coins_request_error));
                 Log.e("REQUEST_ERROR", t.toString());
             }
         });
