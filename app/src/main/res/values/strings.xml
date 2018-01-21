@@ -10,8 +10,6 @@
     <string name="calculator_income">Income: </string>
     <string name="calculator_calculate">Calculate</string>
 
-
-
     <!-- chart -->
     <string name="title_activity_chart" translatable="false">ChartActivity</string>
     <string name="chart_button_7gg">7 days</string>
