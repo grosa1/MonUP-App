@@ -1,14 +1,18 @@
 package giovanni.tradingtoolkit.marketprices;
 
 import android.content.Context;
-import android.graphics.Canvas;
+import android.util.Log;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.components.IMarker;
 import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.utils.MPPointF;
+
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import giovanni.tradingtoolkit.R;
 
@@ -17,13 +21,16 @@ import giovanni.tradingtoolkit.R;
  */
 
 public class ChartMakerView extends MarkerView {
-    private TextView tvContent;
+    private TextView tvPrice;
+    private TextView tvDate;
 
     public ChartMakerView(Context context, int layoutResource) {
         super(context, layoutResource);
 
         // find your layout components
-        tvContent = (TextView) findViewById(R.id.tv_chart_popup);
+        tvPrice = (TextView) findViewById(R.id.tv_chart_popup_price);
+        tvDate = (TextView) findViewById(R.id.tv_chart_popup_time);
+
     }
 
     // callbacks everytime the MarkerView is redrawn, can be used to update the
@@ -31,7 +38,11 @@ public class ChartMakerView extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
 
-        tvContent.setText("€ " + e.getY());
+        tvPrice.setText("€ " + e.getY());
+
+        Long fixedDateMills = ChartActivity.timestamp.get((int) e.getX());
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        tvDate.setText(dateFormat.format(new Date(fixedDateMills * 1000)));
 
         // this will perform necessary layouting
         super.refreshContent(e, highlight);

@@ -2,6 +2,7 @@ package giovanni.tradingtoolkit.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,11 +10,20 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +59,18 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
+
+        //        1514505600
+//        int t = (int) e.getX();
+//        tvDate.setText();
+//        Timestamp tr = ChartActivity.timestamp.get(t);
+//        1517176991155
+//        String str = "1514505600000";
+//                        1516752000000
+//        Date d = new Date(Long.valueOf(str));
+//        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//        Log.d("TIME", ChartActivity.timestamp.get(t).toString());
+//                Log.d("TSTAMP", dateFormat.format(d));
     }
 
     @Override

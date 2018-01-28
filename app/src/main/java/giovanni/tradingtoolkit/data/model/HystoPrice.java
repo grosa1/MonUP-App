@@ -3,6 +3,8 @@ package giovanni.tradingtoolkit.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.sql.Timestamp;
+
 /**
  * Created by Giovanni on 15/01/2018.
  */
@@ -10,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
 public class HystoPrice {
     @SerializedName("time")
     @Expose
-    private Integer time;
+    private Long time;
     @SerializedName("close")
     @Expose
     private Double close;
@@ -30,11 +32,11 @@ public class HystoPrice {
     @Expose
     private Double volumeto;
 
-    public Integer getTime() {
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(Integer time) {
+    public void setTime(Long time) {
         this.time = time;
     }
 

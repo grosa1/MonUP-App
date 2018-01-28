@@ -1,5 +1,5 @@
 <resources>
-    <string name="title_activity_about" translatable="false">Crypto trading tools - v1.5</string>
+    <string name="title_activity_about" translatable="false">Crypto trading tools - v1.7</string>
     <string name="app_name" translatable="false">CryptoTrading toolkit</string>
     <string name="action_settings" translatable="false">About</string>
 

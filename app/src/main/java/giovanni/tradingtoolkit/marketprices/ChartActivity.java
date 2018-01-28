@@ -14,6 +14,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -52,6 +53,8 @@ public class ChartActivity extends AppCompatActivity {
     private List<Entry> weekEntry;
     private List<Entry> monthEntry;
     private List<Entry> fullEntry;
+
+    public static List<Long> timestamp;
 
 
     @Override
@@ -139,11 +142,13 @@ public class ChartActivity extends AppCompatActivity {
         this.weekEntry = new ArrayList<>();
         this.monthEntry = new ArrayList<>();
         this.fullEntry = new ArrayList<>();
+        this.timestamp = new ArrayList<>();
 
         ArrayList<Entry> entries = new ArrayList<>();
         int size = prices.size();
         for (int i = 0; i < size; i++) {
             entries.add(new Entry(i, prices.get(i).getClose().floatValue()));
+            this.timestamp.add(prices.get(i).getTime());
 
             if(size - i <= WEEK)
                 this.weekEntry.add(entries.get(i));

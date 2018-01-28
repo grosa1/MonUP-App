@@ -1,19 +1,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:padding="2dp"
     android:background="@color/colorAccent" >
+
     <TextView
-        android:id="@+id/tv_chart_popup"
-        android:layout_margin="1dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginLeft="2dp"
+        android:id="@+id/tv_chart_popup_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text=""
+        android:text="PRICE"
         android:textSize="14dp"
         android:textColor="@android:color/white"
-        android:ellipsize="end"
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tv_chart_popup_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_chart_popup_price"
+        android:layout_centerHorizontal="true"
+        android:singleLine="true"
+        android:text="DATE"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/white"
+        android:textSize="10dp" />
 </RelativeLayout>
