@@ -6,15 +6,19 @@ android {
         applicationId "giovanni.tradingtoolkit"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 17
-        versionName "1.7"
+        versionCode 18
+        versionName "1.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    lintOptions {
+        abortOnError false
     }
     buildToolsVersion '27.0.1'
 
