@@ -11,9 +11,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,6 +32,7 @@ import giovanni.tradingtoolkit.data.model.Coin;
 import giovanni.tradingtoolkit.data.model.Variation;
 import giovanni.tradingtoolkit.data.remote.CoinMarketCapService;
 import giovanni.tradingtoolkit.data.remote.RetrofitClient;
+import giovanni.tradingtoolkit.main.SharedPrefs;
 import giovanni.tradingtoolkit.main.ProgressDialogManager;
 import giovanni.tradingtoolkit.main.ToastManager;
 import retrofit2.Call;
@@ -32,9 +40,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CoinsFragment extends Fragment {
-
-    public static final String ARG_PRICE_DATA = "price_data";
-    public static final String DEFAULT_CURRENCY = "EUR";
+    public static final String ARG_CHART_SYM = "price_data";
+    public static final String ARG_CHART_CURRENCY = "currency_data";
+    public static final String DEFAULT_CURRENCY = "USD";
     public static final String LIST_LIMIT = "200";
 
     @BindView(R.id.list)
@@ -47,13 +55,16 @@ public class CoinsFragment extends Fragment {
     TextView tvCoin;
     @BindView(R.id.tv_price)
     TextView tvPrice;
+    @BindView(R.id.spinner_currency)
+    Spinner spinnerCurrency;
     @BindView(R.id.tv_percentage_variation)
     TextView tvVariation;
 
-    public static final String ARG_COINS = "COINS";
+    public static String currency;
     private List<Coin> coins;
     private CoinsListAdapter listAdapter;
     private CoinMarketCapService coinDataService;
+    private boolean isConnected = false;
 
     private Variation currentVariation;
     private boolean sortPriceAsc, sortNameAsc, sortRankAsc;
@@ -73,10 +84,6 @@ public class CoinsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.coinDataService = RetrofitClient.getCoinMarketCapService();
-
-        if (getArguments() != null) {
-            //TODO:
-        }
     }
 
     @Override
@@ -85,44 +92,62 @@ public class CoinsFragment extends Fragment {
         View view = inflater.inflate(R.layout.coins_list_fragment, container, false);
         ButterKnife.bind(this, view);
 
+        currency = SharedPrefs.restoreString(getContext(), SharedPrefs.KEY_CURRENCY);
+        if (currency.isEmpty()) {
+            currency = DEFAULT_CURRENCY;
+        }
+
         listAdapter = new CoinsListAdapter(getContext(), coins, coinSym -> {
-//            ToastManager.create(getContext(), "Ƀ = " + priceBtc);
-            this.showChart(coinSym);
+            if (!(currency.equals("BTC") && coinSym.equals("BTC"))) {
+                this.showChart(coinSym, currency);
+            }
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(listAdapter);
 
+        //API CALL
         try {
-            loadCoinList(DEFAULT_CURRENCY, LIST_LIMIT);
+            this.loadCoinList(currency, LIST_LIMIT);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        pullDown.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        //SET CURRENCY SPINNER
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
+                R.array.currency_array, R.layout.layout_currency_spinner);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.spinnerCurrency.setAdapter(adapter);
+
+        this.resetSpinner();
+        this.spinnerCurrency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onRefresh() {
-                try {
-                    loadCoinList(DEFAULT_CURRENCY, LIST_LIMIT);
-                } catch (IOException e) {
-                    e.printStackTrace();
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (isConnected) {
+                    CoinsFragment.currency = spinnerCurrency.getItemAtPosition(position).toString().trim();
+                    SharedPrefs.storeString(getContext(), SharedPrefs.KEY_CURRENCY, CoinsFragment.currency);
+                    updateList(CoinsFragment.currency);
+                } else {
+                    resetSpinner();
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
 
-        String variation = "";
-        switch (currentVariation) {
-            case Hour:
-                variation = getContext().getString(R.string.hour);
-                break;
-            case Daily:
-                variation = getContext().getString(R.string.daily);
-                break;
-            case Weekly:
-                variation = getContext().getString(R.string.weekly);
-                break;
-        }
-        tvVariation.setText(String.format(getContext().getString(R.string.percentage_variation_title), variation));
+        //SET PULL DOWN LISTENER
+        pullDown.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateList(currency);
+            }
+        });
+
+        //SET LIST SORTING
+        tvVariation.setText(getContext().getString(R.string.percentage_variation_title));
 
         // Sort by rank
         tvRank.setOnClickListener(tv -> {
@@ -137,6 +162,8 @@ public class CoinsFragment extends Fragment {
                 sortRankAsc = true;
                 Collections.reverse(coins);
             }
+
+            tvVariation.setText(getContext().getString(R.string.percentage_variation_title));
             listAdapter.notifyDataSetChanged();
         });
 
@@ -153,6 +180,7 @@ public class CoinsFragment extends Fragment {
                 sortNameAsc = true;
                 Collections.reverse(coins);
             }
+            tvVariation.setText(getContext().getString(R.string.percentage_variation_title));
             listAdapter.notifyDataSetChanged();
         });
 
@@ -162,16 +190,22 @@ public class CoinsFragment extends Fragment {
             sortRankAsc = true;
             sortNameAsc = true;
 
-            Collections.sort(coins, (coin1, coin2) -> coin1.getPriceEur().compareTo(coin2.getPriceEur()));
+            if (currency.equals("USD")) {
+                Collections.sort(coins, (coin1, coin2) -> coin1.getPriceUsd().compareTo(coin2.getPriceUsd()));
+            } else if (currency.equals("EUR")) {
+                Collections.sort(coins, (coin1, coin2) -> coin1.getPriceEur().compareTo(coin2.getPriceEur()));
+            } else if (currency.equals("BTC")) {
+                Collections.sort(coins, (coin1, coin2) -> Double.valueOf(coin1.getPriceBtc()).compareTo(Double.valueOf(coin2.getPriceBtc())));
+            }
+
             if (sortPriceAsc) {
                 sortPriceAsc = false;
             } else {
                 sortPriceAsc = true;
                 Collections.reverse(coins);
             }
+            tvVariation.setText(getContext().getString(R.string.percentage_variation_title));
             listAdapter.notifyDataSetChanged();
-
-
         });
 
         // Sort by percentage variation
@@ -181,28 +215,28 @@ public class CoinsFragment extends Fragment {
             sortNameAsc = true;
             sortPriceAsc = true;
 
-            String var = "";
+            String newVariation = "";
             switch (currentVariation) {
                 case Hour:    // Show last day variations sorted by % desc
-                    var = getContext().getString(R.string.hour);
+                    newVariation = getContext().getString(R.string.hour);
                     Collections.sort(coins, (coin1, coin2) -> Double.valueOf(coin2.getPercentChange1h()).compareTo(coin1.getPercentChange1h()));
                     currentVariation = Variation.Daily;
                     break;
 
                 case Daily:    // Show last week variations sorted by % desc
-                    var = getContext().getString(R.string.daily);
+                    newVariation = getContext().getString(R.string.daily);
                     Collections.sort(coins, (coin1, coin2) -> Double.valueOf(coin2.getPercentChange24h()).compareTo(coin1.getPercentChange24h()));
                     currentVariation = Variation.Weekly;
                     break;
 
                 case Weekly:    // Show last hour variations sorted by % desc
-                    var = getContext().getString(R.string.weekly);
+                    newVariation = getContext().getString(R.string.weekly);
                     Collections.sort(coins, (coin1, coin2) -> Double.valueOf(coin2.getPercentChange7d()).compareTo(coin1.getPercentChange7d()));
                     currentVariation = Variation.Hour;
                     break;
             }
             listAdapter.notifyDataSetChanged();
-            tvVariation.setText(String.format(getContext().getString(R.string.percentage_variation_title), var));
+            tvVariation.setText((getContext().getString(R.string.percentage_variation_sym)) + " " + newVariation);
 
         });
 
@@ -216,36 +250,37 @@ public class CoinsFragment extends Fragment {
         ProgressDialogManager.open(getContext());
     }
 
-    //TODO fixare costanti
-    public void loadCoinList(String currency, String limit) throws IOException {
-
-        this.coinDataService.getList(currency, limit).enqueue(new Callback<List<Coin>>() {
+    public void loadCoinList(String currencyType, String limit) throws IOException {
+        this.coinDataService.getList(currencyType, limit).enqueue(new Callback<List<Coin>>() {
             @Override
             public void onResponse(Call<List<Coin>> call, Response<List<Coin>> response) {
 
-                if (response.isSuccessful()) {
+                Log.d("RES", response.body().toString());
 
+                if (response.isSuccessful()) {
                     List<Coin> body = response.body();
                     if (null != body) {
-                        for (Coin c : body) {
-                            if (!coins.contains(c)) coins.add(c);
-                            else {
-                                coins.remove(c);    // Remove coin with old information
-                                coins.add(c);       // Add coin with newest information
-                            }
-                        }
-                        listAdapter.notifyDataSetChanged();
+                        isConnected = true;
+                        coins = body;
+                        storeCache(coins);
+                        listAdapter.updateCoinsList(coins);
                     }
 
                     ProgressDialogManager.close();
 
-                    if (pullDown != null)
+                    if (pullDown != null) {
                         pullDown.setRefreshing(false);
+                    }
 
                 } else {
+                    isConnected = false;
+                    restoreCache();
+                    Log.d("ERR_RES", response.errorBody().toString());
                     ProgressDialogManager.close();
-                    if (pullDown != null)
+                    if (pullDown != null) {
                         pullDown.setRefreshing(false);
+                    }
+
                     int statusCode = response.code();
                     Log.e("ERROR_CODE", String.valueOf(statusCode));
                     ToastManager.create(getContext(), getResources().getString(R.string.coins_request_error));
@@ -254,19 +289,67 @@ public class CoinsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Coin>> call, Throwable t) {
+                isConnected = false;
+                restoreCache();
                 ProgressDialogManager.close();
-                if (pullDown != null)
+
+                if (pullDown != null) {
                     pullDown.setRefreshing(false);
+                }
                 ToastManager.create(getContext(), getResources().getString(R.string.coins_request_error));
                 Log.e("REQUEST_ERROR", t.toString());
             }
         });
     }
 
-    public void showChart(String data) {
+    public void showChart(final String coinSymbol, final String currencyType) {
         Intent intent = new Intent(getActivity(), ChartActivity.class);
-        intent.putExtra(ARG_PRICE_DATA, data);
+        intent.putExtra(ARG_CHART_SYM, coinSymbol);
+        intent.putExtra(ARG_CHART_CURRENCY, currencyType);
         startActivity(intent);
     }
 
+    private void updateList(final String setCurrency) {
+        try {
+            loadCoinList(setCurrency, LIST_LIMIT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean restoreCache() {
+        String serialCoins = SharedPrefs.restoreString(getContext(), SharedPrefs.KEY_COINS_CACHE);
+        if (!serialCoins.isEmpty()) {
+            Type listType = new TypeToken<ArrayList<Coin>>() {
+            }.getType();
+            List<Coin> cached = (new Gson()).fromJson(serialCoins, listType);
+            coins = cached;
+            listAdapter.updateCoinsList(cached);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean storeCache(final List<Coin> updatedCoins) {
+        String serialCoins = (new Gson()).toJson(updatedCoins);
+        if (SharedPrefs.storeString(getContext(), SharedPrefs.KEY_COINS_CACHE, serialCoins)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void resetSpinner() {
+        if (this.spinnerCurrency != null) {
+            int position;
+            if (currency.equals("EUR")) {
+                position = 1;
+            } else if (currency.equals("BTC")) {
+                position = 2;
+            } else {
+                position = 0;
+            }
+            this.spinnerCurrency.setSelection(position);
+        }
+    }
 }

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,8 +60,16 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         holder.coinPosition.setText(String.format("%s", String.valueOf(coin.getRank())));
         holder.coinName.setText(String.format("%s (%s)", coin.getName(), coin.getSymbol()));
 
-        Double price = coin.getPriceEur();
-        holder.coinPrice.setText(String.format(Locale.getDefault(), "%.2f €", roundToDecimalPlaces(price, 2)));
+        if (CoinsFragment.currency.equals("EUR")) {
+            holder.coinPrice.setText(String.format(Locale.getDefault(), "%.2f €", roundToDecimalPlaces(coin.getPriceEur(), 2)));
+            holder.coinPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        } else if (CoinsFragment.currency.equals("BTC")) {
+            holder.coinPrice.setText(coin.getPriceBtc());
+            holder.coinPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
+        } else {
+            holder.coinPrice.setText(String.format(Locale.getDefault(), "%.2f $", roundToDecimalPlaces(coin.getPriceUsd(), 2)));
+            holder.coinPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        }
 
         // Set percentage 1 hour
         Double variation = coin.getPercentChange1h();

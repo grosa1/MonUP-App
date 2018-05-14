@@ -9,15 +9,12 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,10 +43,12 @@ public class ChartActivity extends AppCompatActivity {
     @BindView(R.id.tv_90_gg)
     TextView tv90gg;
 
+    private static final int GRAPH_ANIMATION_SPEED = 1500;
     private final int WEEK = 7;
     private final int MONTH = 30;
     private final int REQUEST_DAYS = 90;
     private CryptoCompareService hystoService;
+    private String coinSym;
     private List<Entry> weekEntry;
     private List<Entry> monthEntry;
     private List<Entry> fullEntry;
@@ -65,9 +64,9 @@ public class ChartActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-        String coin = getIntent().getStringExtra(CoinsFragment.ARG_PRICE_DATA);
-        toolbar.setTitle(coin);
-        getSupportActionBar().setTitle(coin);
+        this.coinSym = getIntent().getStringExtra(CoinsFragment.ARG_CHART_SYM);
+        toolbar.setTitle(coinSym);
+        getSupportActionBar().setTitle(coinSym);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.hystoService = RetrofitClient.getCryptoCompareService();
@@ -81,16 +80,15 @@ public class ChartActivity extends AppCompatActivity {
         lineChart.setHighlightPerDragEnabled(true);
         lineChart.setDrawBorders(false);
         Description desc = new Description();
-        desc.setText(coin + "/EUR");
+        desc.setText(coinSym + "/" + CoinsFragment.currency);
         desc.setTextSize(13);
         lineChart.setDescription(desc);
         lineChart.setNoDataText(getResources().getString(R.string.chart_data_error));
 
         ProgressDialogManager.open(this);
 
-        //TODO fixare costanti
-        String coinCurrency = CoinsFragment.DEFAULT_CURRENCY;
-        loadData(coin, coinCurrency, String.valueOf(REQUEST_DAYS));
+
+        loadData(coinSym, CoinsFragment.currency, String.valueOf(REQUEST_DAYS));
 
         tv7gg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +121,7 @@ public class ChartActivity extends AppCompatActivity {
     public void setDataset(List<Entry> entries) {
         //DATASET SETTINGS
         String labelDesc = getResources().getString(R.string.chart_price_label);
-        LineDataSet dataset = new LineDataSet(entries, labelDesc + " " + "EUR");
+        LineDataSet dataset = new LineDataSet(entries, labelDesc + " " + CoinsFragment.currency);
         dataset.setValueTextSize(13);
         dataset.setDrawValues(false);
         dataset.setHighlightEnabled(true);
@@ -134,7 +132,7 @@ public class ChartActivity extends AppCompatActivity {
         LineData data = new LineData(dataset);
         lineChart.setData(data);
         lineChart.notifyDataSetChanged();
-        lineChart.animateX(1500);
+        lineChart.animateX(GRAPH_ANIMATION_SPEED);
     }
 
     //TODO è brutto
@@ -150,10 +148,10 @@ public class ChartActivity extends AppCompatActivity {
             entries.add(new Entry(i, prices.get(i).getClose().floatValue()));
             this.timestamp.add(prices.get(i).getTime());
 
-            if(size - i <= WEEK)
+            if (size - i <= WEEK)
                 this.weekEntry.add(entries.get(i));
 
-            if(size - i <= MONTH)
+            if (size - i <= MONTH)
                 this.monthEntry.add(entries.get(i));
         }
 
@@ -165,7 +163,7 @@ public class ChartActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<HystoPriceResponse> call, Response<HystoPriceResponse> response) {
 
-                if(response.body() != null) {
+                if (response.body() != null) {
                     String responseStatus = response.body().getResponse();
                     if (responseStatus.equals("Success")) {
                         setChartData(response.body().getData());

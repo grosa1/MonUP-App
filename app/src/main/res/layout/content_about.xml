@@ -127,27 +127,16 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView10"
-            android:layout_below="@id/textView9"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="left|center_vertical"
-            android:text="@string/about_wallet_BTC"
-            android:textIsSelectable="true" />
-
-        <TextView
             android:id="@+id/textView11"
-            android:layout_below="@id/textView10"
+            android:layout_below="@id/textView5"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="13sp"
-            android:gravity="left|center_vertical"
-            android:text="@string/about_wallet_ETH"
+            android:autoLink="web"
+            android:gravity="center"
+            android:text="@string/github"
             android:textIsSelectable="true" />
 
         <ImageView

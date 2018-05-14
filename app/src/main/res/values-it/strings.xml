@@ -7,10 +7,10 @@
     <string name="chart_button_7gg">7 giorni</string>
     <string name="chart_button_90gg">90 giorni</string>
     <string name="coins_request_error">Errore: riprova più tardi</string>
-    <string name="hour">ora</string>
+    <string name="hour">oraria</string>
     <string name="daily">giornaliera</string>
     <string name="weekly">settimanale</string>
-    <string name="percentage_variation_title">Variazione %s</string>
+    <string name="percentage_variation_title">Variazione</string>
     <string name="price_title">Prezzo</string>
     <string name="coin_name">Moneta</string>
     <string name="about_thanks">Grazie a:</string>

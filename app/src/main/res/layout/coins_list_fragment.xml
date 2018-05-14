@@ -45,13 +45,19 @@
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
+        <Spinner
+            android:id="@+id/spinner_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0" />
+
         <TextView
             android:id="@+id/tv_percentage_variation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/percentage_variation_title"
+            android:text="@string/percentage_variation_sym"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="14sp" />

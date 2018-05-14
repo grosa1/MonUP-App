@@ -1,5 +1,5 @@
 <resources>
-    <string name="title_activity_about" translatable="false">Crypto trading tools - v1.7</string>
+    <string name="title_activity_about" translatable="false">Crypto trading tools - v1.8</string>
     <string name="app_name" translatable="false">CryptoTrading toolkit</string>
     <string name="action_settings" translatable="false">About</string>
 
@@ -30,13 +30,13 @@
     <string name="imageView_content_description" translatable="false" />
     <string name="rank" translatable="false">Rank</string>
     <string name="hour">hour</string>
-    <string name="percentage_variation_title">change %s</string>
+    <string name="percentage_variation_sym" translatable="false">&#37; </string>
+    <string name="percentage_variation_title">Change</string>
     <string name="price_title">Price</string>
     <string name="coin_name">Coin</string>
 
     <!-- about -->
-    <string name="about_wallet_BTC" translatable="false">BTC: 14gfwxxJ4BMG6RdnU8WegpCz9ZFqvxhcuw</string>
-    <string name="about_wallet_ETH" translatable="false">ETH: 0x552C3C3cA11b365b6D234b58C3E58A3f944dFE81</string>
+    <string name="github">https://github.com/grosa1/crypto-trading-toolkit-android</string>
     <string name="about_thanks">Thanks to:</string>
     <string name="about_support">Support the app</string>
 

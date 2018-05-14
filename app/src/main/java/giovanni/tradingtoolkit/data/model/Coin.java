@@ -1,5 +1,6 @@
 package giovanni.tradingtoolkit.data.model;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -151,11 +152,11 @@ public class Coin {
     }
 
     public double getPercentChange24h() {
-        return null != percentChange24h ?  Double.parseDouble(percentChange24h) : 0D;
+        return null != percentChange24h ? Double.parseDouble(percentChange24h) : 0D;
     }
 
     public double getPercentChange7d() {
-        return null != percentChange7d ?  Double.parseDouble(percentChange7d) : 0D;
+        return null != percentChange7d ? Double.parseDouble(percentChange7d) : 0D;
     }
 
     public String getLastUpdated() {

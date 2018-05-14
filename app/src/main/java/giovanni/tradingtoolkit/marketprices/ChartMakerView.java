@@ -37,8 +37,13 @@ public class ChartMakerView extends MarkerView {
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-
-        tvPrice.setText("€ " + e.getY());
+        if(CoinsFragment.currency.equals("EUR")) {
+            tvPrice.setText("€ " + e.getY());
+        } else if(CoinsFragment.currency.equals("BTC")) {
+            tvPrice.setText(String.valueOf(e.getY()));
+        } else {
+            tvPrice.setText("$ " + e.getY());
+        }
 
         Long fixedDateMills = ChartActivity.timestamp.get((int) e.getX());
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
