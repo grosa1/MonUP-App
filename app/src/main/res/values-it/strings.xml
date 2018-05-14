@@ -18,5 +18,6 @@
     <string name="calculator_net_revenue">Guadagno netto:</string>
     <string name="calculator_income">Lordo: </string>
     <string name="calculator_calculate">Calcola</string>
-
+    <string name="calculator_purchase_price">Prezzo di acquisto:</string>
+    <string name="calculator_selling_price">Prezzo di vendita:</string>
 </resources>

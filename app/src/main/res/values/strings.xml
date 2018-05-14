@@ -9,6 +9,8 @@
     <string name="calculator_net_revenue">Revenue:</string>
     <string name="calculator_income">Income: </string>
     <string name="calculator_calculate">Calculate</string>
+    <string name="calculator_purchase_price">Purchase price:</string>
+    <string name="calculator_selling_price">Selling price:</string>
 
     <!-- chart -->
     <string name="title_activity_chart" translatable="false">ChartActivity</string>
@@ -36,7 +38,7 @@
     <string name="coin_name">Coin</string>
 
     <!-- about -->
-    <string name="github">https://github.com/grosa1/crypto-trading-toolkit-android</string>
+    <string name="github" translatable="false">https://github.com/grosa1/crypto-trading-toolkit-android</string>
     <string name="about_thanks">Thanks to:</string>
     <string name="about_support">Support the app</string>
 
