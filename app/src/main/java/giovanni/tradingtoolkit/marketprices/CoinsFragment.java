@@ -213,26 +213,26 @@ public class CoinsFragment extends Fragment {
             // Initialize the sorting order of the other two attributes
             sortRankAsc = true;
             sortNameAsc = true;
-            sortPriceAsc = true;
+            // sortPriceAsc = true;
 
             String newVariation = "";
             switch (currentVariation) {
-                case Hour:    // Show last day variations sorted by % desc
-                    newVariation = getContext().getString(R.string.hour);
+                case Weekly:    // IF WEEKLY SET TO HOUR
+                    newVariation = getContext().getString(R.string.weekly);
                     Collections.sort(coins, (coin1, coin2) -> Double.valueOf(coin2.getPercentChange1h()).compareTo(coin1.getPercentChange1h()));
+                    currentVariation = Variation.Hour;
+                    break;
+
+                case Hour:    // IF HOUR SET TO DAILY
+                    newVariation = getContext().getString(R.string.hour);
+                    Collections.sort(coins, (coin1, coin2) -> Double.valueOf(coin2.getPercentChange24h()).compareTo(coin1.getPercentChange24h()));
                     currentVariation = Variation.Daily;
                     break;
 
-                case Daily:    // Show last week variations sorted by % desc
+                case Daily:    // IF DAILY SET TO WEEKLY
                     newVariation = getContext().getString(R.string.daily);
-                    Collections.sort(coins, (coin1, coin2) -> Double.valueOf(coin2.getPercentChange24h()).compareTo(coin1.getPercentChange24h()));
-                    currentVariation = Variation.Weekly;
-                    break;
-
-                case Weekly:    // Show last hour variations sorted by % desc
-                    newVariation = getContext().getString(R.string.weekly);
                     Collections.sort(coins, (coin1, coin2) -> Double.valueOf(coin2.getPercentChange7d()).compareTo(coin1.getPercentChange7d()));
-                    currentVariation = Variation.Hour;
+                    currentVariation = Variation.Weekly;
                     break;
             }
             listAdapter.notifyDataSetChanged();
@@ -311,6 +311,7 @@ public class CoinsFragment extends Fragment {
 
     private void updateList(final String setCurrency) {
         try {
+            tvVariation.setText((getContext().getString(R.string.percentage_variation_title)));
             loadCoinList(setCurrency, LIST_LIMIT);
         } catch (IOException e) {
             e.printStackTrace();
