@@ -6,13 +6,34 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
+
+import giovanni.tradingtoolkit.data.model.Coin;
+import giovanni.tradingtoolkit.main.SharedPrefs;
+import giovanni.tradingtoolkit.marketprices.CoinsListAdapter;
 
 /**
  * The configuration screen for the {@link personalizable_coin_list_widget personalizable_coin_list_widget} AppWidget.
@@ -24,7 +45,15 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     EditText widget_Text;
 
-    String requested_coin;
+    RecyclerView recyclerView;
+    private String requested_coin;
+    private String serialCoins = "COINS";
+    private List<Coin> coins ;
+    private ArrayList<Coin> filteredList;
+    private Context context = personalizable_coin_list_widgetConfigureActivity.this;
+    private CoinsListAdapter.CoinItemListener itemListener;
+
+    private CoinsListAdapter coinsListAdapter;
 
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
         public void onClick(View v) {
@@ -55,10 +84,6 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
             requested_coin = "Coin non trovata";
 
             makeToast(requested_coin);
-            // When the button is clicked, store the string locally
-            //String widgetText = widget_Text.getText().toString();
-            //saveTitlePref(context, mAppWidgetId, widgetText);
-
         }
     };
 
@@ -100,9 +125,35 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
         setResult(RESULT_CANCELED);
         setContentView(R.layout.personalizable_coin_list_widget_configure);
 
-        findViewById(R.id.add_coin_button).setOnClickListener(addButtonOnClickListener);
         widget_Text = (EditText) findViewById(R.id.appwidget_text);
+        recyclerView = (RecyclerView) findViewById(R.id.search_view);
+        findViewById(R.id.add_coin_button).setOnClickListener(addButtonOnClickListener);
         findViewById(R.id.add_widget_button).setOnClickListener(mOnClickListener);
+
+        itemListener = new CoinsListAdapter.CoinItemListener() {
+            @Override
+            public void onCoinClick(String priceBtc) {
+                Log.e("RESTORE", priceBtc);
+            }
+        };
+        this.restore();
+
+        widget_Text.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
 
         // Find the widget id from the intent.
         Intent intent = getIntent();
@@ -119,6 +170,30 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
         }
 
         widget_Text.setText(loadTitlePref(personalizable_coin_list_widgetConfigureActivity.this, mAppWidgetId));
+    }
+
+    private void restore() {
+        final Context context = personalizable_coin_list_widgetConfigureActivity.this;
+        serialCoins = SharedPrefs.restoreString(context, SharedPrefs.KEY_COINS_CACHE);
+        Type listType = new TypeToken<ArrayList<Coin>>() {
+        }.getType();
+        coins = (new Gson()).fromJson(serialCoins, listType);
+
+        Log.e("Coins", coins.toString());
+    }
+
+    private void filter(String text) {
+        filteredList = new ArrayList<>();
+        for (Coin coin : coins) {
+            if ((coin.getName()).toLowerCase().contains(text.toLowerCase()) | (coin.getSymbol()).toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(coin);
+                Log.e("-----Coin: ", coin.toString() + " Symbol: " + coin.getSymbol() + " Name: " + coin.getName());
+            }
+        }
+        coinsListAdapter = new CoinsListAdapter(context, coins, itemListener);
+        coinsListAdapter.filterList(filteredList);
+        recyclerView.setAdapter(coinsListAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
     }
 
     private void makeToast(String text_content) {

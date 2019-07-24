@@ -17,15 +17,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:hint="@string/appwidget_text"
-        android:autofillHints="Enter a coin to observe" />
+        android:hint="@string/search_coin"
+        android:autofillHints="@string/search_coin"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="448dp"
+        android:background="@color/colorPrimaryDark"
+        android:padding="4dp"
+        android:scrollbars="vertical" />
 
     <Button
         android:id="@+id/add_coin_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_gravity="center"
+        android:layout_marginTop="8dp"
         android:text="@string/add_coin" />
 
     <Button
