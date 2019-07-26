@@ -12,5 +12,5 @@
     <color name="materialWhite">#FAFAFA</color>
     <color name="lightGreyMaterial">#E0E0E0</color>
 
-    <color name="widgetTextColor">#000000</color>
+    <color name="widgetTextColor">#ffffff</color>
 </resources>

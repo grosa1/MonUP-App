@@ -9,6 +9,7 @@ public class SharedPrefs {
 
     public static final String KEY_CURRENCY = "CURRENCY";
     public static final String KEY_COINS_CACHE = "CACHE";
+    public static final String KEY_COINS_WIDGET = "COINS_TO_OBSERVE";
 
     public static Boolean storeString(Context context, String key, String value) {
         Boolean result = false;
