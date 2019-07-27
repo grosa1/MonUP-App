@@ -3,15 +3,32 @@ package giovanni.tradingtoolkit.home_widget;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
+import android.widget.ListView;
 import android.widget.RemoteViews;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import giovanni.tradingtoolkit.R;
+import giovanni.tradingtoolkit.data.model.Coin;
+import giovanni.tradingtoolkit.main.SharedPrefs;
+import giovanni.tradingtoolkit.marketprices.CoinsListAdapter;
 
 /**
  * Implementation of App Widget functionality.
  * App Widget Configuration implemented in {@link personalizable_coin_list_widgetConfigureActivity personalizable_coin_list_widgetConfigureActivity}
  */
 public class personalizable_coin_list_widget extends AppWidgetProvider {
+
+    private Context mContext;
+    private List<Coin> coins;
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
@@ -20,6 +37,12 @@ public class personalizable_coin_list_widget extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.personalizable_coin_list_widget);
        //  views.setTextViewText(R.id.appwidget_text, widgetText);
+
+//        CoinsListAdapter coinsListAdapter = new CoinsListAdapter(context, coins, itemListener);
+//        coinsListAdapter.filterList(filteredList);
+//        recyclerView.setAdapter(coinsListAdapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        //ListView coinsList =
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -49,6 +72,23 @@ public class personalizable_coin_list_widget extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
+    }
+
+    private void restorePreferences(Context context) {
+        String storedPreferences = SharedPrefs.restoreString(context, SharedPrefs.KEY_COINS_WIDGET);
+
+        if( !storedPreferences.isEmpty()) {
+
+            Type listType = new TypeToken<ArrayList<Coin>>() {
+            }.getType();
+            coins = (new Gson()).fromJson(storedPreferences, listType);
+
+            Log.e("PREFERENCES", storedPreferences);
+            Log.e("PREFERENCES-COIN", coins.toString());
+
+        }
+
+        Log.e("PREFERENCES", "Coins Restored");
     }
 }
 

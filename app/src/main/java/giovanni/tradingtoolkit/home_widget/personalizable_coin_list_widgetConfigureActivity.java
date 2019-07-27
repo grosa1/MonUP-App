@@ -15,7 +15,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -43,44 +47,6 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
     private ArrayList<Coin> filteredList;
     private Context context;
     private CoinsListAdapter.CoinItemListener itemListener;
-
-    View.OnClickListener addWidgetBtnClickListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            final Context context = personalizable_coin_list_widgetConfigureActivity.this;
-
-            // When the button is clicked, store the string locally
-            //  String widgetText = textArea.getText().toString();
-            //  saveTitlePref(context, mAppWidgetId, widgetText);
-            //  makeToast(widgetText);
-
-            storePreferences();
-            // It is the responsibility of the configuration activity to update the app widget
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            personalizable_coin_list_widget.updateAppWidget(context, appWidgetManager, mAppWidgetId);
-
-            // Make sure we pass back the original appWidgetId
-            Intent resultValue = new Intent();
-            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-            setResult(RESULT_OK, resultValue);
-            finish();
-        }
-    };
-
-    View.OnClickListener addCoinBtnClickListener = new View.OnClickListener() {
-        public void onClick(View v) {
-
-            String requested_coin = textArea.getText().toString();
-
-            filter(requested_coin);
-            if (filteredList.size() != 1) {
-
-                makeToast("Insert correct name or select once from list");
-            } else {
-
-                setToObserve(filteredList.get(SELECTED_COIN));
-            }
-        }
-    };
 
     public personalizable_coin_list_widgetConfigureActivity() {
         super();
@@ -111,6 +77,34 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
 //        prefs.apply();
 //    }
 
+    View.OnClickListener addWidgetBtnClickListener = v -> {
+        // When the button is clicked, store the string locally
+        //  String widgetText = textArea.getText().toString();
+        //  saveTitlePref(context, mAppWidgetId, widgetText);
+        //  makeToast(widgetText);
+
+        storePreferences();
+        // It is the responsibility of the configuration activity to update the app widget
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        personalizable_coin_list_widget.updateAppWidget(context, appWidgetManager, mAppWidgetId);
+
+        // Make sure we pass back the original appWidgetId
+        Intent resultValue = new Intent();
+        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+        setResult(RESULT_OK, resultValue);
+        finish();
+    };
+
+    View.OnClickListener addCoinBtnClickListener = v -> {
+        String requested_coin = textArea.getText().toString();
+        filter(requested_coin);
+        if (filteredList.size() != 1) {
+            makeToast("Insert correct name or select once from list");
+        } else {
+            setToObserve(filteredList.get(SELECTED_COIN));
+        }
+    };
+
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -121,7 +115,6 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
         setContentView(R.layout.personalizable_coin_list_widget_configure);
 
         context = personalizable_coin_list_widgetConfigureActivity.this;
-        coinsToObserve = new ArrayList<>();
         textArea = (EditText) findViewById(R.id.appwidget_text);
         recyclerView = (RecyclerView) findViewById(R.id.search_view);
         findViewById(R.id.add_coin_button).setOnClickListener(addCoinBtnClickListener);
@@ -129,19 +122,19 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
         loadSerialCoins();
         restorePreferences();
 
+        // Find the widget id from the intent.
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            mAppWidgetId = extras.getInt(
+                    AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+        }
 
-        itemListener = new CoinsListAdapter.CoinItemListener() {
-            @Override
-            public void onCoinClick(String coinSymbol) {
-
-                Log.e("ITEM SELECTED", coinSymbol);
-                filter(coinSymbol);
-                if (filteredList.size() == 1){
-
-                    setToObserve(filteredList.get(SELECTED_COIN));
-                }
-            }
-        };
+        // If this activity was started with an intent without an app widget ID, finish with an error.
+        if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+            finish();
+            return;
+        }
 
         textArea.addTextChangedListener(new TextWatcher() {
             @Override
@@ -160,19 +153,13 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
             }
         });
 
-        // Find the widget id from the intent.
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            mAppWidgetId = extras.getInt(
-                    AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-        }
-
-        // If this activity was started with an intent without an app widget ID, finish with an error.
-        if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
-            finish();
-            return;
-        }
+        itemListener = coinSymbol -> {
+            Log.e("ITEM SELECTED", coinSymbol);
+            filter(coinSymbol);
+            if (filteredList.size() == 1){
+                setToObserve(filteredList.get(SELECTED_COIN));
+            }
+        };
 
         // textArea.setText(loadTitlePref(personalizable_coin_list_widgetConfigureActivity.this, mAppWidgetId));
     }
@@ -211,6 +198,8 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
 
     private void storePreferences() {
         SharedPrefs.storeString(context, SharedPrefs.KEY_COINS_WIDGET, coinsToObserve.toString());
+
+
         Log.e("PREFERENCES", "Coins Stored");
         Toast.makeText(this, "Coins Stored", Toast.LENGTH_SHORT).show();
     }
@@ -221,7 +210,16 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
         if( !storedPreferences.isEmpty()) {
 
             // coinsToObserve = //TODO assign value of preferences
+            Type listType = new TypeToken<ArrayList<String>>() {
+            }.getType();
+
+            storedPreferences = parseToArray(storedPreferences);
             Log.e("PREFERENCES", storedPreferences);
+
+            coinsToObserve = (new Gson()).fromJson(storedPreferences, listType);
+
+            Log.e("PREFERENCES", storedPreferences);
+            //Log.e("PREFERENCES-COIN", coinsToObserve.toString());
         }
 
         Log.e("PREFERENCES", "Coins Restored");
@@ -236,6 +234,32 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
 
         Log.e("LOADED-SERIALCOINS", serialCoins);
         Log.e("LOAD_COINS", coins.toString());
+    }
+
+    private String parseToArray(String str) {
+        if ( str.startsWith("{") && str.endsWith("}")) {
+            str = str.substring(1, str.length()-1);
+            str = "[{" + str + "}]";
+        }
+        str = str.substring(1, str.length()-1);
+
+        str = "[" + str + "]";
+
+        return str;
+    }
+
+    private String parseToJson(String str) {
+        if ( str.startsWith("[") && str.endsWith("]")) {
+            str = str.substring(1, str.length()-1);
+            str = "{" + str + "}";
+        }
+        JSONObject paramObject = new JSONObject();
+        try {
+            paramObject.put("toObserve", str);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return str;
     }
 }
 
