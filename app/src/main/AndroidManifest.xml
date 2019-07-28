@@ -22,7 +22,7 @@
                 android:resource="@xml/personalizable_coin_list_widget_info" />
         </receiver>
 
-        <activity android:name=".home_widget.personalizable_coin_list_widgetConfigureActivity">
+        <activity android:name=".home_widget.personalizableCoinListWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

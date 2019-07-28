@@ -15,11 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -33,7 +29,7 @@ import giovanni.tradingtoolkit.marketprices.CoinsListAdapter;
 /**
  * The configuration screen for the {@link personalizable_coin_list_widget personalizable_coin_list_widget} AppWidget.
  */
-public class personalizable_coin_list_widgetConfigureActivity extends Activity {
+public class personalizableCoinListWidgetConfigureActivity extends Activity {
 
     //  private static final String PREFS_NAME = "giovanni.tradingtoolkit.home_widget.personalizable_coin_list_widget";
     // private static final String PREF_PREFIX_KEY = "appwidget_";
@@ -43,14 +39,19 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
 
     RecyclerView recyclerView;
     private List<Coin> coins;
-    private List<Coin> coinsToObserve;
+    private ArrayList<String> coinsToObserve;
     private ArrayList<Coin> filteredList;
     private Context context;
     private CoinsListAdapter.CoinItemListener itemListener;
-
-    public personalizable_coin_list_widgetConfigureActivity() {
-        super();
-    }
+    View.OnClickListener addCoinBtnClickListener = v -> {
+        String requested_coin = textArea.getText().toString();
+        filter(requested_coin);
+        if (filteredList.size() != 1) {
+            makeToast("Insert correct name or select once from list");
+        } else {
+            setToObserve(filteredList.get(SELECTED_COIN).getSymbol());
+        }
+    };
 
 //    // Write the prefix to the SharedPreferences object for this widget
 //    static void saveTitlePref(Context context, int appWidgetId, String text) {
@@ -95,15 +96,9 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
         finish();
     };
 
-    View.OnClickListener addCoinBtnClickListener = v -> {
-        String requested_coin = textArea.getText().toString();
-        filter(requested_coin);
-        if (filteredList.size() != 1) {
-            makeToast("Insert correct name or select once from list");
-        } else {
-            setToObserve(filteredList.get(SELECTED_COIN));
-        }
-    };
+    public personalizableCoinListWidgetConfigureActivity() {
+        super();
+    }
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -114,7 +109,7 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
         setResult(RESULT_CANCELED);
         setContentView(R.layout.personalizable_coin_list_widget_configure);
 
-        context = personalizable_coin_list_widgetConfigureActivity.this;
+        context = personalizableCoinListWidgetConfigureActivity.this;
         textArea = (EditText) findViewById(R.id.appwidget_text);
         recyclerView = (RecyclerView) findViewById(R.id.search_view);
         findViewById(R.id.add_coin_button).setOnClickListener(addCoinBtnClickListener);
@@ -155,13 +150,24 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
 
         itemListener = coinSymbol -> {
             Log.e("ITEM SELECTED", coinSymbol);
-            filter(coinSymbol);
-            if (filteredList.size() == 1){
-                setToObserve(filteredList.get(SELECTED_COIN));
+            if (coinsToObserve.contains(coinSymbol)) {
+                makeToast("Coin is already observed");
+            } else {
+                setToObserve(coinSymbol);
+//                filter(coinSymbol);
+//                if (filteredList.size() == 1) {
+//                    setToObserve(filteredList.get(SELECTED_COIN).getSymbol());
+//                } else {
+//                    for (int i = 0; i < filteredList.size(); i++) {
+//                        if (filteredList.get(i).toString().equals(coinSymbol)) {
+//                            setToObserve(filteredList.get(i).getSymbol());
+//                        }
+//                    }
+//                }
             }
         };
 
-        // textArea.setText(loadTitlePref(personalizable_coin_list_widgetConfigureActivity.this, mAppWidgetId));
+        // textArea.setText(loadTitlePref(personalizableCoinListWidgetConfigureActivity.this, mAppWidgetId));
     }
 
     private void filter(String text) {
@@ -172,7 +178,7 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
             coinName = (coin.getName()).toLowerCase();
             coinSymbol = (coin.getSymbol()).toLowerCase();
 
-            if (coinName.contains(text.toLowerCase()) | coinSymbol.contains(text.toLowerCase())) {
+            if (coinName.contains(text.toLowerCase()) || coinSymbol.contains(text.toLowerCase())) {
                 filteredList.add(coin);
 
                 Log.e("-----Coin: ", coin.toString() + " Symbol: " + coin.getSymbol() + " Name: " + coin.getName());
@@ -184,11 +190,16 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
     }
 
-    private void setToObserve(Coin coin) {
-        coinsToObserve.add(coin);
-        makeToast("Coin added to Observer" + coin);
+    private void setToObserve(String coinSym) {
+        if (null == coinsToObserve) {
+            Log.d("COINSNULL", "null");
+        }
+        coinsToObserve.add(coinSym);
+        makeToast("Coin added to Observer" + coinSym);
 
-        for (int i = 0; i < coinsToObserve.size(); i++) {Log.e("COINS TO OBSERVE", coinsToObserve.get(coinsToObserve.size() - i - 1).toString()); }
+        for (int i = 0; i < coinsToObserve.size(); i++) {
+            Log.e("COINS TO OBSERVE", coinsToObserve.get(coinsToObserve.size() - i - 1));
+        }
     }
 
     private void makeToast(String text_content) {
@@ -197,31 +208,47 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
     }
 
     private void storePreferences() {
-        SharedPrefs.storeString(context, SharedPrefs.KEY_COINS_WIDGET, coinsToObserve.toString());
+        Log.e("PREFERENCES", coinsToObserve.toString());
 
+//        if (coinsToObserve.get(0).equals("[]")) {
+//            coinsToObserve.remove(0);
+//        }
 
-        Log.e("PREFERENCES", "Coins Stored");
-        Toast.makeText(this, "Coins Stored", Toast.LENGTH_SHORT).show();
+        SharedPrefs.storeString(context, SharedPrefs.KEY_COINS_WIDGET, "");
+        for (int i = 0; i < coinsToObserve.size(); i++) {
+            String toStore = coinsToObserve.get(i);
+            String storedCoins = SharedPrefs.restoreString(this, SharedPrefs.KEY_COINS_WIDGET);
+            if (storedCoins != null && !storedCoins.isEmpty()) {
+                SharedPrefs.storeString(context, SharedPrefs.KEY_COINS_WIDGET, storedCoins + "," + toStore);
+            } else {
+                SharedPrefs.storeString(context, SharedPrefs.KEY_COINS_WIDGET, toStore);
+            }
+
+            // SharedPrefs.storeString(context, SharedPrefs.KEY_COINS_WIDGET, ""); //TODO ELIMINARE
+
+            Log.e("PREFERENCES", coinsToObserve.toString());
+            Toast.makeText(this, "Coins Stored", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void restorePreferences() {
+        coinsToObserve = new ArrayList<>();
         String storedPreferences = SharedPrefs.restoreString(context, SharedPrefs.KEY_COINS_WIDGET);
 
-        if( !storedPreferences.isEmpty()) {
+        if (!storedPreferences.isEmpty()) {
 
-            // coinsToObserve = //TODO assign value of preferences
-            Type listType = new TypeToken<ArrayList<String>>() {
-            }.getType();
+            //storedPreferences = storedPreferences.substring(1, storedPreferences.length() - 1);
+            String[] parts = storedPreferences.split(" ,");
 
-            storedPreferences = parseToArray(storedPreferences);
-            Log.e("PREFERENCES", storedPreferences);
+            for (String coinSymbol : parts) {
+                Log.e("PREFERENCES", coinSymbol);
+                coinsToObserve.add(coinSymbol);
+            }
 
-            coinsToObserve = (new Gson()).fromJson(storedPreferences, listType);
+            Log.e("PREFERENCES-Stored", parts.toString());
+            Log.e("PREFERENCES-Restored", coinsToObserve.toString());
 
-            Log.e("PREFERENCES", storedPreferences);
-            //Log.e("PREFERENCES-COIN", coinsToObserve.toString());
         }
-
         Log.e("PREFERENCES", "Coins Restored");
         Toast.makeText(this, "Coins Restored", Toast.LENGTH_SHORT).show();
     }
@@ -234,32 +261,6 @@ public class personalizable_coin_list_widgetConfigureActivity extends Activity {
 
         Log.e("LOADED-SERIALCOINS", serialCoins);
         Log.e("LOAD_COINS", coins.toString());
-    }
-
-    private String parseToArray(String str) {
-        if ( str.startsWith("{") && str.endsWith("}")) {
-            str = str.substring(1, str.length()-1);
-            str = "[{" + str + "}]";
-        }
-        str = str.substring(1, str.length()-1);
-
-        str = "[" + str + "]";
-
-        return str;
-    }
-
-    private String parseToJson(String str) {
-        if ( str.startsWith("[") && str.endsWith("]")) {
-            str = str.substring(1, str.length()-1);
-            str = "{" + str + "}";
-        }
-        JSONObject paramObject = new JSONObject();
-        try {
-            paramObject.put("toObserve", str);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return str;
     }
 }
 

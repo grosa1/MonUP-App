@@ -3,11 +3,8 @@ package giovanni.tradingtoolkit.home_widget;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
-import android.widget.ListView;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,11 +16,10 @@ import java.util.List;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.Coin;
 import giovanni.tradingtoolkit.main.SharedPrefs;
-import giovanni.tradingtoolkit.marketprices.CoinsListAdapter;
 
 /**
  * Implementation of App Widget functionality.
- * App Widget Configuration implemented in {@link personalizable_coin_list_widgetConfigureActivity personalizable_coin_list_widgetConfigureActivity}
+ * App Widget Configuration implemented in {@link personalizableCoinListWidgetConfigureActivity personalizableCoinListWidgetConfigureActivity}
  */
 public class personalizable_coin_list_widget extends AppWidgetProvider {
 
@@ -33,7 +29,7 @@ public class personalizable_coin_list_widget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-       //  CharSequence widgetText = personalizable_coin_list_widgetConfigureActivity.loadTitlePref(context, appWidgetId);
+        //  CharSequence widgetText = personalizableCoinListWidgetConfigureActivity.loadTitlePref(context, appWidgetId);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.personalizable_coin_list_widget);
        //  views.setTextViewText(R.id.appwidget_text, widgetText);
@@ -60,7 +56,7 @@ public class personalizable_coin_list_widget extends AppWidgetProvider {
     public void onDeleted(Context context, int[] appWidgetIds) {
         // When the user deletes the widget, delete the preference associated with it.
         // for (int appWidgetId : appWidgetIds) {
-        //    personalizable_coin_list_widgetConfigureActivity.deleteTitlePref(context, appWidgetId);
+        //    personalizableCoinListWidgetConfigureActivity.deleteTitlePref(context, appWidgetId);
         //}
     }
 
