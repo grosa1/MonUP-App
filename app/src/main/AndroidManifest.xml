@@ -12,7 +12,7 @@
         android:roundIcon="@drawable/trading_toolkit"
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
-        <receiver android:name=".home_widget.personalizable_coin_list_widget">
+        <receiver android:name=".home_widget.CoinListWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -22,7 +22,12 @@
                 android:resource="@xml/personalizable_coin_list_widget_info" />
         </receiver>
 
-        <activity android:name=".home_widget.personalizableCoinListWidgetConfigureActivity">
+        <service
+            android:name=".home_widget.WidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <activity android:name=".home_widget.CoinListWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

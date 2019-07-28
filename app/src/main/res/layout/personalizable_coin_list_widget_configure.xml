@@ -12,13 +12,29 @@
         android:gravity="center"
         android:text="@string/configure" />
 
-    <EditText
-        android:id="@+id/appwidget_text"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/search_coin"
-        android:autofillHints="@string/search_coin"/>
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <EditText
+            android:id="@+id/appwidget_text"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:autofillHints="@string/search_coin"
+            android:hint="@string/search_coin"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/add_coin_button"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="@string/add_coin" />
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_view"
@@ -27,14 +43,6 @@
         android:background="@color/colorPrimaryDark"
         android:padding="4dp"
         android:scrollbars="vertical" />
-
-    <Button
-        android:id="@+id/add_coin_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:text="@string/add_coin" />
 
     <Button
         android:id="@+id/add_widget_button"
