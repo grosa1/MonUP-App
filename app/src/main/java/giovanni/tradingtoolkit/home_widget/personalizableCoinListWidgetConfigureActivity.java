@@ -150,10 +150,8 @@ public class personalizableCoinListWidgetConfigureActivity extends Activity {
 
         itemListener = coinSymbol -> {
             Log.e("ITEM SELECTED", coinSymbol);
-            if (coinsToObserve.contains(coinSymbol)) {
-                makeToast("Coin is already observed");
-            } else {
-                setToObserve(coinSymbol);
+
+            setToObserve(coinSymbol);
 //                filter(coinSymbol);
 //                if (filteredList.size() == 1) {
 //                    setToObserve(filteredList.get(SELECTED_COIN).getSymbol());
@@ -164,8 +162,10 @@ public class personalizableCoinListWidgetConfigureActivity extends Activity {
 //                        }
 //                    }
 //                }
-            }
-        };
+
+        }
+
+        ;
 
         // textArea.setText(loadTitlePref(personalizableCoinListWidgetConfigureActivity.this, mAppWidgetId));
     }
@@ -190,12 +190,13 @@ public class personalizableCoinListWidgetConfigureActivity extends Activity {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
     }
 
-    private void setToObserve(String coinSym) {
-        if (null == coinsToObserve) {
-            Log.d("COINSNULL", "null");
+    private void setToObserve(String coinSymbol) {
+        if (!coinsToObserve.toString().contains(coinSymbol)) {
+            coinsToObserve.add(coinSymbol);
+            makeToast("Coin added to Observer" + coinSymbol);
+        } else {
+            makeToast("Coin is already observed");
         }
-        coinsToObserve.add(coinSym);
-        makeToast("Coin added to Observer" + coinSym);
 
         for (int i = 0; i < coinsToObserve.size(); i++) {
             Log.e("COINS TO OBSERVE", coinsToObserve.get(coinsToObserve.size() - i - 1));
@@ -224,7 +225,7 @@ public class personalizableCoinListWidgetConfigureActivity extends Activity {
                 SharedPrefs.storeString(context, SharedPrefs.KEY_COINS_WIDGET, toStore);
             }
 
-            // SharedPrefs.storeString(context, SharedPrefs.KEY_COINS_WIDGET, ""); //TODO ELIMINARE
+            //SharedPrefs.storeString(context, SharedPrefs.KEY_COINS_WIDGET, ""); //TODO ELIMINARE
 
             Log.e("PREFERENCES", coinsToObserve.toString());
             Toast.makeText(this, "Coins Stored", Toast.LENGTH_SHORT).show();

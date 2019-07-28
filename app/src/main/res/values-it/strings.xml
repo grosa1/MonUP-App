@@ -23,6 +23,6 @@
     <string name="appwidget_text">CryptoTrading</string>
     <string name="configure">Configura</string>
     <string name="add_widget">Aggiungi widget</string>
-    <string name="add_coin">Aggiungi coin</string>
+    <string name="add_coin">Aggiungi</string>
     <string name="search_coin">Cerca Coin</string>
 </resources>
