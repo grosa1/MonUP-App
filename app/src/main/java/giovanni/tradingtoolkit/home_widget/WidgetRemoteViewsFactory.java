@@ -107,7 +107,6 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
         remoteView.setTextViewText(R.id.coin_name, coinItem.getName());
         remoteView.setTextViewText(R.id.list_position, "TODO");
         // remoteView.setTextViewText(R.id.icon, "TODO");
-
         remoteView.setTextViewText(R.id.price, coinItem.getPriceBtc());
         remoteView.setTextViewText(R.id.percentage_variation_1h, Float.toString((float)coinItem.getPercentChange1h()));
         remoteView.setTextViewText(R.id.percentage_variation_1d, Float.toString((float)coinItem.getPercentChange24h()));
