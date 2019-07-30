@@ -7,12 +7,12 @@ import android.graphics.Color;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,6 +53,7 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
         //TODO: Refresh dati
         for (int i = 0; i < coinsToShow.size(); i++) {
             getViewAt(i);
+
             Log.d("WIDGETUPDATED", "POSITION: " + i);
         }
     }
@@ -96,7 +97,10 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
         rv.setTextViewText(R.id.coin_name, coinItem.getName());
         rv.setTextViewText(R.id.list_position, "TODO");
         // rv.setTextViewText(R.id.icon, "TODO");
-        rv.setTextViewText(R.id.price, Double.toString(coinItem.getPriceUsd()));
+        DecimalFormat decimalFormat = new DecimalFormat("###,###.###");
+        String numberAsString = decimalFormat.format(coinItem.getPriceUsd());
+
+        rv.setTextViewText(R.id.price, numberAsString);
         rv.setTextViewText(R.id.percentage_variation_1h, Double.toString(coinItem.getPercentChange1h()));
         rv.setTextViewText(R.id.percentage_variation_1d, Double.toString(coinItem.getPercentChange24h()));
         rv.setTextViewText(R.id.percentage_variation_1w, Double.toString(coinItem.getPercentChange7d()));
