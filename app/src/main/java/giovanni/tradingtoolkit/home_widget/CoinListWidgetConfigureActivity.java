@@ -43,7 +43,6 @@ public class CoinListWidgetConfigureActivity extends Activity {
     private Context context;
     private CoinsListAdapter.CoinItemListener itemListener;
 
-
     View.OnClickListener addCoinBtnClickListener = v -> {
         String requested_coin = textArea.getText().toString();
         filter(requested_coin);

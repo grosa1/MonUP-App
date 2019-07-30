@@ -3,9 +3,11 @@ package giovanni.tradingtoolkit.home_widget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -49,6 +51,10 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
 
     private void updateWidgetListView() {
         //TODO: Refresh dati
+        for (int i = 0; i < coinsToShow.size(); i++) {
+            getViewAt(i);
+            Log.d("WIDGETUPDATED", "POSITION: " + i);
+        }
     }
 
     @Override
@@ -79,23 +85,50 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
         Intent intent = new Intent(context, coinsListAdapter.getClass());
         Coin coinItem = coinsToShow.get(position);
 
-        remoteView = setCoinInfo(remoteView, coinItem);
+        remoteView = setItemInfo(remoteView, coinItem, position);
         remoteView.setRemoteAdapter(R.id.list, intent);
 
         return remoteView;
     }
 
-    private RemoteViews setCoinInfo(RemoteViews rv, Coin coinItem) {
+    private RemoteViews setItemInfo(RemoteViews rv, Coin coinItem, int position) {
 
         rv.setTextViewText(R.id.coin_name, coinItem.getName());
         rv.setTextViewText(R.id.list_position, "TODO");
         // rv.setTextViewText(R.id.icon, "TODO");
-        rv.setTextViewText(R.id.price, coinItem.getPriceBtc());
-        rv.setTextViewText(R.id.percentage_variation_1h, Float.toString((float) coinItem.getPercentChange1h()));
-        rv.setTextViewText(R.id.percentage_variation_1d, Float.toString((float) coinItem.getPercentChange24h()));
-        rv.setTextViewText(R.id.percentage_variation_1w, Float.toString((float) coinItem.getPercentChange7d()));
+        rv.setTextViewText(R.id.price, Double.toString(coinItem.getPriceUsd()));
+        rv.setTextViewText(R.id.percentage_variation_1h, Double.toString(coinItem.getPercentChange1h()));
+        rv.setTextViewText(R.id.percentage_variation_1d, Double.toString(coinItem.getPercentChange24h()));
+        rv.setTextViewText(R.id.percentage_variation_1w, Double.toString(coinItem.getPercentChange7d()));
 
+        rv.setTextColor(R.id.percentage_variation_1d, setPercentageColor(coinItem.getPercentChange24h()));
+        rv.setTextColor(R.id.percentage_variation_1w, setPercentageColor(coinItem.getPercentChange7d()));
+
+        if (setPercentageColor(coinItem.getPercentChange1h()) == Color.GREEN) {
+
+            rv.setTextColor(R.id.percentage_variation_1h, Color.GREEN);
+            rv.setTextColor(R.id.price, Color.GREEN);
+        } else {
+
+            rv.setTextColor(R.id.percentage_variation_1h, Color.RED);
+            rv.setTextColor(R.id.price, Color.RED);
+        }
+
+        if (position % 2 == 0) {
+            rv.setInt(R.id.coin_list_item, "setBackgroundColor", Color.GRAY);
+        } else {
+            rv.setInt(R.id.coin_list_item, "setBackgroundColor", Color.DKGRAY);
+        }
         return rv;
+    }
+
+    private int setPercentageColor(Double value) {
+
+        if (value >= 0) {
+            return Color.GREEN;
+        } else {
+            return Color.RED;
+        }
     }
 
     @Override

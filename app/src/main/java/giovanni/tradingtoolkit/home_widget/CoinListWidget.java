@@ -48,6 +48,7 @@ public class CoinListWidget extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list);
     }
 
     @Override
