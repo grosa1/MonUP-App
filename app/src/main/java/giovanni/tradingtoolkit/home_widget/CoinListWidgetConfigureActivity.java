@@ -137,7 +137,6 @@ public class CoinListWidgetConfigureActivity extends Activity {
             coinSymbol = (coin.getSymbol()).toLowerCase();
             if (coinName.contains(text.toLowerCase()) || coinSymbol.contains(text.toLowerCase())) {
                 filteredList.add(coin);
-                Log.e("-----Coin: ", coin.toString() + " Symbol: " + coinSymbol + " Name: " + coinName);
             }
         }
         CoinsListAdapter coinsListAdapter = new CoinsListAdapter(context, coins, itemListener);
@@ -149,13 +148,9 @@ public class CoinListWidgetConfigureActivity extends Activity {
     private void setToObserve(String coinSymbol) {
         if (!coinsToObserve.toString().contains(coinSymbol)) {
             coinsToObserve.add(coinSymbol);
-            makeToast("Coin added to Observer" + coinSymbol);
+            makeToast("Coin added to the Observer: " + coinSymbol);
         } else {
-            makeToast("Coin is already observed");
-        }
-        //TODO: Remove (Testing)
-        for (int i = 0; i < coinsToObserve.size(); i++) {
-            Log.e("COINS TO OBSERVE", coinsToObserve.get(coinsToObserve.size() - i - 1));
+            makeToast("Coin is already in the Observer");
         }
     }
 
