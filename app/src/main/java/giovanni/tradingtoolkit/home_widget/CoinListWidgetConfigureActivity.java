@@ -19,6 +19,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import giovanni.tradingtoolkit.R;
@@ -31,8 +32,6 @@ import giovanni.tradingtoolkit.marketprices.CoinsListAdapter;
  */
 public class CoinListWidgetConfigureActivity extends Activity {
 
-    //  private static final String PREFS_NAME = "giovanni.tradingtoolkit.home_widget.CoinListWidget";
-    // private static final String PREF_PREFIX_KEY = "appwidget_";
     private static final int SELECTED_COIN = 0;
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     EditText textArea;
@@ -55,36 +54,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
         }
     };
 
-//    // Write the prefix to the SharedPreferences object for this widget
-//    static void saveTitlePref(Context context, int appWidgetId, String text) {
-//        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
-//        prefs.putString(PREF_PREFIX_KEY + appWidgetId, text);
-//        prefs.apply();
-//    }
-//
-//    // Read the prefix from the SharedPreferences object for this widget.
-//    // If there is no preference saved, get the default from a resource
-//    static String loadTitlePref(Context context, int appWidgetId) {
-//        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-//        String titleValue = prefs.getString(PREF_PREFIX_KEY + appWidgetId, null);
-//        if (titleValue != null) {
-//            return titleValue;
-//        } else {
-//            return context.getString(R.string.appwidget_text);
-//        }
-//    }
-//
-//    static void deleteTitlePref(Context context, int appWidgetId) {
-//        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
-//        prefs.remove(PREF_PREFIX_KEY + appWidgetId);
-//        prefs.apply();
-//    }
-
     View.OnClickListener addWidgetBtnClickListener = v -> {
-        // When the button is clicked, store the string locally
-        //  String widgetText = textArea.getText().toString();
-        //  saveTitlePref(context, mAppWidgetId, widgetText);
-        //  makeToast(widgetText);
 
         storePreferences();
         // It is the responsibility of the configuration activity to update the app widget
@@ -114,6 +84,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
         context = CoinListWidgetConfigureActivity.this;
         textArea = (EditText) findViewById(R.id.appwidget_text);
         recyclerView = (RecyclerView) findViewById(R.id.search_view);
+
         findViewById(R.id.add_coin_button).setOnClickListener(addCoinBtnClickListener);
         findViewById(R.id.add_widget_button).setOnClickListener(addWidgetBtnClickListener);
         loadSerialCoins();
@@ -154,18 +125,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
             Log.e("ITEM SELECTED", coinSymbol);
 
             setToObserve(coinSymbol);
-//                filter(coinSymbol);
-//                if (filteredList.size() == 1) {
-//                    setToObserve(filteredList.get(SELECTED_COIN).getSymbol());
-//                } else {
-//                    for (int i = 0; i < filteredList.size(); i++) {
-//                        if (filteredList.get(i).toString().equals(coinSymbol)) {
-//                            setToObserve(filteredList.get(i).getSymbol());
-//                        }
-//                    }
-//                }
         };
-        // textArea.setText(loadTitlePref(CoinListWidgetConfigureActivity.this, mAppWidgetId));
     }
 
     private void filter(String text) {
@@ -193,6 +153,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
         } else {
             makeToast("Coin is already observed");
         }
+        //TODO: Remove (Testing)
         for (int i = 0; i < coinsToObserve.size(); i++) {
             Log.e("COINS TO OBSERVE", coinsToObserve.get(coinsToObserve.size() - i - 1));
         }
@@ -204,11 +165,6 @@ public class CoinListWidgetConfigureActivity extends Activity {
     }
 
     private void storePreferences() {
-        Log.e("PREFERENCES", coinsToObserve.toString());
-
-//        if (coinsToObserve.get(0).equals("[]")) {
-//            coinsToObserve.remove(0);
-//        }
 
         SharedPrefs.storeString(context, SharedPrefs.KEY_COINS_WIDGET, "");
         for (int i = 0; i < coinsToObserve.size(); i++) {
@@ -219,11 +175,6 @@ public class CoinListWidgetConfigureActivity extends Activity {
             } else {
                 SharedPrefs.storeString(context, SharedPrefs.KEY_COINS_WIDGET, toStore);
             }
-
-            //SharedPrefs.storeString(context, SharedPrefs.KEY_COINS_WIDGET, ""); //TODO ELIMINARE
-
-            Log.e("PREFERENCES", coinsToObserve.toString());
-            Toast.makeText(this, "Coins Stored", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -233,14 +184,8 @@ public class CoinListWidgetConfigureActivity extends Activity {
 
         if (!storedPreferences.isEmpty()) {
 
-            //storedPreferences = storedPreferences.substring(1, storedPreferences.length() - 1);
             String[] parts = storedPreferences.split(" ,");
-
-            for (String coinSymbol : parts) {
-                Log.e("PREFERENCES", coinSymbol);
-                coinsToObserve.add(coinSymbol);
-            }
-            Log.e("PREFERENCES-Restored", coinsToObserve.toString());
+            coinsToObserve.addAll(Arrays.asList(parts));
         }
     }
 
@@ -249,8 +194,6 @@ public class CoinListWidgetConfigureActivity extends Activity {
         Type listType = new TypeToken<ArrayList<Coin>>() {
         }.getType();
         coins = (new Gson()).fromJson(serialCoins, listType);
-
-        Log.e("LOAD_COINS", coins.toString());
     }
 }
 
