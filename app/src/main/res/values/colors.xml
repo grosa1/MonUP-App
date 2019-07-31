@@ -12,5 +12,13 @@
     <color name="materialWhite">#FAFAFA</color>
     <color name="lightGreyMaterial">#E0E0E0</color>
 
-    <color name="widgetTextColor">#ffffff</color>
+    <color name="widgetTextColor">#FFFFFF</color>
+    <color name="widgetPrimaryColor">#7CB342</color>
+    <color name="widgetSecondaryColor">#689F38</color>
+
+    <color name="widgetItemPrimaryColor">#FAFAFA</color>
+    <color name="widgetItemSecondaryColor">#E0E0E0</color>
+    <color name="widgetRed">#FF1744</color>
+    <color name="widgetGreen">#689F38</color>
+
 </resources>

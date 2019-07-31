@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:configure="giovanni.tradingtoolkit.home_widget.CoinListWidgetConfigureActivity"
-    android:initialKeyguardLayout="@layout/personalizable_coin_list_widget"
-    android:initialLayout="@layout/personalizable_coin_list_widget"
+    android:initialKeyguardLayout="@layout/widget_coin_list"
+    android:initialLayout="@layout/widget_coin_list"
     android:minWidth="320dp"
     android:minHeight="180dp"
     android:previewImage="@drawable/example_appwidget_preview"

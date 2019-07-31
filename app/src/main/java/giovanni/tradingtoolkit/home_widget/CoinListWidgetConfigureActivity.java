@@ -78,7 +78,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
         // Set the result to CANCELED.  This will cause the widget host to cancel
         // out of the widget placement if the user presses the back button.
         setResult(RESULT_CANCELED);
-        setContentView(R.layout.personalizable_coin_list_widget_configure);
+        setContentView(R.layout.widget_coin_list_configure);
 
         context = CoinListWidgetConfigureActivity.this;
         textArea = (EditText) findViewById(R.id.appwidget_text);

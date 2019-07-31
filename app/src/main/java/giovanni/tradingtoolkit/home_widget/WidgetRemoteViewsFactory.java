@@ -78,7 +78,7 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     public RemoteViews getViewAt(int position) {
         Log.d("WidgetCreatingView", "WidgetCreatingView");
         RemoteViews remoteView = new RemoteViews(context.getPackageName(),
-                R.layout.coin_list_item);
+                R.layout.widget_coin_list_item);
 
         CoinsListAdapter coinsListAdapter = new CoinsListAdapter(context, coinsToShow, itemListener);
         coinsListAdapter.filterList(coinsToShow);
@@ -108,20 +108,20 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
         rv.setTextColor(R.id.percentage_variation_1d, setPercentageColor(coinItem.getPercentChange24h()));
         rv.setTextColor(R.id.percentage_variation_1w, setPercentageColor(coinItem.getPercentChange7d()));
 
-        if (setPercentageColor(coinItem.getPercentChange1h()) == Color.GREEN) {
+        if (setPercentageColor(coinItem.getPercentChange1h()) == context.getResources().getColor(R.color.widgetGreen)) {
 
-            rv.setTextColor(R.id.percentage_variation_1h, Color.GREEN);
-            rv.setTextColor(R.id.price, Color.GREEN);
+            rv.setTextColor(R.id.percentage_variation_1h, context.getResources().getColor(R.color.widgetGreen));
+            rv.setTextColor(R.id.price, context.getResources().getColor(R.color.widgetGreen));
         } else {
 
-            rv.setTextColor(R.id.percentage_variation_1h, Color.RED);
-            rv.setTextColor(R.id.price, Color.RED);
+            rv.setTextColor(R.id.percentage_variation_1h, context.getResources().getColor(R.color.widgetRed));
+            rv.setTextColor(R.id.price, context.getResources().getColor(R.color.widgetRed));
         }
 
         if (position % 2 == 0) {
-            rv.setInt(R.id.coin_list_item, "setBackgroundColor", Color.GRAY);
+            rv.setInt(R.id.coin_list_item, "setBackgroundColor", context.getResources().getColor(R.color.widgetItemPrimaryColor));
         } else {
-            rv.setInt(R.id.coin_list_item, "setBackgroundColor", Color.DKGRAY);
+            rv.setInt(R.id.coin_list_item, "setBackgroundColor", context.getResources().getColor(R.color.widgetItemSecondaryColor));
         }
         return rv;
     }
@@ -129,9 +129,9 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     private int setPercentageColor(Double value) {
 
         if (value >= 0) {
-            return Color.GREEN;
+            return context.getResources().getColor(R.color.widgetGreen);
         } else {
-            return Color.RED;
+            return context.getResources().getColor(R.color.widgetRed);
         }
     }
 
