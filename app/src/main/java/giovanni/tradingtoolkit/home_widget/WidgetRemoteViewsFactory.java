@@ -3,7 +3,6 @@ package giovanni.tradingtoolkit.home_widget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -36,6 +35,22 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
                 AppWidgetManager.INVALID_APPWIDGET_ID);
         Log.d("AppWidgetId", String.valueOf(appWidgetId));
 
+        viewInit();
+    }
+
+    private void updateWidgetListView() {
+
+        viewInit();
+
+        for (int i = 0; i < coinsToShow.size(); i++) {
+            getViewAt(i);
+
+            Log.d("WIDGETUPDATED", "POSITION: " + i);
+        }
+    }
+
+    private void viewInit() {
+
         loadSerialCoins(context);
         restorePreferences(context);
         getCoinsToShow();
@@ -47,15 +62,6 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
 
         CoinsListAdapter coinsListAdapter = new CoinsListAdapter(context, coinsToShow, itemListener);
         coinsListAdapter.filterList(coinsToShow);
-    }
-
-    private void updateWidgetListView() {
-        //TODO: Refresh dati
-        for (int i = 0; i < coinsToShow.size(); i++) {
-            getViewAt(i);
-
-            Log.d("WIDGETUPDATED", "POSITION: " + i);
-        }
     }
 
     @Override
@@ -97,13 +103,13 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
         rv.setTextViewText(R.id.coin_name, coinItem.getName());
         rv.setTextViewText(R.id.list_position, "TODO");
         // rv.setTextViewText(R.id.icon, "TODO");
-        DecimalFormat decimalFormat = new DecimalFormat("###,###.###");
+        DecimalFormat decimalFormat = new DecimalFormat("###,###.##");
         String numberAsString = decimalFormat.format(coinItem.getPriceUsd());
 
         rv.setTextViewText(R.id.price, numberAsString);
-        rv.setTextViewText(R.id.percentage_variation_1h, Double.toString(coinItem.getPercentChange1h()));
-        rv.setTextViewText(R.id.percentage_variation_1d, Double.toString(coinItem.getPercentChange24h()));
-        rv.setTextViewText(R.id.percentage_variation_1w, Double.toString(coinItem.getPercentChange7d()));
+        rv.setTextViewText(R.id.percentage_variation_1h, setPercentageText(coinItem.getPercentChange1h()));
+        rv.setTextViewText(R.id.percentage_variation_1d, setPercentageText(coinItem.getPercentChange24h()));
+        rv.setTextViewText(R.id.percentage_variation_1w, setPercentageText(coinItem.getPercentChange7d()));
 
         rv.setTextColor(R.id.percentage_variation_1d, setPercentageColor(coinItem.getPercentChange24h()));
         rv.setTextColor(R.id.percentage_variation_1w, setPercentageColor(coinItem.getPercentChange7d()));
@@ -135,34 +141,14 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
         }
     }
 
-    @Override
-    public int getViewTypeCount() {
-        // TODO Auto-generated method stub
-        return 1;
-    }
+    private String setPercentageText(Double value) {
 
-    @Override
-    public boolean hasStableIds() {
-        // TODO Auto-generated method stub
-        return false;
-    }
+        String finalValue = Double.toString(value);
 
-    @Override
-    public void onCreate() {
-        // TODO Auto-generated method stub
-        updateWidgetListView();
-    }
-
-    @Override
-    public void onDataSetChanged() {
-        // TODO Auto-generated method stub
-        updateWidgetListView();
-    }
-
-    @Override
-    public void onDestroy() {
-        // TODO Auto-generated method stub
-        coinsToShow.clear();
+        if (value >= 0) {
+            finalValue = "+" + finalValue;
+        }
+        return finalValue + "%";
     }
 
     private Coin getCoinBySymbol(String coinSymbol) {
@@ -207,5 +193,35 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
             String[] parts = storedPreferences.split(" ,");
             coinsToObserve.addAll(Arrays.asList(parts));
         }
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        // TODO Auto-generated method stub
+        return 1;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void onCreate() {
+        // TODO Auto-generated method stub
+        updateWidgetListView();
+    }
+
+    @Override
+    public void onDataSetChanged() {
+        // TODO Auto-generated method stub
+        updateWidgetListView();
+    }
+
+    @Override
+    public void onDestroy() {
+        // TODO Auto-generated method stub
+        coinsToShow.clear();
     }
 }
