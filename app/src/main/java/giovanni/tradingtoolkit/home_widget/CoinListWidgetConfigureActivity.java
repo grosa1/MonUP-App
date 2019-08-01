@@ -12,7 +12,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -20,7 +19,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import giovanni.tradingtoolkit.R;
@@ -37,10 +35,10 @@ public class CoinListWidgetConfigureActivity extends Activity {
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     EditText textArea;
     RecyclerView recyclerView;
-    RecyclerView observedCoinlistView;
+    RecyclerView observedCoinListView;
 
     private List<Coin> coins;
-    private ArrayList<String> coinsToObserve;
+    private String coinsToObserve;
     private ArrayList<Coin> filteredList;
     private ArrayList<Coin> coinsToShow;
     private Context context;
@@ -87,7 +85,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
         context = CoinListWidgetConfigureActivity.this;
         textArea = (EditText) findViewById(R.id.appwidget_text);
         recyclerView = (RecyclerView) findViewById(R.id.search_view);
-        observedCoinlistView = (RecyclerView) findViewById(R.id.coins_observed_view);
+        observedCoinListView = (RecyclerView) findViewById(R.id.coins_observed_view);
 
         findViewById(R.id.add_coin_button).setOnClickListener(addCoinBtnClickListener);
         findViewById(R.id.add_widget_button).setOnClickListener(addWidgetBtnClickListener);
@@ -126,18 +124,12 @@ public class CoinListWidgetConfigureActivity extends Activity {
                 filter(editable.toString());
             }
         });
-
-        itemListener = coinSymbol -> {
-            Log.e("ITEM SELECTED", coinSymbol);
-
-            setToObserve(coinSymbol);
-        };
     }
 
     private void loadObservedCoinListView() {
 
         coinsToShow = new ArrayList<>();
-        String[] coinsToFind = coinsToObserve.toString().split(",");
+        String[] coinsToFind = coinsToObserve.split(",");
 
         for (String coin : coinsToFind) {
             coin = coin.replace("[", "").replace("]", "");
@@ -149,21 +141,12 @@ public class CoinListWidgetConfigureActivity extends Activity {
             }
         }
 
-        removeCoinListener = coinSymbol -> {
-            Log.e("REMOVE COIN: ", coinSymbol);
-
-            removeCoinBySymbol(coinSymbol);
-            makeToast("Coin Removed");
-        };
-
-        CoinsListAdapter coinsListAdapter = new CoinsListAdapter(context, coinsToShow, removeCoinListener);
-        observedCoinlistView.setAdapter(coinsListAdapter);
-        observedCoinlistView.setLayoutManager(new LinearLayoutManager(context));
+        refreshObservedCoinRecycleView();
     }
 
     private void removeCoinBySymbol(String coinSymbol) {
 
-        String newPreferences = (coinsToObserve.get(0).replace(coinSymbol, "")).replace(",,", ",");
+        String newPreferences = (coinsToObserve.replace(coinSymbol, "")).replace(",,", ",");
 
         if (newPreferences.startsWith(",")) {
             newPreferences = newPreferences.substring(1);
@@ -173,8 +156,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
             newPreferences = newPreferences.substring(0, newPreferences.length() - 1);
         }
 
-        coinsToObserve.clear();
-        coinsToObserve.add(newPreferences);
+        coinsToObserve = newPreferences;
 
         storePreferences();
         restorePreferences();
@@ -201,15 +183,38 @@ public class CoinListWidgetConfigureActivity extends Activity {
                 filteredList.add(coin);
             }
         }
+        refreshSearchRecycleView();
+    }
+
+    private void refreshSearchRecycleView() {
+        itemListener = coinSymbol -> {
+            Log.e("ITEM SELECTED", coinSymbol);
+
+            setToObserve(coinSymbol);
+        };
+
         CoinsListAdapter coinsListAdapter = new CoinsListAdapter(context, coins, itemListener);
         coinsListAdapter.filterList(filteredList);
         recyclerView.setAdapter(coinsListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
     }
 
+    private void refreshObservedCoinRecycleView() {
+        removeCoinListener = coinSymbol -> {
+            Log.e("REMOVE COIN: ", coinSymbol);
+
+            removeCoinBySymbol(coinSymbol);
+            makeToast("Coin Removed");
+        };
+
+        CoinsListAdapter coinsListAdapter = new CoinsListAdapter(context, coinsToShow, removeCoinListener);
+        observedCoinListView.setAdapter(coinsListAdapter);
+        observedCoinListView.setLayoutManager(new LinearLayoutManager(context));
+    }
+
     private void setToObserve(String coinSymbol) {
-        if (!coinsToObserve.toString().contains(coinSymbol)) {
-            coinsToObserve.add(coinSymbol);
+        if (!coinsToObserve.contains(coinSymbol)) {
+            coinsToObserve = coinsToObserve + "," + coinSymbol.toUpperCase();
             makeToast("Coin added to the Observer: " + coinSymbol);
         } else {
             makeToast("Coin is already in the Observer");
@@ -223,26 +228,16 @@ public class CoinListWidgetConfigureActivity extends Activity {
 
     private void storePreferences() {
 
-        SharedPrefs.storeString(context, SharedPrefs.KEY_COINS_WIDGET, "");
-        for (int i = 0; i < coinsToObserve.size(); i++) {
-            String toStore = coinsToObserve.get(i);
-            String storedCoins = SharedPrefs.restoreString(this, SharedPrefs.KEY_COINS_WIDGET);
-            if (storedCoins != null && !storedCoins.isEmpty()) {
-                SharedPrefs.storeString(context, SharedPrefs.KEY_COINS_WIDGET, storedCoins + "," + toStore);
-            } else {
-                SharedPrefs.storeString(context, SharedPrefs.KEY_COINS_WIDGET, toStore);
-            }
+        if (coinsToObserve != null && !coinsToObserve.isEmpty()) {
+            SharedPrefs.storeString(context, SharedPrefs.KEY_COINS_WIDGET, coinsToObserve);
         }
     }
 
     private void restorePreferences() {
-        coinsToObserve = new ArrayList<>();
         String storedPreferences = SharedPrefs.restoreString(context, SharedPrefs.KEY_COINS_WIDGET);
 
-        if (!storedPreferences.isEmpty()) {
-
-            String[] parts = storedPreferences.split(" ,");
-            coinsToObserve.addAll(Arrays.asList(parts));
+        if (storedPreferences != null && !storedPreferences.isEmpty()) {
+            coinsToObserve = storedPreferences;
         }
     }
 

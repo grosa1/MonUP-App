@@ -25,7 +25,7 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     private Context context;
     private int appWidgetId;
     private ArrayList<Coin> coinsToShow;
-    private ArrayList<String> coinsToObserve;
+    private String coinsToObserve;
     private List<Coin> coins;
     private CoinsListAdapter.CoinItemListener itemListener;
 
@@ -163,12 +163,12 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
 
     private void getCoinsToShow() {
         coinsToShow = new ArrayList<>();
-        String[] coinsToFind = coinsToObserve.toString().split(",");
+        String[] coinsToFind = coinsToObserve.split(",");
 
         for (String coin : coinsToFind) {
             coin = coin.replace("[", "").replace("]", "");
 
-            if (!coin.isEmpty()) {
+            if (!coin.isEmpty() && (getCoinBySymbol(coin) != null)) {
                 Coin coinToAdd = getCoinBySymbol(coin);
                 assert coinToAdd != null;
                 coinsToShow.add(coinToAdd);
@@ -184,13 +184,10 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     }
 
     private void restorePreferences(Context context) {
-        coinsToObserve = new ArrayList<>();
         String storedPreferences = SharedPrefs.restoreString(context, SharedPrefs.KEY_COINS_WIDGET);
 
-        if (!storedPreferences.isEmpty()) {
-
-            String[] parts = storedPreferences.split(" ,");
-            coinsToObserve.addAll(Arrays.asList(parts));
+        if (storedPreferences != null && !storedPreferences.isEmpty()) {
+            coinsToObserve = storedPreferences;
         }
     }
 
@@ -221,6 +218,6 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     @Override
     public void onDestroy() {
         // TODO Auto-generated method stub
-        coinsToShow.clear();
+        //coinsToShow.clear();
     }
 }
