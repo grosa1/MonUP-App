@@ -44,9 +44,10 @@
 
     <!-- widget -->
     <string name="appwidget_text">CryptoTrading</string>
-    <string name="configure">Configure</string>
+    <string name="configure">Configure CryptoTrading Widget</string>
     <string name="add_widget">Add widget</string>
     <string name="add_coin">Add</string>
-    <string name="search_coin">Search Coin</string>
+    <string name="remove_coin">Click on a Coin to remove it or look for add another</string>
+    <string name="search_coin_hint">Search Coin</string>
 
 </resources>

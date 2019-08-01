@@ -155,7 +155,6 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
 
         for (Coin coin : coins) {
             if (coin.getSymbol().contains(coinSymbol)) {
-                Log.e("COIN-FOUND", coinSymbol);
                 return coin;
             }
         }

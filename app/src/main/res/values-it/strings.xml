@@ -24,5 +24,7 @@
     <string name="configure">Configura</string>
     <string name="add_widget">Aggiungi widget</string>
     <string name="add_coin">Aggiungi</string>
-    <string name="search_coin">Cerca Coin</string>
+    <string name="search_coin">Cerca e aggiungi nuove Coins</string>
+    <string name="remove_coin">Clicca su una Coin per rimuoverla o cercane una da aggiungere</string>
+    <string name="search_coin_hint">Cerca una Coin</string>
 </resources>

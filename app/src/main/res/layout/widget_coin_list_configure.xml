@@ -8,9 +8,22 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="2dp"
         android:gravity="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:padding="2dp"
         android:text="@string/configure" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="6dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:text="@string/remove_coin" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,8 +36,8 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="4"
-            android:autofillHints="@string/search_coin"
-            android:hint="@string/search_coin"
+            android:autofillHints="@string/search_coin_hint"
+            android:hint="@string/search_coin_hint"
             android:inputType="text" />
 
         <Button
@@ -39,9 +52,18 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
-        android:layout_height="362dp"
-        android:background="@color/colorPrimaryDark"
-        android:padding="4dp"
+        android:layout_height="160dp"
+        android:background="@color/widgetGreen"
+        android:padding="2dp"
+        android:scrollbars="vertical" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/coins_observed_view"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:background="@color/widgetRed"
+        android:layout_marginTop="12dp"
+        android:padding="2dp"
         android:scrollbars="vertical" />
 
     <Button
@@ -51,5 +73,4 @@
         android:layout_marginTop="8dp"
         android:layout_gravity="end"
         android:text="@string/add_widget" />
-
 </LinearLayout>

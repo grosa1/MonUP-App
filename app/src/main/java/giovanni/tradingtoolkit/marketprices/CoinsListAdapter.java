@@ -189,7 +189,6 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
     }
 
     public void filterList (ArrayList<Coin> filteredList) {
-        Log.e("ADAPTER", filteredList.toString());
         coins = filteredList;
         notifyDataSetChanged();
     }

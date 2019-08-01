@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -35,13 +36,16 @@ public class CoinListWidgetConfigureActivity extends Activity {
     private static final int SELECTED_COIN = 0;
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     EditText textArea;
-
     RecyclerView recyclerView;
+    RecyclerView observedCoinlistView;
+
     private List<Coin> coins;
     private ArrayList<String> coinsToObserve;
     private ArrayList<Coin> filteredList;
+    private ArrayList<Coin> coinsToShow;
     private Context context;
     private CoinsListAdapter.CoinItemListener itemListener;
+    private CoinsListAdapter.CoinItemListener removeCoinListener;
 
     View.OnClickListener addCoinBtnClickListener = v -> {
         String requested_coin = textArea.getText().toString();
@@ -83,11 +87,14 @@ public class CoinListWidgetConfigureActivity extends Activity {
         context = CoinListWidgetConfigureActivity.this;
         textArea = (EditText) findViewById(R.id.appwidget_text);
         recyclerView = (RecyclerView) findViewById(R.id.search_view);
+        observedCoinlistView = (RecyclerView) findViewById(R.id.coins_observed_view);
 
         findViewById(R.id.add_coin_button).setOnClickListener(addCoinBtnClickListener);
         findViewById(R.id.add_widget_button).setOnClickListener(addWidgetBtnClickListener);
         loadSerialCoins();
         restorePreferences();
+
+        loadObservedCoinListView();
 
         // Find the widget id from the intent.
         Intent intent = getIntent();
@@ -125,6 +132,62 @@ public class CoinListWidgetConfigureActivity extends Activity {
 
             setToObserve(coinSymbol);
         };
+    }
+
+    private void loadObservedCoinListView() {
+
+        coinsToShow = new ArrayList<>();
+        String[] coinsToFind = coinsToObserve.toString().split(",");
+
+        for (String coin : coinsToFind) {
+            coin = coin.replace("[", "").replace("]", "");
+
+            if (!coin.isEmpty()) {
+                Coin coinToAdd = getCoinBySymbol(coin);
+                assert coinToAdd != null;
+                coinsToShow.add(coinToAdd);
+            }
+        }
+
+        removeCoinListener = coinSymbol -> {
+            Log.e("REMOVE COIN: ", coinSymbol);
+
+            removeCoinBySymbol(coinSymbol);
+            makeToast("Coin Removed");
+        };
+
+        CoinsListAdapter coinsListAdapter = new CoinsListAdapter(context, coinsToShow, removeCoinListener);
+        observedCoinlistView.setAdapter(coinsListAdapter);
+        observedCoinlistView.setLayoutManager(new LinearLayoutManager(context));
+    }
+
+    private void removeCoinBySymbol(String coinSymbol) {
+
+        String newPreferences = (coinsToObserve.get(0).replace(coinSymbol, "")).replace(",,", ",");
+
+        if (newPreferences.startsWith(",")) {
+            newPreferences = newPreferences.substring(1);
+        }
+
+        if (newPreferences.endsWith(",")) {
+            newPreferences = newPreferences.substring(0, newPreferences.length() - 1);
+        }
+
+        coinsToObserve.clear();
+        coinsToObserve.add(newPreferences);
+
+        storePreferences();
+        restorePreferences();
+    }
+
+    private Coin getCoinBySymbol(String coinSymbol) {
+
+        for (Coin coin : coins) {
+            if (coin.getSymbol().contains(coinSymbol)) {
+                return coin;
+            }
+        }
+        return null;
     }
 
     private void filter(String text) {

@@ -50,7 +50,6 @@ public class CoinListWidget extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO Auto-generated method stub
         super.onReceive(context, intent);
 
         if (REFRESH_ON_CLICK.equals(intent.getAction())) {

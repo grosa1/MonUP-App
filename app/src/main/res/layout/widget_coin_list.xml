@@ -40,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="giovanni.tradingtoolkit.marketprices.CoinsFragment"
-        tools:listitem="@layout/coin_list_item"
+        tools:listitem="@layout/widget_coin_list_item"
         android:divider="@android:color/transparent"
         android:dividerHeight="0sp" />
 
