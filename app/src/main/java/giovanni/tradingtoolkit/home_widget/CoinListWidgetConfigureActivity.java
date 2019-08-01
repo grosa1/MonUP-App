@@ -32,6 +32,8 @@ import giovanni.tradingtoolkit.marketprices.CoinsListAdapter;
 public class CoinListWidgetConfigureActivity extends Activity {
 
     private static final int SELECTED_COIN = 0;
+    private static final int INVALID_WIDGET_ID = -1;
+
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     EditText textArea;
     RecyclerView recyclerView;
@@ -49,7 +51,8 @@ public class CoinListWidgetConfigureActivity extends Activity {
         String requested_coin = textArea.getText().toString();
         filter(requested_coin);
         if (filteredList.size() != 1) {
-            makeToast("Insert correct name or select once from list");
+            makeToast(getResources().getString(R.string.incorrect_coin_name));
+
         } else {
             setToObserve(filteredList.get(SELECTED_COIN).getSymbol());
         }
@@ -57,16 +60,30 @@ public class CoinListWidgetConfigureActivity extends Activity {
 
     View.OnClickListener addWidgetBtnClickListener = v -> {
 
-        storePreferences();
-        // It is the responsibility of the configuration activity to update the app widget
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        CoinListWidget.updateAppWidget(context, appWidgetManager, mAppWidgetId);
+        if (coinsToObserve.isEmpty()) {
+            makeToast(getResources().getString(R.string.no_coin_to_observe));
+        } else {
 
-        // Make sure we pass back the original appWidgetId
-        Intent resultValue = new Intent();
-        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-        setResult(RESULT_OK, resultValue);
-        finish();
+            if (getWidgetNumber() == INVALID_WIDGET_ID) {
+                storeWidgetNumber();
+
+                // It is the responsibility of the configuration activity to update the app widget
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+                CoinListWidget.updateAppWidget(context, appWidgetManager, getWidgetNumber());
+
+                // Make sure we pass back the original appWidgetId
+                Intent resultValue = new Intent();
+                resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, getWidgetNumber());
+                setResult(RESULT_OK, resultValue);
+                finish();
+            } else {
+
+                CoinListWidget.refresh(context);
+
+                makeToast("Widget updated");
+            }
+            storePreferences();
+        }
     };
 
     public CoinListWidgetConfigureActivity() {
@@ -100,6 +117,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
         if (extras != null) {
             mAppWidgetId = extras.getInt(
                     AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+            Log.e("APPWIDGET", "onCreate: " + mAppWidgetId);
         }
 
         // If this activity was started with an intent without an app widget ID, finish with an error.
@@ -151,7 +169,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
 
     private void removeCoinBySymbol(String coinSymbol) {
 
-        String newPreferences = (coinsToObserve.replace(coinSymbol, "")).replace(",,", ",");
+        String newPreferences = (coinsToObserve).replace(coinSymbol, "").replace(",,", ",");
 
         if (newPreferences.startsWith(",")) {
             newPreferences = newPreferences.substring(1);
@@ -161,10 +179,12 @@ public class CoinListWidgetConfigureActivity extends Activity {
             newPreferences = newPreferences.substring(0, newPreferences.length() - 1);
         }
 
+        if (coinsToObserve.equals(coinSymbol)) {
+            newPreferences = "";
+        }
         coinsToObserve = newPreferences;
-
         storePreferences();
-        restorePreferences();
+        loadObservedCoinListView();
     }
 
     private Coin getCoinBySymbol(String coinSymbol) {
@@ -193,9 +213,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
 
     private void refreshSearchRecycleView() {
         itemListener = coinSymbol -> {
-            Log.e("ITEM SELECTED", coinSymbol);
-
-            setToObserve(coinSymbol);
+            setToObserve(coinSymbol.toUpperCase());
         };
 
         CoinsListAdapter coinsListAdapter = new CoinsListAdapter(context, coins, itemListener);
@@ -206,8 +224,6 @@ public class CoinListWidgetConfigureActivity extends Activity {
 
     private void refreshObservedCoinRecycleView() {
         removeCoinListener = coinSymbol -> {
-            Log.e("REMOVE COIN: ", coinSymbol);
-
             removeCoinBySymbol(coinSymbol);
             makeToast("Coin Removed");
         };
@@ -220,6 +236,9 @@ public class CoinListWidgetConfigureActivity extends Activity {
     private void setToObserve(String coinSymbol) {
         if (!coinsToObserve.contains(coinSymbol)) {
             coinsToObserve = coinsToObserve + "," + coinSymbol.toUpperCase();
+
+            loadObservedCoinListView();
+            refreshObservedCoinRecycleView();
             makeToast("Coin added to the Observer: " + coinSymbol);
         } else {
             makeToast("Coin is already in the Observer");
@@ -227,21 +246,20 @@ public class CoinListWidgetConfigureActivity extends Activity {
     }
 
     private void makeToast(String text_content) {
-        Log.e("Toast", text_content);
         Toast.makeText(this, text_content, Toast.LENGTH_SHORT).show();
     }
 
     private void storePreferences() {
 
-        if (coinsToObserve != null && !coinsToObserve.isEmpty()) {
-            SharedPrefs.storeString(context, SharedPrefs.KEY_COINS_WIDGET, coinsToObserve);
+        if (coinsToObserve != null) {
+            SharedPrefs.storeString(context, SharedPrefs.KEY_WIDGET_COINS, coinsToObserve);
         }
     }
 
     private void restorePreferences() {
-        String storedPreferences = SharedPrefs.restoreString(context, SharedPrefs.KEY_COINS_WIDGET);
+        String storedPreferences = SharedPrefs.restoreString(context, SharedPrefs.KEY_WIDGET_COINS);
 
-        if (storedPreferences != null && !storedPreferences.isEmpty()) {
+        if (storedPreferences != null) {
             coinsToObserve = storedPreferences;
         } else {
             coinsToObserve = "";
@@ -253,6 +271,19 @@ public class CoinListWidgetConfigureActivity extends Activity {
         Type listType = new TypeToken<ArrayList<Coin>>() {
         }.getType();
         coins = (new Gson()).fromJson(serialCoins, listType);
+    }
+
+    private void storeWidgetNumber() {
+        SharedPrefs.storeString(context, SharedPrefs.KEY_WIDGET_ID, Integer.toString(mAppWidgetId));
+    }
+
+    private int getWidgetNumber() {
+        String widgetId = SharedPrefs.restoreString(context, SharedPrefs.KEY_WIDGET_ID);
+        if (widgetId != null && !widgetId.isEmpty()) {
+
+            return Integer.parseInt(widgetId);
+        }
+        return INVALID_WIDGET_ID;
     }
 }
 

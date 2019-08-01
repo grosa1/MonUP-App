@@ -6,9 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.RemoteViews;
-
 import giovanni.tradingtoolkit.R;
 
 /**
@@ -17,7 +15,7 @@ import giovanni.tradingtoolkit.R;
  */
 public class CoinListWidget extends AppWidgetProvider {
 
-    private static final String REFRESH_ON_CLICK = "refreshOnClickTag";
+    public static final String REFRESH_ON_CLICK = "refreshOnClickTag";
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
@@ -54,20 +52,7 @@ public class CoinListWidget extends AppWidgetProvider {
         super.onReceive(context, intent);
 
         if (REFRESH_ON_CLICK.equals(intent.getAction())) {
-
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            ComponentName watchWidget;
-            watchWidget = new ComponentName(context, CoinListWidget.class);
-            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_coin_list);
-            Intent i = new Intent(context, WidgetService.class);
-            int[] widgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, CoinListWidget.class));
-
-            views.setRemoteAdapter(R.id.widget_list, i);
-
-            appWidgetManager.notifyAppWidgetViewDataChanged(widgetIds, R.id.widget_list);
-
-            appWidgetManager.updateAppWidget(watchWidget, views);
-
+            refresh(context);
         }
     }
 
@@ -75,6 +60,19 @@ public class CoinListWidget extends AppWidgetProvider {
         Intent intent = new Intent(context, getClass());
         intent.setAction(action);
         return PendingIntent.getBroadcast(context, 0, intent, 0);
+    }
+
+    public static void refresh(Context context) {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        ComponentName watchWidget;
+        watchWidget = new ComponentName(context, CoinListWidget.class);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_coin_list);
+        Intent i = new Intent(context, WidgetService.class);
+        int[] widgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, CoinListWidget.class));
+
+        views.setRemoteAdapter(R.id.widget_list, i);
+        appWidgetManager.notifyAppWidgetViewDataChanged(widgetIds, R.id.widget_list);
+        appWidgetManager.updateAppWidget(watchWidget, views);
     }
 
     @Override

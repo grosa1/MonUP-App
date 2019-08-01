@@ -29,7 +29,7 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     private List<Coin> coins;
     private CoinsListAdapter.CoinItemListener itemListener;
 
-    public WidgetRemoteViewsFactory(Context context, Intent intent) {
+    WidgetRemoteViewsFactory(Context context, Intent intent) {
         this.context = context;
         appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -44,8 +44,6 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
 
         for (int i = 0; i < coinsToShow.size(); i++) {
             getViewAt(i);
-
-            Log.d("WIDGETUPDATED", "POSITION: " + i);
         }
     }
 
@@ -56,6 +54,7 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
         getCoinsToShow();
 
         itemListener = coinSymbol -> {
+            //TODO: handle click as in CoinListWidget for refresh and action at item click
             Log.e("ITEM SELECTED", coinSymbol);
 
         };
@@ -186,7 +185,7 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     }
 
     private void restorePreferences(Context context) {
-        String storedPreferences = SharedPrefs.restoreString(context, SharedPrefs.KEY_COINS_WIDGET);
+        String storedPreferences = SharedPrefs.restoreString(context, SharedPrefs.KEY_WIDGET_COINS);
 
         if (storedPreferences != null && !storedPreferences.isEmpty()) {
             coinsToObserve = storedPreferences;
@@ -195,31 +194,26 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
 
     @Override
     public int getViewTypeCount() {
-        // TODO Auto-generated method stub
         return 1;
     }
 
     @Override
     public boolean hasStableIds() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public void onCreate() {
-        // TODO Auto-generated method stub
         updateWidgetListView();
     }
 
     @Override
     public void onDataSetChanged() {
-        // TODO Auto-generated method stub
         updateWidgetListView();
     }
 
     @Override
     public void onDestroy() {
-        // TODO Auto-generated method stub
-        //coinsToShow.clear();
+        SharedPrefs.storeString(context, SharedPrefs.KEY_WIDGET_ID, "");
     }
 }

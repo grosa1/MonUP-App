@@ -18,9 +18,12 @@
     <string name="calculator_purchase_price">Prezzo di acquisto:</string>
     <string name="calculator_selling_price">Prezzo di vendita:</string>
     <string name="appwidget_text">CryptoTrading</string>
-    <string name="configure">Configura</string>
+    <string name="configure">Configura Widget</string>
     <string name="add_widget">Aggiungi widget</string>
     <string name="add_coin">Aggiungi</string>
-    <string name="remove_coin">Clicca su una Coin per rimuoverla o cercane una da aggiungere</string>
     <string name="search_coin_hint">Cerca una Coin</string>
+    <string name="coin_observed">Clicca su una Coin per rimuoverla:</string>
+    <string name="configure_description">Cerca una Coin da aggiungere</string>
+    <string name="no_coin_to_observe">Inserire almeno una Coin</string>
+    <string name="incorrect_coin_name">Inserire nome Coin corretto o selezionane una dalla lista</string>
 </resources>
