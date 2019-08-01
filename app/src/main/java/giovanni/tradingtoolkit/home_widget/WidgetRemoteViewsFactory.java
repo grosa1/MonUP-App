@@ -13,11 +13,11 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.Coin;
+import giovanni.tradingtoolkit.main.ResourcesLoader;
 import giovanni.tradingtoolkit.main.SharedPrefs;
 import giovanni.tradingtoolkit.marketprices.CoinsListAdapter;
 
@@ -100,16 +100,18 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
 
     private RemoteViews setItemInfo(RemoteViews rv, Coin coinItem, int position) {
 
-        rv.setTextViewText(R.id.coin_name, coinItem.getName());
-        rv.setTextViewText(R.id.list_position, "TODO");
-        // rv.setTextViewText(R.id.icon, "TODO");
+        int iconToLoad = ResourcesLoader.getResId(coinItem.getSymbol().toLowerCase());
         DecimalFormat decimalFormat = new DecimalFormat("###,###.##");
         String numberAsString = decimalFormat.format(coinItem.getPriceUsd());
 
+        rv.setTextViewText(R.id.coin_name, coinItem.getName() + ".png");
+        rv.setTextViewText(R.id.list_position, "TODO");
         rv.setTextViewText(R.id.price, numberAsString);
         rv.setTextViewText(R.id.percentage_variation_1h, setPercentageText(coinItem.getPercentChange1h()));
         rv.setTextViewText(R.id.percentage_variation_1d, setPercentageText(coinItem.getPercentChange24h()));
         rv.setTextViewText(R.id.percentage_variation_1w, setPercentageText(coinItem.getPercentChange7d()));
+
+        rv.setImageViewResource(R.id.icon, iconToLoad);
 
         rv.setTextColor(R.id.percentage_variation_1d, setPercentageColor(coinItem.getPercentChange24h()));
         rv.setTextColor(R.id.percentage_variation_1w, setPercentageColor(coinItem.getPercentChange7d()));

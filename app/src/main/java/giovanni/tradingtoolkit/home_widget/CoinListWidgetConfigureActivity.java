@@ -89,9 +89,9 @@ public class CoinListWidgetConfigureActivity extends Activity {
 
         findViewById(R.id.add_coin_button).setOnClickListener(addCoinBtnClickListener);
         findViewById(R.id.add_widget_button).setOnClickListener(addWidgetBtnClickListener);
+
         loadSerialCoins();
         restorePreferences();
-
         loadObservedCoinListView();
 
         // Find the widget id from the intent.
