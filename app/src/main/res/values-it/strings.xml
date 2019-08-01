@@ -26,4 +26,5 @@
     <string name="configure_description">Cerca una Coin da aggiungere</string>
     <string name="no_coin_to_observe">Inserire almeno una Coin</string>
     <string name="incorrect_coin_name">Inserire nome Coin corretto o selezionane una dalla lista</string>
+    <string name="no_active_widget">Aggiungi prima il widget nella home</string>
 </resources>

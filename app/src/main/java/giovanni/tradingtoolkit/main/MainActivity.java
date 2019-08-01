@@ -1,5 +1,6 @@
 package giovanni.tradingtoolkit.main;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -29,6 +31,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.calculator.CalculatorFragment;
+import giovanni.tradingtoolkit.home_widget.CoinListWidgetConfigureActivity;
+import giovanni.tradingtoolkit.marketprices.ChartActivity;
 import giovanni.tradingtoolkit.marketprices.CoinsFragment;
 import giovanni.tradingtoolkit.settings.AboutActivity;
 
@@ -89,10 +93,24 @@ public class MainActivity extends AppCompatActivity {
 //            case R.id.settings:
 //                return true;
 
-            case R.id.about:
+            case R.id.configure_widget: {
+                String widgetId = SharedPrefs.restoreString(this, SharedPrefs.KEY_WIDGET_ID);
+
+                if (!widgetId.isEmpty()) {
+                    Intent configIntent = new Intent(this, CoinListWidgetConfigureActivity.class);
+                    configIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, Integer.parseInt(widgetId));
+                    startActivity(configIntent);
+                } else {
+                    Toast.makeText(this, R.string.no_active_widget, Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+
+            case R.id.about: {
                 Intent intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
 
+            }
             default:
                 return super.onOptionsItemSelected(item);
         }

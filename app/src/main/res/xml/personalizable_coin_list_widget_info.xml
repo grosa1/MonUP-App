@@ -4,7 +4,7 @@
     android:initialKeyguardLayout="@layout/widget_coin_list"
     android:initialLayout="@layout/widget_coin_list"
     android:minWidth="320dp"
-    android:minHeight="180dp"
+    android:minHeight="110dp"
     android:previewImage="@drawable/example_appwidget_preview"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="180000"
