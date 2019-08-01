@@ -23,7 +23,6 @@ import giovanni.tradingtoolkit.marketprices.CoinsListAdapter;
 
 public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     private Context context;
-    private int appWidgetId;
     private ArrayList<Coin> coinsToShow;
     private String coinsToObserve;
     private List<Coin> coins;
@@ -31,7 +30,7 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
 
     WidgetRemoteViewsFactory(Context context, Intent intent) {
         this.context = context;
-        appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+        int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
         Log.d("AppWidgetId", String.valueOf(appWidgetId));
 

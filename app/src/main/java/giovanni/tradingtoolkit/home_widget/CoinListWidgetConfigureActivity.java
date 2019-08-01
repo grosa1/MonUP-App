@@ -13,14 +13,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.Coin;
 import giovanni.tradingtoolkit.main.SharedPrefs;
@@ -44,8 +41,6 @@ public class CoinListWidgetConfigureActivity extends Activity {
     private ArrayList<Coin> filteredList;
     private ArrayList<Coin> coinsToShow;
     private Context context;
-    private CoinsListAdapter.CoinItemListener itemListener;
-    private CoinsListAdapter.CoinItemListener removeCoinListener;
 
     View.OnClickListener addCoinBtnClickListener = v -> {
         String requested_coin = textArea.getText().toString();
@@ -100,9 +95,9 @@ public class CoinListWidgetConfigureActivity extends Activity {
         setContentView(R.layout.widget_coin_list_configure);
 
         context = CoinListWidgetConfigureActivity.this;
-        textArea = (EditText) findViewById(R.id.appwidget_text);
-        recyclerView = (RecyclerView) findViewById(R.id.search_view);
-        observedCoinListView = (RecyclerView) findViewById(R.id.coins_observed_view);
+        textArea = findViewById(R.id.appwidget_text);
+        recyclerView = findViewById(R.id.search_view);
+        observedCoinListView = findViewById(R.id.coins_observed_view);
 
         findViewById(R.id.add_coin_button).setOnClickListener(addCoinBtnClickListener);
         findViewById(R.id.add_widget_button).setOnClickListener(addWidgetBtnClickListener);
@@ -212,9 +207,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
     }
 
     private void refreshSearchRecycleView() {
-        itemListener = coinSymbol -> {
-            setToObserve(coinSymbol.toUpperCase());
-        };
+        CoinsListAdapter.CoinItemListener itemListener = coinSymbol -> setToObserve(coinSymbol.toUpperCase());
 
         CoinsListAdapter coinsListAdapter = new CoinsListAdapter(context, coins, itemListener);
         coinsListAdapter.filterList(filteredList);
@@ -223,7 +216,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
     }
 
     private void refreshObservedCoinRecycleView() {
-        removeCoinListener = coinSymbol -> {
+        CoinsListAdapter.CoinItemListener removeCoinListener = coinSymbol -> {
             removeCoinBySymbol(coinSymbol);
             makeToast("Coin Removed");
         };
