@@ -104,7 +104,7 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
         DecimalFormat decimalFormat = new DecimalFormat("###,###.##");
         String numberAsString = decimalFormat.format(coinItem.getPriceUsd());
 
-        rv.setTextViewText(R.id.coin_name, coinItem.getName() + ".png");
+        rv.setTextViewText(R.id.coin_name, coinItem.getName());
         rv.setTextViewText(R.id.list_position, "TODO");
         rv.setTextViewText(R.id.price, numberAsString);
         rv.setTextViewText(R.id.percentage_variation_1h, setPercentageText(coinItem.getPercentChange1h()));

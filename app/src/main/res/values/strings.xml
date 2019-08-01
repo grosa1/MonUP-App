@@ -23,15 +23,15 @@
     <!-- coins list -->
     <string name="title_dashboard" translatable="false">Market Prices</string>
     <string name="coins_request_error">Error: please try later</string>
-    <string name="daily">Day</string>
-    <string name="weekly">Week</string>
+    <string name="daily" translatable="false">Day</string>
+    <string name="weekly" translatable="false">Week</string>
     <string name="list_position_place_holder" translatable="false">n.</string>
     <string name="coin_name_place_holder" translatable="false">Coin name</string>
     <string name="price_place_holder" translatable="false">000000</string>
     <string name="percentage_variation_place_holder" translatable="false">+100.00%</string>
     <string name="imageView_content_description" translatable="false" />
     <string name="rank" translatable="false">Rank</string>
-    <string name="hour">Hour</string>
+    <string name="hour" translatable="false">Hour</string>
     <string name="percentage_variation_sym" translatable="false">&#37; </string>
     <string name="percentage_variation_title">Change</string>
     <string name="price_title">Price</string>

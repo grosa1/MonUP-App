@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import giovanni.tradingtoolkit.R;
@@ -34,18 +35,18 @@ public class CoinListWidget extends AppWidgetProvider {
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
+
+            RemoteViews remoteViews;
+            ComponentName watchWidget;
+
+            remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_coin_list);
+            watchWidget = new ComponentName(context, CoinListWidget.class);
+
+            remoteViews.setOnClickPendingIntent(R.id.refresh, getPendingSelfIntent(context, REFRESH_ON_CLICK));
+            appWidgetManager.updateAppWidget(watchWidget, remoteViews);
+
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
         }
-
-        RemoteViews remoteViews;
-        ComponentName watchWidget;
-
-        remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_coin_list);
-        watchWidget = new ComponentName(context, CoinListWidget.class);
-
-        remoteViews.setOnClickPendingIntent(R.id.refresh, getPendingSelfIntent(context, REFRESH_ON_CLICK));
-        appWidgetManager.updateAppWidget(watchWidget, remoteViews);
-
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
     }
 
     @Override

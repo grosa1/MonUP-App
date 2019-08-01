@@ -128,20 +128,25 @@ public class CoinListWidgetConfigureActivity extends Activity {
 
     private void loadObservedCoinListView() {
 
-        coinsToShow = new ArrayList<>();
-        String[] coinsToFind = coinsToObserve.split(",");
 
-        for (String coin : coinsToFind) {
-            coin = coin.replace("[", "").replace("]", "");
+        if (coinsToObserve != null) {
 
-            if (!coin.isEmpty()) {
-                Coin coinToAdd = getCoinBySymbol(coin);
-                assert coinToAdd != null;
-                coinsToShow.add(coinToAdd);
+            coinsToShow = new ArrayList<>();
+            String[] coinsToFind;
+            coinsToFind = coinsToObserve.split(",");
+
+            for (String coin : coinsToFind) {
+                coin = coin.replace("[", "").replace("]", "");
+
+                if (!coin.isEmpty()) {
+                    Coin coinToAdd = getCoinBySymbol(coin);
+                    assert coinToAdd != null;
+                    coinsToShow.add(coinToAdd);
+                }
             }
-        }
 
-        refreshObservedCoinRecycleView();
+            refreshObservedCoinRecycleView();
+        }
     }
 
     private void removeCoinBySymbol(String coinSymbol) {
@@ -238,6 +243,8 @@ public class CoinListWidgetConfigureActivity extends Activity {
 
         if (storedPreferences != null && !storedPreferences.isEmpty()) {
             coinsToObserve = storedPreferences;
+        } else {
+            coinsToObserve = "";
         }
     }
 
