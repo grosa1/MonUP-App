@@ -49,9 +49,13 @@
     <string name="add_coin">Add</string>
     <string name="configure_description">Look for a coin to add:</string>
     <string name="search_coin_hint">Search Coin</string>
+    <string name="coin_already_observed">Coin is already in the Observer</string>
+    <string name="coin_added_to_observer">Coin added to the Observer: </string>
+    <string name="coin_removed">Coin removed</string>
     <string name="coin_observed">Click on a coin observed to remove it:</string>
     <string name="no_coin_to_observe">Insert at least one coin</string>
     <string name="incorrect_coin_name">Insert correct name or select once from list</string>
     <string name="no_active_widget">Add widget in home first</string>
+    <string name="widget_refreshed">Refreshed</string>
 
 </resources>

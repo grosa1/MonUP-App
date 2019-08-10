@@ -7,6 +7,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
+import android.widget.Toast;
+
 import giovanni.tradingtoolkit.R;
 
 /**
@@ -63,6 +65,7 @@ public class CoinListWidget extends AppWidgetProvider {
     }
 
     public static void refresh(Context context) {
+        Toast.makeText(context, R.string.widget_refreshed, Toast.LENGTH_SHORT).show();
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         ComponentName watchWidget;
         watchWidget = new ComponentName(context, CoinListWidget.class);

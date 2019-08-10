@@ -5,7 +5,7 @@
     android:initialLayout="@layout/widget_coin_list"
     android:minWidth="320dp"
     android:minHeight="110dp"
-    android:previewImage="@drawable/example_appwidget_preview"
+    android:previewImage="@drawable/trading_toolkit"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="180000"
     android:widgetCategory="home_screen|keyguard">Observed coins</appwidget-provider>

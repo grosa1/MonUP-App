@@ -145,7 +145,7 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
 
         String finalValue = Double.toString(value);
 
-        if (value >= 0) {
+        if (value > 0) {
             finalValue = "+" + finalValue;
         }
         return finalValue + "%";

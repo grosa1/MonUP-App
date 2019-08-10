@@ -75,7 +75,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
 
                 CoinListWidget.refresh(context);
 
-                makeToast("Widget updated");
+                makeToast(getResources().getString(R.string.widget_refreshed));
             }
             storePreferences();
         }
@@ -140,7 +140,6 @@ public class CoinListWidgetConfigureActivity extends Activity {
     }
 
     private void loadObservedCoinListView() {
-
 
         if (coinsToObserve != null) {
 
@@ -218,7 +217,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
     private void refreshObservedCoinRecycleView() {
         CoinsListAdapter.CoinItemListener removeCoinListener = coinSymbol -> {
             removeCoinBySymbol(coinSymbol);
-            makeToast("Coin Removed");
+            makeToast(getResources().getString(R.string.coin_removed));
         };
 
         CoinsListAdapter coinsListAdapter = new CoinsListAdapter(context, coinsToShow, removeCoinListener);
@@ -232,9 +231,9 @@ public class CoinListWidgetConfigureActivity extends Activity {
 
             loadObservedCoinListView();
             refreshObservedCoinRecycleView();
-            makeToast("Coin added to the Observer: " + coinSymbol);
+            makeToast(getResources().getString(R.string.coin_added_to_observer) + coinSymbol);
         } else {
-            makeToast("Coin is already in the Observer");
+            makeToast(getResources().getString(R.string.coin_already_observed));
         }
     }
 
