@@ -47,18 +47,15 @@ public class CoinListWidgetConfigureActivity extends Activity {
         filter(requested_coin);
         if (filteredList.size() != 1) {
             makeToast(getResources().getString(R.string.incorrect_coin_name));
-
         } else {
             setToObserve(filteredList.get(SELECTED_COIN).getSymbol());
         }
     };
 
     View.OnClickListener addWidgetBtnClickListener = v -> {
-
         if (coinsToObserve.isEmpty()) {
             makeToast(getResources().getString(R.string.no_coin_to_observe));
         } else {
-
             if (getWidgetNumber() == INVALID_WIDGET_ID) {
                 storeWidgetNumber();
 
@@ -72,9 +69,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
                 setResult(RESULT_OK, resultValue);
                 finish();
             } else {
-
                 CoinListWidget.refresh(context);
-
                 makeToast(getResources().getString(R.string.widget_refreshed));
             }
             storePreferences();
@@ -140,9 +135,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
     }
 
     private void loadObservedCoinListView() {
-
         if (coinsToObserve != null) {
-
             coinsToShow = new ArrayList<>();
             String[] coinsToFind;
             coinsToFind = coinsToObserve.split(",");
@@ -156,15 +149,12 @@ public class CoinListWidgetConfigureActivity extends Activity {
                     coinsToShow.add(coinToAdd);
                 }
             }
-
             refreshObservedCoinRecycleView();
         }
     }
 
     private void removeCoinBySymbol(String coinSymbol) {
-
         String newPreferences = (coinsToObserve).replace(coinSymbol, "").replace(",,", ",");
-
         if (newPreferences.startsWith(",")) {
             newPreferences = newPreferences.substring(1);
         }
@@ -182,7 +172,6 @@ public class CoinListWidgetConfigureActivity extends Activity {
     }
 
     private Coin getCoinBySymbol(String coinSymbol) {
-
         for (Coin coin : coins) {
             if (coin.getSymbol().contains(coinSymbol)) {
                 return coin;
@@ -207,7 +196,6 @@ public class CoinListWidgetConfigureActivity extends Activity {
 
     private void refreshSearchRecycleView() {
         CoinsListAdapter.CoinItemListener itemListener = coinSymbol -> setToObserve(coinSymbol.toUpperCase());
-
         CoinsListAdapter coinsListAdapter = new CoinsListAdapter(context, coins, itemListener);
         coinsListAdapter.filterList(filteredList);
         recyclerView.setAdapter(coinsListAdapter);
@@ -219,7 +207,6 @@ public class CoinListWidgetConfigureActivity extends Activity {
             removeCoinBySymbol(coinSymbol);
             makeToast(getResources().getString(R.string.coin_removed));
         };
-
         CoinsListAdapter coinsListAdapter = new CoinsListAdapter(context, coinsToShow, removeCoinListener);
         observedCoinListView.setAdapter(coinsListAdapter);
         observedCoinListView.setLayoutManager(new LinearLayoutManager(context));
@@ -228,7 +215,6 @@ public class CoinListWidgetConfigureActivity extends Activity {
     private void setToObserve(String coinSymbol) {
         if (!coinsToObserve.contains(coinSymbol)) {
             coinsToObserve = coinsToObserve + "," + coinSymbol.toUpperCase();
-
             loadObservedCoinListView();
             refreshObservedCoinRecycleView();
             makeToast(getResources().getString(R.string.coin_added_to_observer) + coinSymbol);
@@ -242,7 +228,6 @@ public class CoinListWidgetConfigureActivity extends Activity {
     }
 
     private void storePreferences() {
-
         if (coinsToObserve != null) {
             SharedPrefs.storeString(context, SharedPrefs.KEY_WIDGET_COINS, coinsToObserve);
         }
@@ -250,7 +235,6 @@ public class CoinListWidgetConfigureActivity extends Activity {
 
     private void restorePreferences() {
         String storedPreferences = SharedPrefs.restoreString(context, SharedPrefs.KEY_WIDGET_COINS);
-
         if (storedPreferences != null) {
             coinsToObserve = storedPreferences;
         } else {

@@ -6,15 +6,12 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.Coin;
 import giovanni.tradingtoolkit.main.ResourcesLoader;
@@ -30,34 +27,26 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
 
     WidgetRemoteViewsFactory(Context context, Intent intent) {
         this.context = context;
-        int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                AppWidgetManager.INVALID_APPWIDGET_ID);
+        int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
         Log.d("AppWidgetId", String.valueOf(appWidgetId));
-
         viewInit();
     }
 
     private void updateWidgetListView() {
-
         viewInit();
-
         for (int i = 0; i < coinsToShow.size(); i++) {
             getViewAt(i);
         }
     }
 
     private void viewInit() {
-
         loadSerialCoins(context);
         restorePreferences(context);
         getCoinsToShow();
-
         itemListener = coinSymbol -> {
             //TODO: handle click as in CoinListWidget for refresh and action at item click
             Log.e("ITEM SELECTED", coinSymbol);
-
         };
-
         CoinsListAdapter coinsListAdapter = new CoinsListAdapter(context, coinsToShow, itemListener);
         coinsListAdapter.filterList(coinsToShow);
     }
@@ -81,23 +70,17 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     @Override
     public RemoteViews getViewAt(int position) {
         Log.d("WidgetCreatingView", "WidgetCreatingView");
-        RemoteViews remoteView = new RemoteViews(context.getPackageName(),
-                R.layout.widget_coin_list_item);
-
+        RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.widget_coin_list_item);
         CoinsListAdapter coinsListAdapter = new CoinsListAdapter(context, coinsToShow, itemListener);
         coinsListAdapter.filterList(coinsToShow);
-
         Intent intent = new Intent(context, coinsListAdapter.getClass());
         Coin coinItem = coinsToShow.get(position);
-
         remoteView = setItemInfo(remoteView, coinItem, position);
         remoteView.setRemoteAdapter(R.id.list, intent);
-
         return remoteView;
     }
 
     private RemoteViews setItemInfo(RemoteViews rv, Coin coinItem, int position) {
-
         int iconToLoad = ResourcesLoader.getResId(coinItem.getSymbol().toLowerCase());
         DecimalFormat decimalFormat = new DecimalFormat("###,###.##");
         String numberAsString = decimalFormat.format(coinItem.getPriceUsd());
@@ -108,18 +91,14 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
         rv.setTextViewText(R.id.percentage_variation_1h, setPercentageText(coinItem.getPercentChange1h()));
         rv.setTextViewText(R.id.percentage_variation_1d, setPercentageText(coinItem.getPercentChange24h()));
         rv.setTextViewText(R.id.percentage_variation_1w, setPercentageText(coinItem.getPercentChange7d()));
-
         rv.setImageViewResource(R.id.icon, iconToLoad);
-
         rv.setTextColor(R.id.percentage_variation_1d, setPercentageColor(coinItem.getPercentChange24h()));
         rv.setTextColor(R.id.percentage_variation_1w, setPercentageColor(coinItem.getPercentChange7d()));
 
         if (setPercentageColor(coinItem.getPercentChange1h()) == context.getResources().getColor(R.color.widgetGreen)) {
-
             rv.setTextColor(R.id.percentage_variation_1h, context.getResources().getColor(R.color.widgetGreen));
             rv.setTextColor(R.id.price, context.getResources().getColor(R.color.widgetGreen));
         } else {
-
             rv.setTextColor(R.id.percentage_variation_1h, context.getResources().getColor(R.color.widgetRed));
             rv.setTextColor(R.id.price, context.getResources().getColor(R.color.widgetRed));
         }
@@ -133,7 +112,6 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     }
 
     private int setPercentageColor(Double value) {
-
         if (value >= 0) {
             return context.getResources().getColor(R.color.widgetGreen);
         } else {
@@ -142,9 +120,7 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     }
 
     private String setPercentageText(Double value) {
-
         String finalValue = Double.toString(value);
-
         if (value > 0) {
             finalValue = "+" + finalValue;
         }
@@ -152,7 +128,6 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     }
 
     private Coin getCoinBySymbol(String coinSymbol) {
-
         for (Coin coin : coins) {
             if (coin.getSymbol().contains(coinSymbol)) {
                 return coin;
@@ -164,10 +139,8 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     private void getCoinsToShow() {
         coinsToShow = new ArrayList<>();
         String[] coinsToFind = coinsToObserve.split(",");
-
         for (String coin : coinsToFind) {
             coin = coin.replace("[", "").replace("]", "");
-
             if (!coin.isEmpty() && (getCoinBySymbol(coin) != null)) {
                 Coin coinToAdd = getCoinBySymbol(coin);
                 assert coinToAdd != null;
@@ -185,7 +158,6 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
 
     private void restorePreferences(Context context) {
         String storedPreferences = SharedPrefs.restoreString(context, SharedPrefs.KEY_WIDGET_COINS);
-
         if (storedPreferences != null && !storedPreferences.isEmpty()) {
             coinsToObserve = storedPreferences;
         }
