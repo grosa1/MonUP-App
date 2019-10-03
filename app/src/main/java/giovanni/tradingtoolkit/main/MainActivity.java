@@ -3,7 +3,6 @@ package giovanni.tradingtoolkit.main;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,28 +10,19 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.calculator.CalculatorFragment;
+import giovanni.tradingtoolkit.data.remote.LoadCoinService;
 import giovanni.tradingtoolkit.home_widget.CoinListWidgetConfigureActivity;
-import giovanni.tradingtoolkit.marketprices.ChartActivity;
 import giovanni.tradingtoolkit.marketprices.CoinsFragment;
 import giovanni.tradingtoolkit.settings.AboutActivity;
 
@@ -63,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
+
+        Intent intent = new Intent(MainActivity.this, LoadCoinService.class);
+        startService(intent);
 
         //        1514505600
 //        int t = (int) e.getX();

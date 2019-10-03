@@ -128,7 +128,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         return coins.size();
     }
 
-    void updateCoinsList(List<Coin> items) {
+    public void updateCoinsList(List<Coin> items) {
         coins = items;
         notifyDataSetChanged();
     }
