@@ -64,10 +64,10 @@ public class LoadCoinService extends Service {
     private Variation currentVariation;
     private boolean sortPriceAsc, sortNameAsc, sortRankAsc;
 
-    public CoinsFragment() {
-        coins = new ArrayList<>();
-        currentVariation = Variation.Daily;
-    }
+//    public CoinsFragment() {
+//        coins = new ArrayList<>();
+//        currentVariation = Variation.Daily;
+//    }
 
     public static CoinsFragment newInstance() {
         CoinsFragment fragment = new CoinsFragment();
