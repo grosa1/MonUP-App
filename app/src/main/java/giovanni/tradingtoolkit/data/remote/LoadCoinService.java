@@ -77,7 +77,7 @@ public class LoadCoinService extends Service {
 
     public LoadCoinService() {
 
-        Toast.makeText(this, "Invoke background service LoadCoinServiceStart.", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Invoke background service LoadCoinServiceStart.", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -97,7 +97,18 @@ public class LoadCoinService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(this, "Invoke background service onStartCommand method.", Toast.LENGTH_LONG).show();
 
+//        currency = SharedPrefs.restoreString(getApplicationContext(), SharedPrefs.KEY_CURRENCY);
+//
+//        if (currency == null || currency == "") {
+//            currency = "USD";
+//        }
 
+        //API CALL
+        try {
+            this.loadCoinList("USD", LIST_LIMIT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -121,11 +132,12 @@ public class LoadCoinService extends Service {
                         isConnected = true;
                         coins = body;
                         storeCache(coins);
-                        listAdapter.updateCoinsList(coins);
+                        // listAdapter.updateCoinsList(coins);
                     }
 
                     ProgressDialogManager.close();
 
+                    /*
                     if (pullDown != null) {
                         pullDown.setRefreshing(false);
                     }
@@ -133,11 +145,12 @@ public class LoadCoinService extends Service {
                 } else {
                     isConnected = false;
                     restoreCache();
-                    Log.d("ERR_RES", response.errorBody().toString());
                     ProgressDialogManager.close();
                     if (pullDown != null) {
                         pullDown.setRefreshing(false);
                     }
+                    */
+                    Log.d("ERR_RES", response.errorBody().toString());
 
                     int statusCode = response.code();
                     Log.e("ERROR_CODE", String.valueOf(statusCode));
@@ -149,11 +162,11 @@ public class LoadCoinService extends Service {
             public void onFailure(Call<List<Coin>> call, Throwable t) {
                 isConnected = false;
                 restoreCache();
-                ProgressDialogManager.close();
+//                ProgressDialogManager.close();
 
-                if (pullDown != null) {
-                    pullDown.setRefreshing(false);
-                }
+                //              if (pullDown != null) {
+                //                pullDown.setRefreshing(false);
+                //          }
                 ToastManager.create(getApplicationContext(), getResources().getString(R.string.coins_request_error));
                 Log.e("REQUEST_ERROR", t.toString());
             }

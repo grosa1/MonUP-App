@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -53,9 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
-
-        Intent intent = new Intent(MainActivity.this, LoadCoinService.class);
-        startService(intent);
 
         //        1514505600
 //        int t = (int) e.getX();
@@ -107,6 +105,20 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onPause() {
+
+        Intent intent = new Intent(MainActivity.this, LoadCoinService.class);
+        startService(intent);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+
+        super.onPause();
     }
 
     private void setupTabIcons() {

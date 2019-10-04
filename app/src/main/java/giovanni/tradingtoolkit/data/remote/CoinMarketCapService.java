@@ -8,7 +8,6 @@ import giovanni.tradingtoolkit.data.model.Coin;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-
 /**
  * Created by giiio on 21/12/2017.
  */
