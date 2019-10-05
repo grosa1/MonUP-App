@@ -6,10 +6,15 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import javax.security.auth.login.LoginException;
+
 import giovanni.tradingtoolkit.R;
+import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
+import giovanni.tradingtoolkit.main.MainActivity;
 
 /**
  * Implementation of App Widget functionality.
@@ -28,10 +33,16 @@ public class CoinListWidget extends AppWidgetProvider {
         views.setRemoteAdapter(R.id.widget_list, intent);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
+
+        //refresh(context);
+        Log.e("UPDATEAPPWID", "UPDA");
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+
+        Log.e("ONUPDATE", "UPDA");
+
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
@@ -46,15 +57,21 @@ public class CoinListWidget extends AppWidgetProvider {
             appWidgetManager.updateAppWidget(watchWidget, remoteViews);
 
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
+            //refresh(context);
+
         }
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.e("ONRECEIVE", "UPDA");
+
         super.onReceive(context, intent);
 
         if (REFRESH_ON_CLICK.equals(intent.getAction())) {
-            refresh(context);
+            Intent broadcastIntent = new Intent(context, LoadCoinReceiver.class);
+            context.sendBroadcast(broadcastIntent);
+            //refresh(context);
         }
     }
 
@@ -65,6 +82,8 @@ public class CoinListWidget extends AppWidgetProvider {
     }
 
     public static void refresh(Context context) {
+        Log.e("REFRESH", "UPDA");
+
         Toast.makeText(context, R.string.widget_refreshed, Toast.LENGTH_SHORT).show();
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         ComponentName watchWidget;
@@ -85,6 +104,9 @@ public class CoinListWidget extends AppWidgetProvider {
 
     @Override
     public void onEnabled(Context context) {
+        Log.e("ONENABLE", "UPDA");
+
+        //this.refresh(context);
         // Enter relevant functionality for when the first widget is created
     }
 

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="giovanni.tradingtoolkit">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -8,13 +12,14 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/trading_toolkit"
         android:supportsRtl="true"
-        android:theme="@style/MyMaterialTheme">
+        android:theme="@style/MyMaterialTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+
         <activity android:name=".home_widget.CoinListWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".main.MainActivity"
             android:label="@string/app_name">
@@ -24,16 +29,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".marketprices.ChartActivity"
             android:label="@string/title_activity_chart"
             android:theme="@style/MyMaterialTheme" />
-
         <activity
             android:name=".settings.AboutActivity"
             android:label="@string/title_activity_about"
             android:theme="@style/MyMaterialTheme" />
+
+        <service
+            android:name=".home_widget.WidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <receiver android:name=".home_widget.CoinListWidget">
             <intent-filter>
@@ -48,15 +56,22 @@
         <service
             android:name=".data.remote.LoadCoinService"
             android:enabled="true"
-            android:exported="true"></service>
-        <service
-            android:name=".home_widget.WidgetService"
-            android:exported="false"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+
+        <!--        <receiver-->
+        <!--            android:name=".data.remote.LoadCoinReceiver"-->
+        <!--            android:enabled="true"-->
+        <!--            android:exported="true"-->
+        <!--            android:label="RestartServiceWhenStopped"-->
+        <!--            android:permission="TODO"-->
+        <!--            />-->
+
+        <receiver android:name=".data.remote.LoadCoinReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
