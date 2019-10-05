@@ -118,6 +118,7 @@ public class LoadCoinService extends Service {
                         //isConnected = true;
                         coins = body;
                         storeCache(coins);
+                        CoinListWidget.refresh(LoadCoinService.this);
                     }
                 } else {
                     restoreCache();
@@ -136,7 +137,6 @@ public class LoadCoinService extends Service {
             }
         });
 
-        CoinListWidget.refresh(LoadCoinService.this);
         super.onDestroy();
     }
 

@@ -57,8 +57,6 @@ public class CoinListWidget extends AppWidgetProvider {
             appWidgetManager.updateAppWidget(watchWidget, remoteViews);
 
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
-            //refresh(context);
-
         }
     }
 
@@ -91,7 +89,6 @@ public class CoinListWidget extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_coin_list);
         Intent i = new Intent(context, WidgetService.class);
         int[] widgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, CoinListWidget.class));
-
         views.setRemoteAdapter(R.id.widget_list, i);
         appWidgetManager.notifyAppWidgetViewDataChanged(widgetIds, R.id.widget_list);
         appWidgetManager.updateAppWidget(watchWidget, views);
