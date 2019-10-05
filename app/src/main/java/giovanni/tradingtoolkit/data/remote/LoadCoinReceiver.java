@@ -3,6 +3,7 @@ package giovanni.tradingtoolkit.data.remote;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 public class LoadCoinReceiver extends BroadcastReceiver {
@@ -13,7 +14,9 @@ public class LoadCoinReceiver extends BroadcastReceiver {
         // an Intent broadcast.
 
         Log.i(LoadCoinReceiver.class.getSimpleName(), "Service Stops! Oooooooooooooppppssssss!!!!");
-        context.startService(new Intent(context, LoadCoinService.class));
+        //context.startService(new Intent(context, LoadCoinService.class));
+        Intent i = new Intent(context, LoadCoinService.class);
+        ContextCompat.startForegroundService(context, i);
 
         //throw new UnsupportedOperationException("Not yet implemented");
     }
