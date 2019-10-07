@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.Coin;
+import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
 import giovanni.tradingtoolkit.main.ResourcesLoader;
 import giovanni.tradingtoolkit.main.SharedPrefs;
 import giovanni.tradingtoolkit.marketprices.CoinsListAdapter;
@@ -30,6 +31,10 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
         int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
         Log.d("AppWidgetId", String.valueOf(appWidgetId));
         viewInit();
+
+        //Calling Service Refresh
+        Intent broadcastIntent = new Intent(context, LoadCoinReceiver.class);
+        context.sendBroadcast(broadcastIntent);
     }
 
     private void updateWidgetListView() {

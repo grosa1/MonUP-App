@@ -30,6 +30,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
 
     private static final int SELECTED_COIN = 0;
     private static final int INVALID_WIDGET_ID = -1;
+    private static final String TAG = "COINLISTCONFIGUREA";
 
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     EditText textArea;
@@ -61,6 +62,10 @@ public class CoinListWidgetConfigureActivity extends Activity {
 
                 // It is the responsibility of the configuration activity to update the app widget
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+
+                Log.e(TAG, ": ButtonPressed, WidgetID GET" + getWidgetNumber());
+                Log.e(TAG, ": ButtonPressed, WidgetID MY" + mAppWidgetId);
+
                 CoinListWidget.updateAppWidget(context, appWidgetManager, getWidgetNumber());
 
                 // Make sure we pass back the original appWidgetId
@@ -133,6 +138,12 @@ public class CoinListWidgetConfigureActivity extends Activity {
             }
         });
     }
+
+//    @Override
+//    public void onDestroy() {
+//        CoinListWidget.refresh(context);
+//        super.onDestroy();
+//    }
 
     private void loadObservedCoinListView() {
         if (coinsToObserve != null) {
@@ -250,7 +261,20 @@ public class CoinListWidgetConfigureActivity extends Activity {
     }
 
     private void storeWidgetNumber() {
-        SharedPrefs.storeString(context, SharedPrefs.KEY_WIDGET_ID, Integer.toString(mAppWidgetId));
+
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            mAppWidgetId = extras.getInt(
+                    AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+            Log.e("APPWIDGET", "storeWidgetNumber: " + mAppWidgetId);
+            SharedPrefs.storeString(context, SharedPrefs.KEY_WIDGET_ID, Integer.toString(mAppWidgetId));
+        }
+
+        // If this activity was started with an intent without an app widget ID, finish with an error.
+        if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+            finish();
+        }
     }
 
     private int getWidgetNumber() {
