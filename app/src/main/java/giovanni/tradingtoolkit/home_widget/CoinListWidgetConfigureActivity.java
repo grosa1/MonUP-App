@@ -1,13 +1,10 @@
 package giovanni.tradingtoolkit.home_widget;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -23,8 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.Coin;
-import giovanni.tradingtoolkit.data.remote.LoadCoinService;
-import giovanni.tradingtoolkit.main.MainActivity;
 import giovanni.tradingtoolkit.main.SharedPrefs;
 import giovanni.tradingtoolkit.marketprices.CoinsListAdapter;
 
@@ -64,22 +59,14 @@ public class CoinListWidgetConfigureActivity extends Activity {
             if (getWidgetNumber() == INVALID_WIDGET_ID) {
                 storeWidgetNumber();
 
-
-
                 // Make sure we pass back the original appWidgetId
                 Intent resultValue = new Intent();
                 resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, getWidgetNumber());
-
-                // It is the responsibility of the configuration activity to update the app widget
-                //AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-                //CoinListWidget.updateAppWidget(context, appWidgetManager, getWidgetNumber());
-
                 setResult(RESULT_OK, resultValue);
             } else {
-                CoinListWidget.refresh(context);
                 makeToast(getResources().getString(R.string.widget_refreshed));
             }
-            //CoinListWidget.refresh(context);
+            CoinListWidget.updateWidget(context);
             storePreferences();
             finish();
         }
@@ -273,45 +260,9 @@ public class CoinListWidgetConfigureActivity extends Activity {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-
-        Log.e("ACTIVITY", "onCreate: ");
-        super.onCreate(savedInstanceState, persistentState);
-    }
-
-    @Override
-    protected void onPause() {
-        Log.e("ACTIVITY", "onPause: ");
-
-        super.onPause();
-    }
-
-    @Override
     protected void onDestroy() { //TODO: remove isLoadCoinServiceRunning making same method and loadCoins() in Main Activity static
-        Log.e("ACTIVITY", "onDestroy: ");
-
         CoinListWidget.runService(context);
-//        Intent mServiceIntent;
-//        LoadCoinService mSensorService;
-//
-//        mSensorService = new LoadCoinService();
-//        mServiceIntent = new Intent(CoinListWidgetConfigureActivity.this, mSensorService.getClass());
-//        if (!isLoadCoinServiceRunning(mSensorService.getClass())) {
-//            startService(mServiceIntent);
-//        }
         super.onDestroy();
     }
-
-//    private boolean isLoadCoinServiceRunning(Class<?> serviceClass) {
-//        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-//        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-//            if (serviceClass.getName().equals(service.service.getClassName())) {
-//                Log.i("isLoadCoinServiceRunn?", true + "");
-//                return true;
-//            }
-//        }
-//        Log.i("isLoadCoinServiceRunn?", false + "");
-//        return false;
-//    }
 }
 

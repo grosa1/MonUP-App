@@ -8,16 +8,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
-
-import javax.security.auth.login.LoginException;
-
 import giovanni.tradingtoolkit.R;
-import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
 import giovanni.tradingtoolkit.data.remote.LoadCoinService;
-import giovanni.tradingtoolkit.main.MainActivity;
 
 /**
  * Implementation of App Widget functionality.
@@ -34,22 +28,11 @@ public class CoinListWidget extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_coin_list);
         Intent intent = new Intent(context, WidgetService.class);
         views.setRemoteAdapter(R.id.widget_list, intent);
-
-        //views.setOnClickPendingIntent(R.id.refresh, PendingIntent.getBroadcast(context, 0, new Intent(context, WidgetService.class).setAction(REFRESH_ON_CLICK), 0));
-        //TODO Scrivere per bene il Pending intent
-        //refresh(context);
-
         appWidgetManager.updateAppWidget(appWidgetId, views);
-
-        //refresh(context);
-        Log.e("UPDATEAPPWID", "UPDA");
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-
-        Log.e("ONUPDATE", "UPDA");
-
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
@@ -69,17 +52,11 @@ public class CoinListWidget extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.e("ONRECEIVE", "UPDA");
-
-        super.onReceive(context, intent);
-
         if (REFRESH_ON_CLICK.equals(intent.getAction())) {
-            //Intent broadcastIntent = new Intent(context, LoadCoinReceiver.class);
-            //context.sendBroadcast(broadcastIntent);
             runService(context);
-
             refresh(context);
         }
+        super.onReceive(context, intent);
     }
 
     protected PendingIntent getPendingSelfIntent(Context context, String action) {
@@ -89,8 +66,6 @@ public class CoinListWidget extends AppWidgetProvider {
     }
 
     public static void refresh(Context context) {
-        Log.e("REFRESH", "UPDA");
-
         Toast.makeText(context, R.string.widget_refreshed, Toast.LENGTH_SHORT).show();
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         ComponentName watchWidget;
@@ -123,11 +98,9 @@ public class CoinListWidget extends AppWidgetProvider {
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
-                Log.e("isLoadCoinServiceRunn?", true + "");
                 return true;
             }
         }
-        Log.e("isLoadCoinServiceRunn?", false + "");
         return false;
     }
 
@@ -153,10 +126,6 @@ public class CoinListWidget extends AppWidgetProvider {
 
     @Override
     public void onEnabled(Context context) {
-        Log.e("ONENABLE", "UPDA");
-
-        // runService(context);
-        //this.refresh(context);
         // Enter relevant functionality for when the first widget is created
     }
 

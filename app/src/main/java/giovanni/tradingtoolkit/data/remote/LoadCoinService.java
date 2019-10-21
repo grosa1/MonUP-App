@@ -97,15 +97,8 @@ public class LoadCoinService extends Service {
 
     @Override
     public void onDestroy() {
-        // Toast.makeText(this, "Invoke background service onDestroy method.", Toast.LENGTH_LONG).show();
-
         this.stopSelf();
-
         super.onDestroy();
-
-        //Intent broadcastIntent = new Intent(LoadCoinService.this, LoadCoinReceiver.class);
-
-        //sendBroadcast(broadcastIntent);
     }
 
 
@@ -144,17 +137,6 @@ public class LoadCoinService extends Service {
         });
 
         CoinListWidget.updateWidget(context);
-        // CoinListWidget.refresh(context);
-//        Intent intent = new Intent(this, CoinListWidget.class);
-//        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-//        // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
-//        // since it seems the onUpdate() is only fired on that:
-//        int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), CoinListWidget.class));
-//        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
-//        sendBroadcast(intent);
-
-
-        // onDestroy();
     }
 
     private void restoreCache() {
@@ -163,7 +145,6 @@ public class LoadCoinService extends Service {
             Type listType = new TypeToken<ArrayList<Coin>>() {
             }.getType();
             coins = (new Gson()).fromJson(serialCoins, listType);
-            //listAdapter.updateCoinsList(cached);
         }
     }
 
@@ -171,5 +152,4 @@ public class LoadCoinService extends Service {
         String serialCoins = (new Gson()).toJson(updatedCoins);
         SharedPrefs.storeString(getApplicationContext(), SharedPrefs.KEY_COINS_CACHE, serialCoins);
     }
-
 }
