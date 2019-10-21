@@ -19,7 +19,7 @@ import giovanni.tradingtoolkit.data.remote.LoadCoinService;
  */
 public class CoinListWidget extends AppWidgetProvider {
 
-    public static final String REFRESH_ON_CLICK = "refreshOnClickTag";
+    public static final String REFRESH_ON_CLICK = "REFRESH_ON_CLICK";
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
