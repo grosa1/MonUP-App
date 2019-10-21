@@ -1,11 +1,13 @@
 package giovanni.tradingtoolkit.home_widget;
 
+import android.app.ActivityManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -14,6 +16,7 @@ import javax.security.auth.login.LoginException;
 
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
+import giovanni.tradingtoolkit.data.remote.LoadCoinService;
 import giovanni.tradingtoolkit.main.MainActivity;
 
 /**
@@ -31,6 +34,10 @@ public class CoinListWidget extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_coin_list);
         Intent intent = new Intent(context, WidgetService.class);
         views.setRemoteAdapter(R.id.widget_list, intent);
+
+        //views.setOnClickPendingIntent(R.id.refresh, PendingIntent.getBroadcast(context, 0, new Intent(context, WidgetService.class).setAction(REFRESH_ON_CLICK), 0));
+        //TODO Scrivere per bene il Pending intent
+        //refresh(context);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
@@ -67,9 +74,11 @@ public class CoinListWidget extends AppWidgetProvider {
         super.onReceive(context, intent);
 
         if (REFRESH_ON_CLICK.equals(intent.getAction())) {
-            Intent broadcastIntent = new Intent(context, LoadCoinReceiver.class);
-            context.sendBroadcast(broadcastIntent);
-            //refresh(context);
+            //Intent broadcastIntent = new Intent(context, LoadCoinReceiver.class);
+            //context.sendBroadcast(broadcastIntent);
+            runService(context);
+
+            refresh(context);
         }
     }
 
@@ -94,6 +103,49 @@ public class CoinListWidget extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(watchWidget, views);
     }
 
+    public static void updateWidget(Context context) {
+        Intent intent = new Intent(context, CoinListWidget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
+        // since it seems the onUpdate() is only fired on that:
+        int[] ids = AppWidgetManager.getInstance(context.getApplicationContext()).getAppWidgetIds(new ComponentName(context.getApplicationContext(), CoinListWidget.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        context.sendBroadcast(intent);
+        refresh(context);
+        Intent mServiceIntent;
+        LoadCoinService mSensorService;
+        mSensorService = new LoadCoinService();
+        mServiceIntent = new Intent(context, mSensorService.getClass());
+        context.stopService(mServiceIntent);
+    }
+
+    private static boolean isLoadCoinServiceRunning(Context context, Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                Log.e("isLoadCoinServiceRunn?", true + "");
+                return true;
+            }
+        }
+        Log.e("isLoadCoinServiceRunn?", false + "");
+        return false;
+    }
+
+    public static void runService(Context context) {
+        Intent mServiceIntent;
+        LoadCoinService mSensorService;
+
+        mSensorService = new LoadCoinService();
+        mServiceIntent = new Intent(context, mSensorService.getClass());
+        if (!isLoadCoinServiceRunning(context, mSensorService.getClass())) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(mServiceIntent);
+            } else {
+                context.startService(mServiceIntent);
+            }
+        }
+    }
+
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         // When the user deletes the widget, delete the preference associated with it.
@@ -103,6 +155,7 @@ public class CoinListWidget extends AppWidgetProvider {
     public void onEnabled(Context context) {
         Log.e("ONENABLE", "UPDA");
 
+        // runService(context);
         //this.refresh(context);
         // Enter relevant functionality for when the first widget is created
     }

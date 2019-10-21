@@ -1,10 +1,13 @@
 package giovanni.tradingtoolkit.home_widget;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -20,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.Coin;
+import giovanni.tradingtoolkit.data.remote.LoadCoinService;
+import giovanni.tradingtoolkit.main.MainActivity;
 import giovanni.tradingtoolkit.main.SharedPrefs;
 import giovanni.tradingtoolkit.marketprices.CoinsListAdapter;
 
@@ -29,8 +34,7 @@ import giovanni.tradingtoolkit.marketprices.CoinsListAdapter;
 public class CoinListWidgetConfigureActivity extends Activity {
 
     private static final int SELECTED_COIN = 0;
-    private static final int INVALID_WIDGET_ID = -1;
-    private static final String TAG = "COINLISTCONFIGUREA";
+    public static final int INVALID_WIDGET_ID = -1;
 
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     EditText textArea;
@@ -60,24 +64,24 @@ public class CoinListWidgetConfigureActivity extends Activity {
             if (getWidgetNumber() == INVALID_WIDGET_ID) {
                 storeWidgetNumber();
 
-                // It is the responsibility of the configuration activity to update the app widget
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 
-                Log.e(TAG, ": ButtonPressed, WidgetID GET" + getWidgetNumber());
-                Log.e(TAG, ": ButtonPressed, WidgetID MY" + mAppWidgetId);
-
-                CoinListWidget.updateAppWidget(context, appWidgetManager, getWidgetNumber());
 
                 // Make sure we pass back the original appWidgetId
                 Intent resultValue = new Intent();
                 resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, getWidgetNumber());
+
+                // It is the responsibility of the configuration activity to update the app widget
+                //AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+                //CoinListWidget.updateAppWidget(context, appWidgetManager, getWidgetNumber());
+
                 setResult(RESULT_OK, resultValue);
-                finish();
             } else {
                 CoinListWidget.refresh(context);
                 makeToast(getResources().getString(R.string.widget_refreshed));
             }
+            //CoinListWidget.refresh(context);
             storePreferences();
+            finish();
         }
     };
 
@@ -138,12 +142,6 @@ public class CoinListWidgetConfigureActivity extends Activity {
             }
         });
     }
-
-//    @Override
-//    public void onDestroy() {
-//        CoinListWidget.refresh(context);
-//        super.onDestroy();
-//    }
 
     private void loadObservedCoinListView() {
         if (coinsToObserve != null) {
@@ -261,29 +259,59 @@ public class CoinListWidgetConfigureActivity extends Activity {
     }
 
     private void storeWidgetNumber() {
-
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            mAppWidgetId = extras.getInt(
-                    AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-            Log.e("APPWIDGET", "storeWidgetNumber: " + mAppWidgetId);
+        if (mAppWidgetId != INVALID_WIDGET_ID && mAppWidgetId != getWidgetNumber()) {
             SharedPrefs.storeString(context, SharedPrefs.KEY_WIDGET_ID, Integer.toString(mAppWidgetId));
-        }
-
-        // If this activity was started with an intent without an app widget ID, finish with an error.
-        if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
-            finish();
         }
     }
 
     private int getWidgetNumber() {
         String widgetId = SharedPrefs.restoreString(context, SharedPrefs.KEY_WIDGET_ID);
         if (widgetId != null && !widgetId.isEmpty()) {
-
             return Integer.parseInt(widgetId);
         }
         return INVALID_WIDGET_ID;
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+
+        Log.e("ACTIVITY", "onCreate: ");
+        super.onCreate(savedInstanceState, persistentState);
+    }
+
+    @Override
+    protected void onPause() {
+        Log.e("ACTIVITY", "onPause: ");
+
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() { //TODO: remove isLoadCoinServiceRunning making same method and loadCoins() in Main Activity static
+        Log.e("ACTIVITY", "onDestroy: ");
+
+        CoinListWidget.runService(context);
+//        Intent mServiceIntent;
+//        LoadCoinService mSensorService;
+//
+//        mSensorService = new LoadCoinService();
+//        mServiceIntent = new Intent(CoinListWidgetConfigureActivity.this, mSensorService.getClass());
+//        if (!isLoadCoinServiceRunning(mSensorService.getClass())) {
+//            startService(mServiceIntent);
+//        }
+        super.onDestroy();
+    }
+
+//    private boolean isLoadCoinServiceRunning(Class<?> serviceClass) {
+//        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+//        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+//            if (serviceClass.getName().equals(service.service.getClassName())) {
+//                Log.i("isLoadCoinServiceRunn?", true + "");
+//                return true;
+//            }
+//        }
+//        Log.i("isLoadCoinServiceRunn?", false + "");
+//        return false;
+//    }
 }
 

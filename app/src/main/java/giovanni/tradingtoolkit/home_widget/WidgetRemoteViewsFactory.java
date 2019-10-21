@@ -190,6 +190,6 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
 
     @Override
     public void onDestroy() {
-        SharedPrefs.storeString(context, SharedPrefs.KEY_WIDGET_ID, "");
+        SharedPrefs.storeString(context, SharedPrefs.KEY_WIDGET_ID, Integer.toString(CoinListWidgetConfigureActivity.INVALID_WIDGET_ID));
     }
 }

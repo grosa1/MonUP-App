@@ -4,6 +4,8 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -43,6 +45,7 @@ public class LoadCoinService extends Service {
     public static String currency;
     private List<Coin> coins;
     private CoinMarketCapService coinDataService;
+    private static Context context;
 
     public LoadCoinService() {
 
@@ -58,6 +61,7 @@ public class LoadCoinService extends Service {
     public void onCreate() {
         Toast.makeText(this, "Invoke background service onCreate method.", Toast.LENGTH_LONG).show();
 
+        context = getApplicationContext();
         String CHANNEL_ID = "my_channel_01";
         NotificationChannel channel = null;
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -95,11 +99,13 @@ public class LoadCoinService extends Service {
     public void onDestroy() {
         // Toast.makeText(this, "Invoke background service onDestroy method.", Toast.LENGTH_LONG).show();
 
+        this.stopSelf();
+
         super.onDestroy();
 
-        Intent broadcastIntent = new Intent(LoadCoinService.this, LoadCoinReceiver.class);
+        //Intent broadcastIntent = new Intent(LoadCoinService.this, LoadCoinReceiver.class);
 
-        sendBroadcast(broadcastIntent);
+        //sendBroadcast(broadcastIntent);
     }
 
 
@@ -118,7 +124,7 @@ public class LoadCoinService extends Service {
                         //isConnected = true;
                         coins = body;
                         storeCache(coins);
-                        CoinListWidget.refresh(LoadCoinService.this);
+                        //CoinListWidget.refresh(LoadCoinService.this);
                     }
                 } else {
                     restoreCache();
@@ -137,7 +143,18 @@ public class LoadCoinService extends Service {
             }
         });
 
-        super.onDestroy();
+        CoinListWidget.updateWidget(context);
+        // CoinListWidget.refresh(context);
+//        Intent intent = new Intent(this, CoinListWidget.class);
+//        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+//        // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
+//        // since it seems the onUpdate() is only fired on that:
+//        int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), CoinListWidget.class));
+//        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+//        sendBroadcast(intent);
+
+
+        // onDestroy();
     }
 
     private void restoreCache() {

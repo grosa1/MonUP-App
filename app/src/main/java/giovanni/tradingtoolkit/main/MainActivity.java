@@ -76,15 +76,15 @@ public class MainActivity extends AppCompatActivity {
         this.loadCoins();
     }
 
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
+    private boolean isLoadCoinServiceRunning(Class<?> serviceClass) { //TODO: make static
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
-                Log.i("isMyServiceRunning?", true + "");
+                Log.i("isLoadCoinServiceRunn?", true + "");
                 return true;
             }
         }
-        Log.i("isMyServiceRunning?", false + "");
+        Log.i("isLoadCoinServiceRunn?", false + "");
         return false;
     }
 
@@ -92,15 +92,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         stopService(mServiceIntent);
+
         Log.i("MAINACT", "onDestroy!");
         super.onDestroy();
 
     }
 
-    public void loadCoins() {
+    @Override
+    protected void onPause() {
+        stopService(mServiceIntent);
+
+        Log.i("MAINACT", "onPause!");
+        super.onPause();
+    }
+
+    public void loadCoins() { //TODO: make static
         mSensorService = new LoadCoinService();
         mServiceIntent = new Intent(MainActivity.this, mSensorService.getClass());
-        if (!isMyServiceRunning(mSensorService.getClass())) {
+        if (!isLoadCoinServiceRunning(mSensorService.getClass())) {
             startService(mServiceIntent);
         }
     }
