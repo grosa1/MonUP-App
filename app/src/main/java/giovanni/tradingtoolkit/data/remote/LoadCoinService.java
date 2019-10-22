@@ -114,16 +114,14 @@ public class LoadCoinService extends Service {
                 if (response.isSuccessful()) {
                     List<Coin> body = response.body();
                     if (null != body) {
-                        //isConnected = true;
                         coins = body;
                         storeCache(coins);
-                        //CoinListWidget.refresh(LoadCoinService.this);
+                        CoinListWidget.updateWidget(context);
                     }
                 } else {
                     restoreCache();
                     int statusCode = response.code();
                     Log.e("ERROR_CODE", String.valueOf(statusCode));
-
                 }
             }
 
@@ -135,8 +133,6 @@ public class LoadCoinService extends Service {
                 Log.e("REQUEST_ERROR", t.toString());
             }
         });
-
-        CoinListWidget.updateWidget(context);
     }
 
     private void restoreCache() {
