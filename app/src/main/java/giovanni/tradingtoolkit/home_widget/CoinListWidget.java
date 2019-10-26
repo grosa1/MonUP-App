@@ -11,6 +11,7 @@ import android.os.Build;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 import giovanni.tradingtoolkit.R;
+import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
 import giovanni.tradingtoolkit.data.remote.LoadCoinService;
 
 /**
@@ -66,7 +67,7 @@ public class CoinListWidget extends AppWidgetProvider {
     }
 
     public static void refresh(Context context) {
-        Toast.makeText(context, R.string.widget_refreshed, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, R.string.widget_refreshed, Toast.LENGTH_SHORT).show();
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         ComponentName watchWidget;
         watchWidget = new ComponentName(context, CoinListWidget.class);
@@ -81,42 +82,24 @@ public class CoinListWidget extends AppWidgetProvider {
     public static void updateWidget(Context context) {
         Intent intent = new Intent(context, CoinListWidget.class);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
-        // since it seems the onUpdate() is only fired on that:
         int[] ids = AppWidgetManager.getInstance(context.getApplicationContext()).getAppWidgetIds(new ComponentName(context.getApplicationContext(), CoinListWidget.class));
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
         context.sendBroadcast(intent);
         refresh(context);
+        stopService(context);
+    }
+
+    public static void runService(Context context) {
+        Intent i = new Intent(context, LoadCoinReceiver.class);
+        context.sendBroadcast(i);
+    }
+
+    public static void stopService(Context context) {
         Intent mServiceIntent;
         LoadCoinService mSensorService;
         mSensorService = new LoadCoinService();
         mServiceIntent = new Intent(context, mSensorService.getClass());
         context.stopService(mServiceIntent);
-    }
-
-    private static boolean isLoadCoinServiceRunning(Context context, Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static void runService(Context context) {
-        Intent mServiceIntent;
-        LoadCoinService mSensorService;
-
-        mSensorService = new LoadCoinService();
-        mServiceIntent = new Intent(context, mSensorService.getClass());
-        if (!isLoadCoinServiceRunning(context, mSensorService.getClass())) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(mServiceIntent);
-            } else {
-                context.startService(mServiceIntent);
-            }
-        }
     }
 
     @Override

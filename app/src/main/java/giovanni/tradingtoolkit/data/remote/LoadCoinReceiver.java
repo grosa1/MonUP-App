@@ -3,21 +3,32 @@ package giovanni.tradingtoolkit.data.remote;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
+
+import giovanni.tradingtoolkit.R;
 
 public class LoadCoinReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO: This method is called when the BroadcastReceiver is receiving
-        // an Intent broadcast.
+        if (isConnected(context)) {
+            Intent i = new Intent(context, LoadCoinService.class);
+            ContextCompat.startForegroundService(context, i);
+        } else {
+            Toast.makeText(context, R.string.not_connected, Toast.LENGTH_SHORT).show();
+        }
+    }
 
-        Log.i(LoadCoinReceiver.class.getSimpleName(), "Service Stops! Oooooooooooooppppssssss!!!!");
-        //context.startService(new Intent(context, LoadCoinService.class));
-        Intent i = new Intent(context, LoadCoinService.class);
-        ContextCompat.startForegroundService(context, i);
-
-        //throw new UnsupportedOperationException("Not yet implemented");
+    public boolean isConnected(Context context) {
+        ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        NetworkInfo networkInfo = null;
+        if (connectivityManager != null) {
+            networkInfo = connectivityManager.getActiveNetworkInfo();
+        }
+        return networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected();
     }
 }

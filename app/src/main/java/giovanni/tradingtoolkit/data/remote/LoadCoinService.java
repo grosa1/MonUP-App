@@ -45,7 +45,7 @@ public class LoadCoinService extends Service {
     public static String currency;
     private List<Coin> coins;
     private CoinMarketCapService coinDataService;
-    private static Context context;
+    private Context context;
 
     public LoadCoinService() {
 
@@ -59,8 +59,6 @@ public class LoadCoinService extends Service {
 
     @Override
     public void onCreate() {
-        Toast.makeText(this, "Invoke background service onCreate method.", Toast.LENGTH_LONG).show();
-
         context = getApplicationContext();
         String CHANNEL_ID = "my_channel_01";
         NotificationChannel channel = null;
@@ -101,7 +99,6 @@ public class LoadCoinService extends Service {
         super.onDestroy();
     }
 
-
     public void loadCoinList(String currencyType, String limit) throws IOException {
         this.coinDataService.getList(currencyType, limit).enqueue(new Callback<List<Coin>>() {
             @Override
@@ -117,6 +114,7 @@ public class LoadCoinService extends Service {
                         coins = body;
                         storeCache(coins);
                         CoinListWidget.updateWidget(context);
+                        Toast.makeText(context, R.string.widget_refreshed, Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     restoreCache();
@@ -127,9 +125,7 @@ public class LoadCoinService extends Service {
 
             @Override
             public void onFailure(Call<List<Coin>> call, Throwable t) {
-                //isConnected = false;
                 restoreCache();
-                // ToastManager.create(getApplicationContext(), getResources().getString(R.string.coins_request_error));
                 Log.e("REQUEST_ERROR", t.toString());
             }
         });

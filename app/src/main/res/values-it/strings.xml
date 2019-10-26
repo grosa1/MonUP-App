@@ -31,4 +31,5 @@
     <string name="coin_removed">Coin rimossa</string>
     <string name="coin_added_to_observer">"Coin aggiunta all'osservatore: "</string>
     <string name="coin_already_observed">Coin già osservata</string>
+    <string name="not_connected">Controlla la connessione e riprova</string>
 </resources>

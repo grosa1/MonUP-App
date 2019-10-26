@@ -285,7 +285,7 @@ public class CoinsFragment extends Fragment {
 
                     int statusCode = response.code();
                     Log.e("ERROR_CODE", String.valueOf(statusCode));
-                    ToastManager.create(getContext(), getResources().getString(R.string.coins_request_error));
+                    //ToastManager.create(getContext(), getResources().getString(R.string.coins_request_error));
                 }
             }
 
@@ -298,7 +298,7 @@ public class CoinsFragment extends Fragment {
                 if (pullDown != null) {
                     pullDown.setRefreshing(false);
                 }
-                ToastManager.create(getContext(), getResources().getString(R.string.coins_request_error));
+                //ToastManager.create(getContext(), getResources().getString(R.string.coins_request_error));
                 Log.e("REQUEST_ERROR", t.toString());
             }
         });

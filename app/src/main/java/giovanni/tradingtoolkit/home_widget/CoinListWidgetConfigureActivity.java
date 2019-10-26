@@ -63,8 +63,6 @@ public class CoinListWidgetConfigureActivity extends Activity {
                 Intent resultValue = new Intent();
                 resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, getWidgetNumber());
                 setResult(RESULT_OK, resultValue);
-            } else {
-                makeToast(getResources().getString(R.string.widget_refreshed));
             }
             CoinListWidget.updateWidget(context);
             storePreferences();

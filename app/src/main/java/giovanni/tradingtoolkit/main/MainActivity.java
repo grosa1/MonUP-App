@@ -24,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.calculator.CalculatorFragment;
+import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
 import giovanni.tradingtoolkit.data.remote.LoadCoinService;
 import giovanni.tradingtoolkit.home_widget.CoinListWidgetConfigureActivity;
 import giovanni.tradingtoolkit.marketprices.CoinsFragment;
@@ -76,28 +77,12 @@ public class MainActivity extends AppCompatActivity {
         this.loadCoins();
     }
 
-    @Override
-    protected void onDestroy() {
-        stopService(mServiceIntent);
-
-        Log.i("MAINACT", "onDestroy!");
-        super.onDestroy();
-
-    }
-
-    @Override
-    protected void onPause() {
-        stopService(mServiceIntent);
-
-        Log.i("MAINACT", "onPause!");
-        super.onPause();
-    }
-
     public void loadCoins() { //TODO: make static
         mSensorService = new LoadCoinService();
         mServiceIntent = new Intent(MainActivity.this, mSensorService.getClass());
         if (!isLoadCoinServiceRunning(mSensorService.getClass())) {
-            startService(mServiceIntent);
+            Intent i = new Intent(this, LoadCoinReceiver.class);
+            this.sendBroadcast(i);
         }
     }
 

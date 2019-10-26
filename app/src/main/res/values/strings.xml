@@ -57,5 +57,6 @@
     <string name="incorrect_coin_name">Insert correct name or select once from list</string>
     <string name="no_active_widget">Add widget in home first</string>
     <string name="widget_refreshed">Refreshed</string>
+    <string name="not_connected">Check your connection and retry</string>
 
 </resources>
