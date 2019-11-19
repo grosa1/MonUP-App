@@ -28,6 +28,7 @@ import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
 import giovanni.tradingtoolkit.data.remote.LoadCoinService;
 import giovanni.tradingtoolkit.home_widget.CoinListWidgetConfigureActivity;
 import giovanni.tradingtoolkit.marketprices.CoinsFragment;
+import giovanni.tradingtoolkit.news.NewsFragment;
 import giovanni.tradingtoolkit.settings.AboutActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private int[] tabIcons = {
             //R.drawable.ic_notifications_black_24dp,
             R.drawable.ic_marketplace_black_24dp,
-            R.drawable.ic_tools_black_24dp
+            R.drawable.ic_tools_black_24dp,
+            R.drawable.ic_news
     };
 
     Intent mServiceIntent;
@@ -164,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
         //tabLayout.getTabAt(2).setIcon(tabIcons[2]);
     }
 
@@ -178,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.addFrag(CoinsFragment.newInstance(), "");
         adapter.addFrag(CalculatorFragment.newInstance(), "");
+        adapter.addFrag(NewsFragment.newInstance(), "");
 
         viewPager.setAdapter(adapter);
     }
