@@ -38,10 +38,8 @@
 
     <ListView
         android:id="@+id/news_list"
-        android:name="giovanni.tradingtoolkit.marketprices.CoinsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="giovanni.tradingtoolkit.marketprices.CoinsFragment"
         tools:listitem="@layout/news_list_item"
         android:divider="@android:color/transparent"
         android:dividerHeight="0sp" />

@@ -19,7 +19,7 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="10"
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
@@ -29,7 +29,9 @@
             android:id="@+id/news_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
+            android:layout_gravity="start"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
             android:layout_weight="2"
             android:text="@string/news_title_place_holder"
             android:textSize="18sp" />
@@ -38,9 +40,10 @@
             android:id="@+id/news_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
             android:layout_weight="8"
-            android:gravity="end"
+            android:gravity="start"
             android:text="@string/price_place_holder"
             android:textSize="16sp" />
 

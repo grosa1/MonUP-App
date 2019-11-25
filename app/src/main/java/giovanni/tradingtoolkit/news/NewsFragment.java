@@ -1,21 +1,30 @@
 package giovanni.tradingtoolkit.news;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import giovanni.tradingtoolkit.R;
+import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
+import giovanni.tradingtoolkit.data.remote.LoadNewsReceiver;
+import giovanni.tradingtoolkit.data.remote.LoadNewsService;
 import giovanni.tradingtoolkit.main.ToastManager;
+import io.cryptocontrol.cryptonewsapi.models.Article;
 
 public class NewsFragment extends Fragment {
 
@@ -37,6 +46,13 @@ public class NewsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //ArrayAdapter<Article> newsAdapter = new NewsAdapter();
+
+        //listView.setAdapter(R.id.news_list, intent);
+        Context context = this.getContext();
+        Intent i = new Intent(context, LoadNewsService.class);
+        ContextCompat.startForegroundService(context, i);
     }
 
     @Override
@@ -82,5 +98,10 @@ public class NewsFragment extends Fragment {
             AlertDialog alert11 = builder1.create();
             alert11.show();
         }
+    }
+
+    public static void runService(Context context) {
+        Intent i = new Intent(context, LoadNewsReceiver.class);
+        context.sendBroadcast(i);
     }
 }
