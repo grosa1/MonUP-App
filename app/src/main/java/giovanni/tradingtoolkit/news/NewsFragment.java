@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import javax.security.auth.login.LoginException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +38,8 @@ public class NewsFragment extends Fragment {
     @BindView(R.id.text_news)
     TextView textNews;
 
+    private Context context;
+
     public NewsFragment() {
 
     }
@@ -50,9 +55,8 @@ public class NewsFragment extends Fragment {
         //ArrayAdapter<Article> newsAdapter = new NewsAdapter();
 
         //listView.setAdapter(R.id.news_list, intent);
-        Context context = this.getContext();
-        Intent i = new Intent(context, LoadNewsService.class);
-        ContextCompat.startForegroundService(context, i);
+        //runService(context);
+
     }
 
     @Override
@@ -61,6 +65,13 @@ public class NewsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_news, container, false);
         ButterKnife.bind(this, view);
+
+        context = this.getContext();
+
+        btnRefresh.setOnClickListener(v -> {
+            Log.e("API-RES", "Refresh");
+            runService(context);
+        });
 
         return view;
     }
@@ -100,7 +111,7 @@ public class NewsFragment extends Fragment {
         }
     }
 
-    public static void runService(Context context) {
+    public void runService(Context context) {
         Intent i = new Intent(context, LoadNewsReceiver.class);
         context.sendBroadcast(i);
     }
