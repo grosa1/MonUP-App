@@ -75,13 +75,13 @@ public class LoadNewsService extends Service {
                 CryptoControlApi api = new CryptoControlApi(API_KEY);
 
                 // Connect to a self-hosted proxy server (to improve performance) that points to cryptocontrol.io
-                CryptoControlApi apiProxy = new CryptoControlApi(API_KEY, "http://cryptocontrol_proxy/api/v1/public");
+                //CryptoControlApi api = new CryptoControlApi(API_KEY, "http://cryptocontrol_proxy/api/v1/public");
 
                 // Enable sentiment datapoints
-                api.enableSentiment();
+                //api.enableSentiment(); //TODO: REMOVE
 
                 // Get top crypto news
-                api.getLatestNews(new CryptoControlApi.OnResponseHandler<List<Article>>() {
+                api.getTopNews(new CryptoControlApi.OnResponseHandler<List<Article>>() {
                     public void onSuccess(List<Article> body) {
                         Log.e("API-RES", "InSuccess" + body);
                         for (Article article : body) {
