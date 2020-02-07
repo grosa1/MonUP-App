@@ -72,6 +72,7 @@ public class LoadNewsService extends Service {
 //                        }
                         Log.d(TAG, "onSuccess News: " + news);
                         storeCache(news);
+                        onDestroy();
                     }
 
                     public void onFailure(Exception e) {
