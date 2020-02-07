@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.widget.Toast;
 
 import giovanni.tradingtoolkit.R;
@@ -16,7 +15,6 @@ public class LoadNewsReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (isConnected(context)) {
-            Log.e("API-RES", "LoadReceiver: ");
             Intent i = new Intent(context, LoadNewsService.class);
             ContextCompat.startForegroundService(context, i);
         } else {

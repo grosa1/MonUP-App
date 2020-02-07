@@ -1,14 +1,7 @@
 package giovanni.tradingtoolkit.news;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
-import android.util.LayoutDirection;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +11,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -33,7 +25,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolki
     private Context context;
     private ArticleItemListener itemListener;
 
-    public NewsListAdapter(Context context, List<Article> news, ArticleItemListener itemListener) {
+    NewsListAdapter(Context context, List<Article> news, ArticleItemListener itemListener) {
         this.news = news;
         this.context = context;
         this.itemListener = itemListener;
@@ -62,7 +54,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolki
             background = ResourcesLoader.getColorFromId(context, R.color.materialWhite);
         }
         holder.layout.setBackgroundColor(background);
-
     }
 
     @Override
@@ -73,7 +64,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolki
         return 0;
     }
 
-    public void updateNewsList(List<Article> items) {
+    void updateNewsList(List<Article> items) {
         news = items;
         notifyDataSetChanged();
     }
@@ -91,11 +82,10 @@ public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolki
         public ImageView icon;
         @BindView(R.id.article_title)
         public TextView title;
-
         @BindView(R.id.news_list_item)
         public LinearLayout layout;
 
-        public ViewHolder(View itemView, giovanni.tradingtoolkit.news.NewsListAdapter.ArticleItemListener articleItemListener) {
+        ViewHolder(View itemView, giovanni.tradingtoolkit.news.NewsListAdapter.ArticleItemListener articleItemListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemListener = articleItemListener;
