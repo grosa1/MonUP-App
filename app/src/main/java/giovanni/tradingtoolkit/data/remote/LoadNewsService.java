@@ -11,9 +11,16 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import giovanni.tradingtoolkit.data.model.Coin;
+import giovanni.tradingtoolkit.main.SharedPrefs;
 import io.cryptocontrol.cryptonewsapi.models.Article;
 import io.cryptocontrol.cryptonewsapi.CryptoControlApi;
 import io.cryptocontrol.cryptonewsapi.models.CoinDetail;
@@ -32,7 +39,6 @@ public class LoadNewsService extends Service {
 
     public LoadNewsService() {
 
-        Log.e("API-RES", "LoadNewsService: ");
     }
 
     @Override
@@ -43,7 +49,6 @@ public class LoadNewsService extends Service {
 
     @Override
     public void onCreate() {
-        Log.e("API-RES", "LoadNewsService: ");
         context = getApplicationContext();
         String CHANNEL_ID = "my_channel_01";
         NotificationChannel channel = null;
@@ -69,7 +74,6 @@ public class LoadNewsService extends Service {
 
             @Override
             public void run() {
-                Log.e("API-RES", "OnstartCommand: ");
 
                 // Connect to the CryptoControl API
                 CryptoControlApi api = new CryptoControlApi(API_KEY);
@@ -82,11 +86,12 @@ public class LoadNewsService extends Service {
 
                 // Get top crypto news
                 api.getTopNews(new CryptoControlApi.OnResponseHandler<List<Article>>() {
-                    public void onSuccess(List<Article> body) {
-                        Log.e("API-RES", "InSuccess" + body);
-                        for (Article article : body) {
-                            Log.e("API-RES", "onSuccess: " + article.getTitle());
-                        }
+                    public void onSuccess(List<Article> news) {
+//                        for (Article article : news) {
+//                            Log.e("API-RESPONSE", "onSuccess News: " + article.getTitle());
+//                        }
+                        Log.e("API-RESPONSE", "onSuccess News: " + news);
+                        storeCache(news);
                     }
 
                     public void onFailure(Exception e) {
@@ -96,21 +101,7 @@ public class LoadNewsService extends Service {
                 });
 
 
-//                // Get top crypto news
-//                api.getTopNews(new CryptoControlApi.OnResponseHandler<List<Article>>() {
-//                    public void onSuccess(List<Article> body) {
-//                        Log.e("API-RES", "InSuccess" + body);
-//                        for (Article article : body) {
-//                            Log.e("API-RES", "onSuccess: " + article.getTitle());
-//                        }
-//                    }
-//
-//                    public void onFailure(Exception e) {
-//                        Log.e("API-RES", "Failed " + e);
-//                        e.printStackTrace();
-//                    }
-//                });
-
+                //TODO: Not yet implemented Apis
 //                // Get latest tweets for bitcoin
 //                api.getLatestTweetsByCoin("bitcoin", new CryptoControlApi.OnResponseHandler<List<Tweet>>() {
 //                    @Override
@@ -175,16 +166,17 @@ public class LoadNewsService extends Service {
     }
 
 //    private void restoreCache() {
-//        String serialCoins = SharedPrefs.restoreString(getApplicationContext(), SharedPrefs.KEY_COINS_CACHE); //TODO controllare getApplicationContext
-//        if (!serialCoins.isEmpty()) {
-//            Type listType = new TypeToken<ArrayList<Coin>>() {
+//        String serialNews = SharedPrefs.restoreString(getApplicationContext(), SharedPrefs.KEY_NEWS_CACHE); //TODO controllare getApplicationContext
+//        if (!serialNews.isEmpty()) {
+//            Type listType = new TypeToken<ArrayList<Article>>() {
 //            }.getType();
-//            coins = (new Gson()).fromJson(serialCoins, listType);
+//            news = (new Gson()).fromJson(serialNews, listType);
 //        }
 //    }
-//
-//    private void storeCache(final List<Coin> updatedCoins) {
-//        String serialCoins = (new Gson()).toJson(updatedCoins);
-//        SharedPrefs.storeString(getApplicationContext(), SharedPrefs.KEY_COINS_CACHE, serialCoins);
-//    }
+
+    private void storeCache(final List<Article> updatedNews) {
+        String serialNews = (new Gson()).toJson(updatedNews);
+        SharedPrefs.storeString(getApplicationContext(), SharedPrefs.KEY_NEWS_CACHE, serialNews);
+        Log.e("STORE", "storeCache: " + updatedNews );
+    }
 }

@@ -104,10 +104,6 @@ public class LoadCoinService extends Service {
             @Override
             public void onResponse(Call<List<Coin>> call, Response<List<Coin>> response) {
 
-                if (response.body() != null) { //TODO Rimuovere
-                    Log.d("RES", response.body().toString());
-                }
-
                 if (response.isSuccessful()) {
                     List<Coin> body = response.body();
                     if (null != body) {

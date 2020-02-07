@@ -61,4 +61,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'io.cryptocontrol:crypto-news-api:2.5.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
