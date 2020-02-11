@@ -1,15 +1,14 @@
 package giovanni.tradingtoolkit.home_widget;
 
-import android.app.ActivityManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.widget.RemoteViews;
 import android.widget.Toast;
+
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
 import giovanni.tradingtoolkit.data.remote.LoadCoinService;
@@ -67,7 +66,7 @@ public class CoinListWidget extends AppWidgetProvider {
     }
 
     public static void refresh(Context context) {
-        //Toast.makeText(context, R.string.widget_refreshed, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, R.string.widget_refreshed, Toast.LENGTH_SHORT).show();
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         ComponentName watchWidget;
         watchWidget = new ComponentName(context, CoinListWidget.class);

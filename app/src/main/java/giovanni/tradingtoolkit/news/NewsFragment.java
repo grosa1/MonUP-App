@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -73,6 +74,7 @@ public class NewsFragment extends Fragment {
         context = this.getContext();
 
         btnRefresh.setOnClickListener(v -> {
+            Toast.makeText(context, R.string.news_refreshed, Toast.LENGTH_SHORT).show();
             refresh();
         });
 
@@ -105,8 +107,6 @@ public class NewsFragment extends Fragment {
                         dialog.cancel();
                         showInBrowser(article.getUrl());
                     });
-
-            builder1.setOnDismissListener(dialog -> refresh());
 
             AlertDialog alert11 = builder1.create();
             alert11.show();

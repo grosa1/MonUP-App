@@ -96,7 +96,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolki
         public void onClick(View view) {
             Article article = getItem(getAdapterPosition());
             itemListener.onArticleClick(article);
-            notifyDataSetChanged();
         }
     }
 

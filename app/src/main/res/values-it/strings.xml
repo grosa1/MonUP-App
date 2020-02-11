@@ -34,6 +34,7 @@
     <string name="not_connected">Controlla la connessione e riprova</string>
     <string name="news_text">News</string>
     <string name="news_title_place_holder">Titolo news</string>
-    <string name="news_text_place_holder" translatable="false">Nessun testo</string>
+    <string name="news_text_place_holder" translatable="false">"Nessun testo "</string>
     <string name="article_url">Vai all\'articolo originale</string>
+    <string name="news_refreshed">News aggiornate</string>
 </resources>

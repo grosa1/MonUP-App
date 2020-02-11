@@ -4,19 +4,12 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -27,12 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import butterknife.BindView;
-import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.Coin;
 import giovanni.tradingtoolkit.home_widget.CoinListWidget;
 import giovanni.tradingtoolkit.main.SharedPrefs;
-import giovanni.tradingtoolkit.main.ToastManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -110,7 +100,6 @@ public class LoadCoinService extends Service {
                         coins = body;
                         storeCache(coins);
                         CoinListWidget.updateWidget(context);
-                        Toast.makeText(context, R.string.widget_refreshed, Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     restoreCache();

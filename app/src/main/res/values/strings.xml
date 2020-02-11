@@ -64,5 +64,6 @@
     <string name="news_title_place_holder">News title</string>
     <string name="news_text_place_holder">No text</string>
     <string name="article_url">Go to original post</string>
+    <string name="news_refreshed">News refreshed</string>
 
 </resources>

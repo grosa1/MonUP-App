@@ -26,6 +26,8 @@ import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.calculator.CalculatorFragment;
 import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
 import giovanni.tradingtoolkit.data.remote.LoadCoinService;
+import giovanni.tradingtoolkit.data.remote.LoadNewsReceiver;
+import giovanni.tradingtoolkit.data.remote.LoadNewsService;
 import giovanni.tradingtoolkit.home_widget.CoinListWidgetConfigureActivity;
 import giovanni.tradingtoolkit.marketprices.CoinsFragment;
 import giovanni.tradingtoolkit.news.NewsFragment;
@@ -47,7 +49,9 @@ public class MainActivity extends AppCompatActivity {
     };
 
     Intent mServiceIntent;
-    LoadCoinService mSensorService;
+    LoadCoinService CoinService;
+    LoadNewsService NewsService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,18 +81,28 @@ public class MainActivity extends AppCompatActivity {
 
 
         this.loadCoins();
+        this.loadNews();
     }
 
     public void loadCoins() { //TODO: make static
-        mSensorService = new LoadCoinService();
-        mServiceIntent = new Intent(MainActivity.this, mSensorService.getClass());
-        if (!isLoadCoinServiceRunning(mSensorService.getClass())) {
+        CoinService = new LoadCoinService();
+        mServiceIntent = new Intent(MainActivity.this, CoinService.getClass());
+        if (!isLoadServiceRunning(CoinService.getClass())) {
             Intent i = new Intent(this, LoadCoinReceiver.class);
             this.sendBroadcast(i);
         }
     }
 
-    private boolean isLoadCoinServiceRunning(Class<?> serviceClass) { //TODO: make static
+    public void loadNews() { //TODO: make static
+        NewsService = new LoadNewsService();
+        mServiceIntent = new Intent(MainActivity.this, NewsService.getClass());
+        if (!isLoadServiceRunning(NewsService.getClass())) {
+            Intent i = new Intent(this, LoadNewsReceiver.class);
+            this.sendBroadcast(i);
+        }
+    }
+
+    private boolean isLoadServiceRunning(Class<?> serviceClass) { //TODO: make static
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
