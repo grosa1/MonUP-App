@@ -66,7 +66,7 @@ public class NewsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        runService(context);
+        //runService(context);
         restoreCache();
 
         View view = inflater.inflate(R.layout.news_list_fragment, container, false);
@@ -81,10 +81,9 @@ public class NewsFragment extends Fragment {
         //SET PULL DOWN LISTENER
         pullDown.setOnRefreshListener(this::refresh);
 
-        listAdapter.updateNewsList(news);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(listAdapter);
-        listAdapter.notifyDataSetChanged();
+        listAdapter.updateNewsList(news);
 
         return view;
     }
@@ -126,7 +125,6 @@ public class NewsFragment extends Fragment {
     public void runService(Context context) {
         Intent i = new Intent(context, LoadNewsReceiver.class);
         context.sendBroadcast(i);
-        listAdapter.notifyDataSetChanged();
         restoreCache();
     }
 
