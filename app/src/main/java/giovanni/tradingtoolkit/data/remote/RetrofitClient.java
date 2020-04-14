@@ -21,7 +21,7 @@ public class RetrofitClient {
     }
 
     public static CoinMarketCapService getCoinMarketCapService() {
-        return RetrofitClient.getClient("https://api.coinmarketcap.com/").create(CoinMarketCapService.class);
+        return RetrofitClient.getClient("https://pro-api.coinmarketcap.com/").create(CoinMarketCapService.class);
     }
 
     public static CryptoCompareService getCryptoCompareService() {

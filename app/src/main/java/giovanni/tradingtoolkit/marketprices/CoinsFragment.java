@@ -2,6 +2,7 @@ package giovanni.tradingtoolkit.marketprices;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -31,12 +32,9 @@ import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.Coin;
 import giovanni.tradingtoolkit.data.model.Variation;
 import giovanni.tradingtoolkit.data.remote.CoinMarketCapService;
-import giovanni.tradingtoolkit.data.remote.LoadCoinService;
 import giovanni.tradingtoolkit.data.remote.RetrofitClient;
-import giovanni.tradingtoolkit.main.MainActivity;
-import giovanni.tradingtoolkit.main.SharedPrefs;
 import giovanni.tradingtoolkit.main.ProgressDialogManager;
-import giovanni.tradingtoolkit.main.ToastManager;
+import giovanni.tradingtoolkit.main.SharedPrefs;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -255,9 +253,13 @@ public class CoinsFragment extends Fragment {
     public void loadCoinList(String currencyType, String limit) throws IOException {
         this.coinDataService.getList(currencyType, limit).enqueue(new Callback<List<Coin>>() {
             @Override
-            public void onResponse(Call<List<Coin>> call, Response<List<Coin>> response) {
+            public void onResponse(@NonNull Call<List<Coin>> call, @NonNull Response<List<Coin>> response) {
+                Log.e("LOADCOINLIST", "onResponse: " + response);
+                Log.e("LOADCOINLIST", "onResponse: " + call);
 
-                Log.d("RES", response.body().toString());
+                if (response.body() != null) {
+                    Log.d("RES", response.body().toString());
+                }
 
                 if (response.isSuccessful()) {
                     List<Coin> body = response.body();
@@ -335,11 +337,7 @@ public class CoinsFragment extends Fragment {
 
     private boolean storeCache(final List<Coin> updatedCoins) {
         String serialCoins = (new Gson()).toJson(updatedCoins);
-        if (SharedPrefs.storeString(getContext(), SharedPrefs.KEY_COINS_CACHE, serialCoins)) {
-            return true;
-        }
-
-        return false;
+        return SharedPrefs.storeString(getContext(), SharedPrefs.KEY_COINS_CACHE, serialCoins);
     }
 
     private void resetSpinner() {

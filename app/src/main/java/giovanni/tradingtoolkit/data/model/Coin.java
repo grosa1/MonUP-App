@@ -1,8 +1,9 @@
 package giovanni.tradingtoolkit.data.model;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.Objects;
 
 /**
  * Created by giiio on 17/12/2017.
@@ -182,7 +183,7 @@ public class Coin {
 
         Coin coin = (Coin) o;
 
-        return id != null ? id.equals(coin.id) : coin.id == null;
+        return Objects.equals(id, coin.id);
     }
 
     @Override

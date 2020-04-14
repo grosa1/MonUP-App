@@ -36,7 +36,6 @@ public class LoadCoinService extends Service {
     private List<Coin> coins;
     private CoinMarketCapService coinDataService;
     private Context context;
-
     public LoadCoinService() {
 
     }
