@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.Coin;
+import giovanni.tradingtoolkit.data.model.ResponseData;
 import giovanni.tradingtoolkit.data.model.Variation;
 import giovanni.tradingtoolkit.data.remote.CoinMarketCapService;
 import giovanni.tradingtoolkit.data.remote.RetrofitClient;
@@ -251,9 +252,9 @@ public class CoinsFragment extends Fragment {
     }
 
     public void loadCoinList(String currencyType, String limit) throws IOException {
-        this.coinDataService.getList(currencyType, limit).enqueue(new Callback<List<Coin>>() {
+        this.coinDataService.getList(currencyType, limit).enqueue(new Callback<ResponseData>() {
             @Override
-            public void onResponse(@NonNull Call<List<Coin>> call, @NonNull Response<List<Coin>> response) {
+            public void onResponse(@NonNull Call<ResponseData> call, @NonNull Response<ResponseData> response) {
                 Log.e("LOADCOINLIST", "onResponse: " + response);
                 Log.e("LOADCOINLIST", "onResponse: " + call);
 
@@ -262,10 +263,10 @@ public class CoinsFragment extends Fragment {
                 }
 
                 if (response.isSuccessful()) {
-                    List<Coin> body = response.body();
+                    ResponseData body = response.body();
                     if (null != body) {
                         isConnected = true;
-                        coins = body;
+                        coins = body.getData();
                         storeCache(coins);
                         listAdapter.updateCoinsList(coins);
                     }
@@ -292,7 +293,7 @@ public class CoinsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Coin>> call, Throwable t) {
+            public void onFailure(Call<ResponseData> call, Throwable t) {
                 isConnected = false;
                 restoreCache();
                 ProgressDialogManager.close();

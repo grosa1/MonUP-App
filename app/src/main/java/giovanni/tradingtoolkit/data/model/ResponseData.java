@@ -1,42 +1,34 @@
+
 package giovanni.tradingtoolkit.data.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Objects;
-
-/**
- * Created by giiio on 17/12/2017.
- */
+import java.util.List;
 
 public class ResponseData {
-    @SerializedName("id")
+
+    @SerializedName("status")
     @Expose
-    private String id;
+    private Status status;
+    @SerializedName("data")
+    @Expose
+    private List<Coin> data = null;
 
-
-    public ResponseData(String id) {
-
-        this.id = id;
+    public Status getStatus() {
+        return status;
     }
 
-    public String getId() {
-        return id;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ResponseData coin = (ResponseData) o;
-
-        return Objects.equals(id, coin.id);
+    public List<Coin> getData() {
+        return data;
     }
 
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+    public void setData(List<Coin> data) {
+        this.data = data;
     }
+
 }

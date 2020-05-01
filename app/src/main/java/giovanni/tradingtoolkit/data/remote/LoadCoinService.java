@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 import giovanni.tradingtoolkit.data.model.Coin;
+import giovanni.tradingtoolkit.data.model.ResponseData;
 import giovanni.tradingtoolkit.home_widget.CoinListWidget;
 import giovanni.tradingtoolkit.main.SharedPrefs;
 import retrofit2.Call;
@@ -89,14 +90,14 @@ public class LoadCoinService extends Service {
     }
 
     public void loadCoinList(String currencyType, String limit) throws IOException {
-        this.coinDataService.getList(currencyType, limit).enqueue(new Callback<List<Coin>>() {
+        this.coinDataService.getList(currencyType, limit).enqueue(new Callback<ResponseData>() {
             @Override
-            public void onResponse(Call<List<Coin>> call, Response<List<Coin>> response) {
+            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
 
                 if (response.isSuccessful()) {
-                    List<Coin> body = response.body();
+                    ResponseData body = response.body();
                     if (null != body) {
-                        coins = body;
+                        coins = body.getData();
                         storeCache(coins);
                         CoinListWidget.updateWidget(context);
                     }
@@ -108,7 +109,7 @@ public class LoadCoinService extends Service {
             }
 
             @Override
-            public void onFailure(Call<List<Coin>> call, Throwable t) {
+            public void onFailure(Call<ResponseData> call, Throwable t) {
                 restoreCache();
                 Log.e("REQUEST_ERROR", t.toString());
             }

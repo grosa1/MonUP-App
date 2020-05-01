@@ -1,179 +1,198 @@
+
 package giovanni.tradingtoolkit.data.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
 import java.util.Objects;
 
-/**
- * Created by giiio on 17/12/2017.
- */
-
 public class Coin {
+
     @SerializedName("id")
     @Expose
-    private String id;
+    private Integer id;
     @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("symbol")
     @Expose
     private String symbol;
-    @SerializedName("rank")
+    @SerializedName("slug")
     @Expose
-    private int rank;
-    @SerializedName("price_usd")
+    private String slug;
+    @SerializedName("num_market_pairs")
     @Expose
-    private Double priceUsd;
-    @SerializedName("price_btc")
+    private Integer numMarketPairs;
+    @SerializedName("date_added")
     @Expose
-    private String priceBtc;
-    @SerializedName("24h_volume_usd")
+    private String dateAdded;
+    @SerializedName("tags")
     @Expose
-    private String _24hVolumeUsd;
-    @SerializedName("market_cap_usd")
-    @Expose
-    private String marketCapUsd;
-    @SerializedName("available_supply")
-    @Expose
-    private String availableSupply;
-    @SerializedName("total_supply")
-    @Expose
-    private String totalSupply;
+    private List<String> tags = null;
     @SerializedName("max_supply")
     @Expose
-    private String maxSupply;
-    @SerializedName("percent_change_1h")
+    private Integer maxSupply;
+    @SerializedName("circulating_supply")
     @Expose
-    private String percentChange1h;
-    @SerializedName("percent_change_24h")
+    private Integer circulatingSupply;
+    @SerializedName("total_supply")
     @Expose
-    private String percentChange24h;
-    @SerializedName("percent_change_7d")
+    private Integer totalSupply;
+    @SerializedName("platform")
     @Expose
-    private String percentChange7d;
+    private String platform;
+    @SerializedName("cmc_rank")
+    @Expose
+    private Integer cmcRank;
     @SerializedName("last_updated")
     @Expose
     private String lastUpdated;
-    @SerializedName("price_eur")
+    @SerializedName("quote")
     @Expose
-    private Double priceEur;
-    @SerializedName("24h_volume_eur")
-    @Expose
-    private String _24hVolumeEur;
-    @SerializedName("market_cap_eur")
-    @Expose
-    private String marketCapEur;
+    private Quote quote;
 
-    public Coin(String id,
-                String name,
-                String symbol,
-                int rank,
-                Double priceUsd,
-                String priceBtc,
-                String _24hVolumeUsd,
-                String marketCapUsd,
-                String availableSupply,
-                String totalSupply,
-                String maxSupply,
-                String percentChange1h,
-                String percentChange24h,
-                String percentChange7d,
-                String lastUpdated,
-                Double priceEur,
-                String _24hVolumeEur,
-                String marketCapEur) {
-
-        this.id = id;
-        this.name = name;
-        this.symbol = symbol;
-        this.rank = rank;
-        this.priceUsd = priceUsd;
-        this.priceBtc = priceBtc;
-        this._24hVolumeUsd = _24hVolumeUsd;
-        this.marketCapUsd = marketCapUsd;
-        this.availableSupply = availableSupply;
-        this.totalSupply = totalSupply;
-        this.maxSupply = maxSupply;
-        this.percentChange1h = percentChange1h;
-        this.percentChange24h = percentChange24h;
-        this.percentChange7d = percentChange7d;
-        this.lastUpdated = lastUpdated;
-        this.priceEur = priceEur;
-        this._24hVolumeEur = _24hVolumeEur;
-        this.marketCapEur = marketCapEur;
+    public Integer getId() {
+        return id;
     }
 
-    public String getId() {
-        return id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getSymbol() {
         return symbol;
     }
 
-    public int getRank() {
-        return rank;
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
-    public Double getPriceUsd() {
-        return priceUsd;
+    public String getSlug() {
+        return slug;
     }
 
-    public String getPriceBtc() {
-        return priceBtc;
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
-    public String get_24hVolumeUsd() {
-        return _24hVolumeUsd;
+    public Integer getNumMarketPairs() {
+        return numMarketPairs;
     }
 
-    public String getMarketCapUsd() {
-        return marketCapUsd;
+    public void setNumMarketPairs(Integer numMarketPairs) {
+        this.numMarketPairs = numMarketPairs;
     }
 
-    public String getAvailableSupply() {
-        return availableSupply;
+    public String getDateAdded() {
+        return dateAdded;
     }
 
-    public String getTotalSupply() {
-        return totalSupply;
+    public void setDateAdded(String dateAdded) {
+        this.dateAdded = dateAdded;
     }
 
-    public String getMaxSupply() {
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public Integer getMaxSupply() {
         return maxSupply;
     }
 
-    public double getPercentChange1h() {
-        return null != percentChange1h ? Double.parseDouble(percentChange1h) : 0D;
+    public void setMaxSupply(Integer maxSupply) {
+        this.maxSupply = maxSupply;
     }
 
-    public double getPercentChange24h() {
-        return null != percentChange24h ? Double.parseDouble(percentChange24h) : 0D;
+    public Integer getCirculatingSupply() {
+        return circulatingSupply;
     }
 
-    public double getPercentChange7d() {
-        return null != percentChange7d ? Double.parseDouble(percentChange7d) : 0D;
+    public void setCirculatingSupply(Integer circulatingSupply) {
+        this.circulatingSupply = circulatingSupply;
+    }
+
+    public Integer getTotalSupply() {
+        return totalSupply;
+    }
+
+    public void setTotalSupply(Integer totalSupply) {
+        this.totalSupply = totalSupply;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public Integer getRank() {
+        return cmcRank;
+    }
+
+    public void setCmcRank(Integer cmcRank) {
+        this.cmcRank = cmcRank;
     }
 
     public String getLastUpdated() {
         return lastUpdated;
     }
 
+    public void setLastUpdated(String lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public Object getQuote() {
+        return quote;
+    }
+
+    public void setQuote(Quote quote) {
+        this.quote = quote;
+    }
+
+    public Double getPriceUsd() {
+        return quote.getUSD().getPrice();
+    }
+
     public Double getPriceEur() {
-        return priceEur;
+        return quote.getUSD().getPrice();
+    } //TODO: find a method to calculate them
+
+    public String getPriceBtc() {
+        return (quote.getUSD().getPrice()).toString();
+    }//TODO: find a method to calculate them
+
+
+    public Double getPercentChange1h() {
+        String percentChange1h = "0.00"; //TODO: find a method to calculate them
+
+        return null != percentChange1h ? Double.parseDouble(percentChange1h) : 0D;
     }
 
-    public String get_24hVolumeEur() {
-        return _24hVolumeEur;
+    public Double getPercentChange24h() {
+        String percentChange24h = "0.00"; //TODO: find a method to calculate them
+
+        return null != percentChange24h ? Double.parseDouble(percentChange24h) : 0D;
     }
 
-    public String getMarketCapEur() {
-        return marketCapEur;
+    public Double getPercentChange7d() {
+        String percentChange7d = "0.00"; //TODO: find a method to calculate them
+
+        return null != percentChange7d ? Double.parseDouble(percentChange7d) : 0D;
     }
 
     @Override
