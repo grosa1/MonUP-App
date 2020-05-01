@@ -32,16 +32,16 @@ public class Coin {
     private List<String> tags = null;
     @SerializedName("max_supply")
     @Expose
-    private Integer maxSupply;
+    private Float maxSupply;
     @SerializedName("circulating_supply")
     @Expose
-    private Integer circulatingSupply;
+    private Float circulatingSupply;
     @SerializedName("total_supply")
     @Expose
-    private Integer totalSupply;
+    private Float totalSupply;
     @SerializedName("platform")
     @Expose
-    private String platform;
+    private Object platform;
     @SerializedName("cmc_rank")
     @Expose
     private Integer cmcRank;
@@ -51,6 +51,33 @@ public class Coin {
     @SerializedName("quote")
     @Expose
     private Quote quote;
+
+    public Coin(int id,
+                String name,
+                String symbol,
+                int rank,
+                Double priceUsd,
+                String priceBtc,
+                String _24hVolumeUsd,
+                String marketCapUsd,
+                String availableSupply,
+                Float totalSupply,
+                Float maxSupply,
+                String percentChange1h,
+                String percentChange24h,
+                String percentChange7d,
+                String lastUpdated,
+                Double priceEur,
+                String _24hVolumeEur,
+                String marketCapEur) {
+
+        this.id = id;
+        this.name = name;
+        this.symbol = symbol;
+        this.totalSupply = totalSupply;
+        this.maxSupply = maxSupply;
+        this.lastUpdated = lastUpdated;
+    }
 
     public Integer getId() {
         return id;
@@ -108,31 +135,31 @@ public class Coin {
         this.tags = tags;
     }
 
-    public Integer getMaxSupply() {
+    public Float getMaxSupply() {
         return maxSupply;
     }
 
-    public void setMaxSupply(Integer maxSupply) {
+    public void setMaxSupply(Float maxSupply) {
         this.maxSupply = maxSupply;
     }
 
-    public Integer getCirculatingSupply() {
+    public Float getCirculatingSupply() {
         return circulatingSupply;
     }
 
-    public void setCirculatingSupply(Integer circulatingSupply) {
+    public void setCirculatingSupply(Float circulatingSupply) {
         this.circulatingSupply = circulatingSupply;
     }
 
-    public Integer getTotalSupply() {
+    public Float getTotalSupply() {
         return totalSupply;
     }
 
-    public void setTotalSupply(Integer totalSupply) {
+    public void setTotalSupply(Float totalSupply) {
         this.totalSupply = totalSupply;
     }
 
-    public String getPlatform() {
+    public Object getPlatform() {
         return platform;
     }
 
