@@ -13,11 +13,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.Coin;
 import giovanni.tradingtoolkit.main.SharedPrefs;
@@ -101,7 +104,6 @@ public class CoinListWidgetConfigureActivity extends Activity {
         if (extras != null) {
             mAppWidgetId = extras.getInt(
                     AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-            Log.e("APPWIDGET", "onCreate: " + mAppWidgetId);
         }
 
         // If this activity was started with an intent without an app widget ID, finish with an error.
@@ -241,6 +243,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
         Type listType = new TypeToken<ArrayList<Coin>>() {
         }.getType();
         coins = (new Gson()).fromJson(serialCoins, listType);
+        Log.e("ERR: ", "loadSerialCoins: " + coins);
     }
 
     private void storeWidgetNumber() {
