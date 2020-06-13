@@ -37,4 +37,6 @@
     <string name="news_text_place_holder" translatable="false">"Nessun testo "</string>
     <string name="article_url">Vai all\'articolo originale</string>
     <string name="news_refreshed">News aggiornate</string>
+    <string name="reset_widget">Ripristina Widget</string>
+    <string name="widget_resetted">Widget ripristinato</string>
 </resources>
