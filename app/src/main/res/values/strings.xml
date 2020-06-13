@@ -45,6 +45,8 @@
     <!-- widget -->
     <string name="appwidget_text">CryptoTrading</string>
     <string name="configure">Configure Widget</string>
+    <string name="reset_widget">Reset Widget</string>
+    <string name="widget_resetted">Resetted Widget</string>
     <string name="add_widget">Add widget</string>
     <string name="add_coin">Add</string>
     <string name="configure_description">Look for a coin to add:</string>

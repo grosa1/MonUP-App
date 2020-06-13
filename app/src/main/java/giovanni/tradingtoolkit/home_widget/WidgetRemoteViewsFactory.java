@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.Coin;
 import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
@@ -50,7 +53,6 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
         getCoinsToShow();
         itemListener = coinSymbol -> {
             //TODO: handle click as in CoinListWidget for refresh and action at item click
-            Log.e("ITEM SELECTED", coinSymbol);
         };
         CoinsListAdapter coinsListAdapter = new CoinsListAdapter(context, coinsToShow, itemListener);
         coinsListAdapter.filterList(coinsToShow);
@@ -190,6 +192,7 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
 
     @Override
     public void onDestroy() {
-        SharedPrefs.storeString(context, SharedPrefs.KEY_WIDGET_ID, Integer.toString(CoinListWidgetConfigureActivity.INVALID_WIDGET_ID));
+        String INVALID_WIDGET_ID = Integer.toString(CoinListWidgetConfigureActivity.INVALID_WIDGET_ID);
+        SharedPrefs.storeString(context, SharedPrefs.KEY_WIDGET_ID, INVALID_WIDGET_ID);
     }
 }

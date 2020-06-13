@@ -1,6 +1,7 @@
 package giovanni.tradingtoolkit.main;
 
 import android.app.ActivityManager;
+import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
@@ -131,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
 //                return true;
 
             case R.id.configure_widget: {
+                // TODO integrate with CoinListWidgetConfigureActivity
                 String widgetId = SharedPrefs.restoreString(this, SharedPrefs.KEY_WIDGET_ID);
 
                 if (!widgetId.isEmpty()) {
@@ -140,6 +142,18 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, R.string.no_active_widget, Toast.LENGTH_SHORT).show();
                 }
+                return true;
+            }
+
+            case R.id.reset_widget: {
+                // TODO integrate with CoinListWidgetConfigureActivity
+                String widgetId = SharedPrefs.restoreString(this, SharedPrefs.KEY_WIDGET_ID);
+                AppWidgetHost host = new AppWidgetHost(this, 1);
+                host.deleteAppWidgetId(Integer.parseInt(widgetId));
+
+                SharedPrefs.storeString(this, SharedPrefs.KEY_WIDGET_COINS, null);
+                SharedPrefs.storeString(this, SharedPrefs.KEY_WIDGET_ID, null);
+                Toast.makeText(this, R.string.widget_resetted, Toast.LENGTH_SHORT).show();
                 return true;
             }
 
