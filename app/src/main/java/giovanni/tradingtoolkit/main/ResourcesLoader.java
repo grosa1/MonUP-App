@@ -4,6 +4,11 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
+
+import java.lang.reflect.Field;
+
+import giovanni.tradingtoolkit.R;
 
 /**
  * Created by giiio on 17/12/2017.
@@ -30,5 +35,18 @@ public class ResourcesLoader {
 
     public static int getColorFromId(Context context, int resId) {
         return context.getResources().getColor(resId);
+    }
+
+    public static int getResId(String resName) {
+
+        try {
+            Class res = R.drawable.class;
+            Field field = res.getField(resName);
+
+            return field.getInt(null);
+        } catch (Exception e) {
+            Log.e("MyTag", "Failure to get drawable id.", e);
+            return -1;
+        }
     }
 }

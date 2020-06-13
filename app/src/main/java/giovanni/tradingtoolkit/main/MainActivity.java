@@ -1,8 +1,10 @@
 package giovanni.tradingtoolkit.main;
 
+import android.app.ActivityManager;
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,23 +15,22 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.calculator.CalculatorFragment;
+import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
+import giovanni.tradingtoolkit.data.remote.LoadCoinService;
+import giovanni.tradingtoolkit.data.remote.LoadNewsReceiver;
+import giovanni.tradingtoolkit.data.remote.LoadNewsService;
+import giovanni.tradingtoolkit.home_widget.CoinListWidgetConfigureActivity;
 import giovanni.tradingtoolkit.marketprices.CoinsFragment;
+import giovanni.tradingtoolkit.news.NewsFragment;
 import giovanni.tradingtoolkit.settings.AboutActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,8 +44,14 @@ public class MainActivity extends AppCompatActivity {
     private int[] tabIcons = {
             //R.drawable.ic_notifications_black_24dp,
             R.drawable.ic_marketplace_black_24dp,
-            R.drawable.ic_tools_black_24dp
+            R.drawable.ic_tools_black_24dp,
+            R.drawable.ic_news
     };
+
+    Intent mServiceIntent;
+    LoadCoinService CoinService;
+    LoadNewsService NewsService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +78,40 @@ public class MainActivity extends AppCompatActivity {
 //        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 //        Log.d("TIME", ChartActivity.timestamp.get(t).toString());
 //                Log.d("TSTAMP", dateFormat.format(d));
+
+
+        this.loadCoins();
+        this.loadNews();
+    }
+
+    public void loadCoins() { //TODO: make static
+        CoinService = new LoadCoinService();
+        mServiceIntent = new Intent(MainActivity.this, CoinService.getClass());
+        if (!isLoadServiceRunning(CoinService.getClass())) {
+            Intent i = new Intent(this, LoadCoinReceiver.class);
+            this.sendBroadcast(i);
+        }
+    }
+
+    public void loadNews() { //TODO: make static
+        NewsService = new LoadNewsService();
+        mServiceIntent = new Intent(MainActivity.this, NewsService.getClass());
+        if (!isLoadServiceRunning(NewsService.getClass())) {
+            Intent i = new Intent(this, LoadNewsReceiver.class);
+            this.sendBroadcast(i);
+        }
+    }
+
+    private boolean isLoadServiceRunning(Class<?> serviceClass) { //TODO: make static
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                Log.i("isLoadCoinServiceRunn?", true + "");
+                return true;
+            }
+        }
+        Log.i("isLoadCoinServiceRunn?", false + "");
+        return false;
     }
 
     @Override
@@ -89,18 +130,57 @@ public class MainActivity extends AppCompatActivity {
 //            case R.id.settings:
 //                return true;
 
-            case R.id.about:
+            case R.id.configure_widget: {
+                String widgetId = SharedPrefs.restoreString(this, SharedPrefs.KEY_WIDGET_ID);
+
+                if (!widgetId.isEmpty()) {
+                    Intent configIntent = new Intent(this, CoinListWidgetConfigureActivity.class);
+                    configIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, Integer.parseInt(widgetId));
+                    startActivity(configIntent);
+                } else {
+                    Toast.makeText(this, R.string.no_active_widget, Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+
+            case R.id.about: {
                 Intent intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
 
+            }
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+//    @Override
+//    protected void onPause() {
+//
+//        Intent intent = new Intent(MainActivity.this, LoadCoinService.class);
+//        startService(intent);
+//        super.onPause();
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//
+//        Intent intent = new Intent(MainActivity.this, LoadCoinService.class);
+//        startService(intent);
+//        super.onDestroy();
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//
+//        Intent intent = new Intent(MainActivity.this, LoadCoinService.class);
+//        stopService(intent);
+//        super.onResume();
+//    }
+
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
         //tabLayout.getTabAt(2).setIcon(tabIcons[2]);
     }
 
@@ -115,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.addFrag(CoinsFragment.newInstance(), "");
         adapter.addFrag(CalculatorFragment.newInstance(), "");
+        adapter.addFrag(NewsFragment.newInstance(), "");
 
         viewPager.setAdapter(adapter);
     }

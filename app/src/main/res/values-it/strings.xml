@@ -7,9 +7,6 @@
     <string name="chart_button_7gg">7 giorni</string>
     <string name="chart_button_90gg">90 giorni</string>
     <string name="coins_request_error">Errore: riprova più tardi</string>
-    <string name="hour">oraria</string>
-    <string name="daily">giornaliera</string>
-    <string name="weekly">settimanale</string>
     <string name="percentage_variation_title">Variazione</string>
     <string name="price_title">Prezzo</string>
     <string name="coin_name">Moneta</string>
@@ -20,4 +17,24 @@
     <string name="calculator_calculate">Calcola</string>
     <string name="calculator_purchase_price">Prezzo di acquisto:</string>
     <string name="calculator_selling_price">Prezzo di vendita:</string>
+    <string name="appwidget_text">CryptoTrading</string>
+    <string name="configure">Configura Widget</string>
+    <string name="add_widget">Aggiungi widget</string>
+    <string name="add_coin">Aggiungi</string>
+    <string name="search_coin_hint">Cerca una Coin</string>
+    <string name="coin_observed">Clicca su una Coin per rimuoverla:</string>
+    <string name="configure_description">Cerca una Coin da aggiungere</string>
+    <string name="no_coin_to_observe">Inserire almeno una Coin</string>
+    <string name="incorrect_coin_name">Inserire nome Coin corretto o selezionane una dalla lista</string>
+    <string name="no_active_widget">Aggiungi prima il widget nella home</string>
+    <string name="widget_refreshed">Aggiornato</string>
+    <string name="coin_removed">Coin rimossa</string>
+    <string name="coin_added_to_observer">"Coin aggiunta all'osservatore: "</string>
+    <string name="coin_already_observed">Coin già osservata</string>
+    <string name="not_connected">Controlla la connessione e riprova</string>
+    <string name="news_text">News</string>
+    <string name="news_title_place_holder">Titolo news</string>
+    <string name="news_text_place_holder" translatable="false">"Nessun testo "</string>
+    <string name="article_url">Vai all\'articolo originale</string>
+    <string name="news_refreshed">News aggiornate</string>
 </resources>

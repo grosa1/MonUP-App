@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/article_info"
+    android:divider="@drawable/news_divider" android:dividerHeight="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:fontFamily="sans-serif">
+
+    <TextView
+        android:id="@+id/article_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:text="@string/news_title_place_holder"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="22sp" />
+
+</LinearLayout>

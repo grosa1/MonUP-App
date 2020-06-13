@@ -2,6 +2,7 @@ package giovanni.tradingtoolkit.marketprices;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -29,12 +30,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.Coin;
+import giovanni.tradingtoolkit.data.model.ResponseData;
 import giovanni.tradingtoolkit.data.model.Variation;
 import giovanni.tradingtoolkit.data.remote.CoinMarketCapService;
 import giovanni.tradingtoolkit.data.remote.RetrofitClient;
-import giovanni.tradingtoolkit.main.SharedPrefs;
 import giovanni.tradingtoolkit.main.ProgressDialogManager;
-import giovanni.tradingtoolkit.main.ToastManager;
+import giovanni.tradingtoolkit.main.SharedPrefs;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -251,17 +252,21 @@ public class CoinsFragment extends Fragment {
     }
 
     public void loadCoinList(String currencyType, String limit) throws IOException {
-        this.coinDataService.getList(currencyType, limit).enqueue(new Callback<List<Coin>>() {
+        this.coinDataService.getList(currencyType, limit).enqueue(new Callback<ResponseData>() {
             @Override
-            public void onResponse(Call<List<Coin>> call, Response<List<Coin>> response) {
+            public void onResponse(@NonNull Call<ResponseData> call, @NonNull Response<ResponseData> response) {
+                Log.e("LOADCOINLIST", "onResponse: " + response);
+                Log.e("LOADCOINLIST", "onResponse: " + call);
 
-                Log.d("RES", response.body().toString());
+                if (response.body() != null) {
+                    Log.d("RES", response.body().toString());
+                }
 
                 if (response.isSuccessful()) {
-                    List<Coin> body = response.body();
+                    ResponseData body = response.body();
                     if (null != body) {
                         isConnected = true;
-                        coins = body;
+                        coins = body.getData();
                         storeCache(coins);
                         listAdapter.updateCoinsList(coins);
                     }
@@ -283,12 +288,12 @@ public class CoinsFragment extends Fragment {
 
                     int statusCode = response.code();
                     Log.e("ERROR_CODE", String.valueOf(statusCode));
-                    ToastManager.create(getContext(), getResources().getString(R.string.coins_request_error));
+                    //ToastManager.create(getContext(), getResources().getString(R.string.coins_request_error));
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Coin>> call, Throwable t) {
+            public void onFailure(Call<ResponseData> call, Throwable t) {
                 isConnected = false;
                 restoreCache();
                 ProgressDialogManager.close();
@@ -296,7 +301,7 @@ public class CoinsFragment extends Fragment {
                 if (pullDown != null) {
                     pullDown.setRefreshing(false);
                 }
-                ToastManager.create(getContext(), getResources().getString(R.string.coins_request_error));
+                //ToastManager.create(getContext(), getResources().getString(R.string.coins_request_error));
                 Log.e("REQUEST_ERROR", t.toString());
             }
         });
@@ -333,11 +338,7 @@ public class CoinsFragment extends Fragment {
 
     private boolean storeCache(final List<Coin> updatedCoins) {
         String serialCoins = (new Gson()).toJson(updatedCoins);
-        if (SharedPrefs.storeString(getContext(), SharedPrefs.KEY_COINS_CACHE, serialCoins)) {
-            return true;
-        }
-
-        return false;
+        return SharedPrefs.storeString(getContext(), SharedPrefs.KEY_COINS_CACHE, serialCoins);
     }
 
     private void resetSpinner() {

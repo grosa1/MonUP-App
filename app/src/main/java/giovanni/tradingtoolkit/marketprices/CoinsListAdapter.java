@@ -30,7 +30,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
     private Context context;
     private CoinItemListener itemListener;
 
-    CoinsListAdapter(Context context, List<Coin> coins, CoinItemListener itemListener) {
+    public CoinsListAdapter(Context context, List<Coin> coins, CoinItemListener itemListener) {
         this.coins = coins;
         this.context = context;
         this.itemListener = itemListener;
@@ -128,7 +128,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         return coins.size();
     }
 
-    void updateCoinsList(List<Coin> items) {
+    public void updateCoinsList(List<Coin> items) {
         coins = items;
         notifyDataSetChanged();
     }
@@ -186,6 +186,11 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
     private Double roundToDecimalPlaces(Double value, int decimalPlaces) {
         Double shift = Math.pow(10, decimalPlaces);
         return Math.round(value * shift) / shift;
+    }
+
+    public void filterList (ArrayList<Coin> filteredList) {
+        coins = filteredList;
+        notifyDataSetChanged();
     }
 }
 

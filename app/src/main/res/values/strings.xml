@@ -23,15 +23,15 @@
     <!-- coins list -->
     <string name="title_dashboard" translatable="false">Market Prices</string>
     <string name="coins_request_error">Error: please try later</string>
-    <string name="daily">daily</string>
-    <string name="weekly">weekly</string>
+    <string name="daily" translatable="false">Day</string>
+    <string name="weekly" translatable="false">Week</string>
     <string name="list_position_place_holder" translatable="false">n.</string>
     <string name="coin_name_place_holder" translatable="false">Coin name</string>
     <string name="price_place_holder" translatable="false">000000</string>
     <string name="percentage_variation_place_holder" translatable="false">+100.00%</string>
     <string name="imageView_content_description" translatable="false" />
     <string name="rank" translatable="false">Rank</string>
-    <string name="hour">hour</string>
+    <string name="hour" translatable="false">Hour</string>
     <string name="percentage_variation_sym" translatable="false">&#37; </string>
     <string name="percentage_variation_title">Change</string>
     <string name="price_title">Price</string>
@@ -41,5 +41,29 @@
     <string name="github" translatable="false">https://github.com/grosa1/crypto-trading-toolkit-android</string>
     <string name="about_thanks">Thanks to:</string>
     <string name="about_support">Support the app</string>
+
+    <!-- widget -->
+    <string name="appwidget_text">CryptoTrading</string>
+    <string name="configure">Configure Widget</string>
+    <string name="add_widget">Add widget</string>
+    <string name="add_coin">Add</string>
+    <string name="configure_description">Look for a coin to add:</string>
+    <string name="search_coin_hint">Search Coin</string>
+    <string name="coin_already_observed">Coin is already in the Observer</string>
+    <string name="coin_added_to_observer">Coin added to the Observer: </string>
+    <string name="coin_removed">Coin removed</string>
+    <string name="coin_observed">Click on a coin observed to remove it:</string>
+    <string name="no_coin_to_observe">Insert at least one coin</string>
+    <string name="incorrect_coin_name">Insert correct name or select once from list</string>
+    <string name="no_active_widget">Add widget in home first</string>
+    <string name="widget_refreshed">Refreshed</string>
+    <string name="not_connected">Check your connection and retry</string>
+
+    <!-- news and article -->
+    <string name="news_text">News</string>
+    <string name="news_title_place_holder">News title</string>
+    <string name="news_text_place_holder">No text</string>
+    <string name="article_url">Go to original post</string>
+    <string name="news_refreshed">News refreshed</string>
 
 </resources>
