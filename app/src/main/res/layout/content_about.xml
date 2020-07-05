@@ -107,17 +107,37 @@
 
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/textView8"
-            android:layout_below="@id/textView5"
-            android:layout_marginTop="10dp"
+        <RelativeLayout
+            android:id="@+id/textView111"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/lightGreyMaterial" />
+            android:layout_height="64dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/textView112"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/textView113"
+                android:layout_alignParentStart="true"
+                android:gravity="center"
+                android:text="CryptoControl API" />
+
+            <TextView
+                android:id="@+id/textView113"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:autoLink="web"
+                android:gravity="center"
+                android:text="https://api-docs.cryptocontrol.io/" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/textView9"
-            android:layout_below="@id/textView8"
+            android:layout_below="@id/textView7"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:layout_marginLeft="15dp"
@@ -139,18 +159,12 @@
             android:text="@string/github"
             android:textIsSelectable="true" />
 
-        <ImageView
-            android:layout_below="@id/textView5"
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="0.5dp"
-            android:background="@color/lightGreyMaterial" />
-
-        <RelativeLayout
-            android:id="@+id/textView12"
+        <Space
+            android:id="@+id/space"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:gravity="left|center_vertical">
+        </Space>
 
             <TextView
                 android:id="@+id/textView13"
@@ -159,54 +173,85 @@
                 android:layout_above="@+id/textView14"
                 android:layout_alignParentStart="true"
                 android:gravity="center"
-                android:text="developed by Giovanni Rosa"
+                android:text="developed by"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_gravity="center">
 
             <TextView
                 android:id="@+id/textView14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:textColor="@color/colorPrimary"
+                android:gravity="center"
+                android:text="Giovanni Rosa:"
+                android:textStyle="italic"
+                android:layout_marginEnd="10dp"/>
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:autoLink="email"
                 android:gravity="center"
-                android:text="giovanni.rosa1@virgilio.it" />
+                android:text="g.rosa1@studenti.unimol.it" />
+        </LinearLayout>
 
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/textView15"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="left|center_vertical">
-
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_gravity="center">
             <TextView
                 android:id="@+id/textView16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/textView17"
-                android:layout_alignParentStart="true"
-                android:gravity="center"
-                android:text="contributors:"
+                android:layout_alignParentBottom="true"
                 android:textColor="@color/colorPrimary"
-                android:textStyle="bold" />
+                android:gravity="center"
+                android:text="Federico Zappone:"
+                android:textStyle="italic"
+                android:layout_marginEnd="10dp"/>
 
             <TextView
                 android:id="@+id/textView17"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:autoLink="email"
                 android:gravity="center"
-                android:textStyle="italic"
+                android:text="f.zappone1@studenti.unimol.it" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_gravity="center">
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:textColor="@color/colorPrimary"
-
-                android:text="Stefano Dalla Palma" />
-
-        </RelativeLayout>
-
-
+                android:gravity="center"
+                android:text="Stefano Dalla Palma"
+                android:textStyle="italic"
+                android:layout_marginEnd="10dp"/>
+        </LinearLayout>
 
     </LinearLayout>
-
 </android.support.v4.widget.NestedScrollView>
