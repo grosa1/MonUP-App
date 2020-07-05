@@ -16,13 +16,14 @@ import com.google.gson.Gson;
 import java.util.List;
 import java.util.Objects;
 
+import giovanni.tradingtoolkit.BuildConfig;
 import giovanni.tradingtoolkit.main.SharedPrefs;
 import io.cryptocontrol.cryptonewsapi.CryptoControlApi;
 import io.cryptocontrol.cryptonewsapi.models.Article;
 
 public class LoadNewsService extends Service {
 
-    private static final String API_KEY = "d97b2bdfeb879304ab5fbbbbba5cd87b";
+    private static final String API_KEY = BuildConfig.CRYPTOCONTROL_NEWS_API_KEY;
     private static final String TAG = "LoadNewsService";
 
     public LoadNewsService() {
