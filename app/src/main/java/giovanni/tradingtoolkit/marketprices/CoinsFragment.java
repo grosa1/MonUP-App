@@ -255,8 +255,6 @@ public class CoinsFragment extends Fragment {
         this.coinDataService.getList(currencyType, limit).enqueue(new Callback<ResponseData>() {
             @Override
             public void onResponse(@NonNull Call<ResponseData> call, @NonNull Response<ResponseData> response) {
-                Log.e("LOADCOINLIST", "onResponse: " + response);
-                Log.e("LOADCOINLIST", "onResponse: " + call);
 
                 if (response.body() != null) {
                     Log.d("RES", response.body().toString());

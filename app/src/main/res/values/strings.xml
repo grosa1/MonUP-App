@@ -1,5 +1,5 @@
 <resources>
-    <string name="title_activity_about" translatable="false">Crypto trading tools - v1.8</string>
+    <string name="title_activity_about" translatable="false">Crypto trading tools - v2.0</string>
     <string name="app_name" translatable="false">CryptoTrading toolkit</string>
     <string name="action_settings" translatable="false">About</string>
 
@@ -40,7 +40,8 @@
     <!-- about -->
     <string name="github" translatable="false">https://github.com/grosa1/crypto-trading-toolkit-android</string>
     <string name="about_thanks">Thanks to:</string>
-    <string name="about_support">Support the app</string>
+    <string name="about_support">Support the app!</string>
+    <string name="developed_by">Developed by</string>
 
     <!-- widget -->
     <string name="appwidget_text">CryptoTrading</string>

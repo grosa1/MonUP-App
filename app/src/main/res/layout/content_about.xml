@@ -10,6 +10,7 @@
 
     <LinearLayout
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -139,7 +140,7 @@
             android:id="@+id/textView9"
             android:layout_below="@id/textView7"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="56dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:gravity="center"
@@ -159,30 +160,26 @@
             android:text="@string/github"
             android:textIsSelectable="true" />
 
-        <Space
-            android:id="@+id/space"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:gravity="left|center_vertical">
-        </Space>
 
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/textView14"
-                android:layout_alignParentStart="true"
-                android:gravity="center"
-                android:text="developed by"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_above="@+id/textView14"
+            android:layout_alignParentStart="true"
+            android:layout_width="match_parent"
+            android:layout_marginTop="16dp"
+            android:layout_height="28dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:text="@string/developed_by"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
             android:layout_gravity="center">
 
             <TextView
@@ -210,8 +207,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
             android:layout_gravity="center">
             <TextView
                 android:id="@+id/textView16"
@@ -238,8 +235,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
             android:layout_gravity="center">
             <TextView
                 android:id="@+id/textView22"
@@ -252,6 +249,7 @@
                 android:textStyle="italic"
                 android:layout_marginEnd="10dp"/>
         </LinearLayout>
+
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
