@@ -11,6 +11,11 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -45,11 +50,11 @@ public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolki
 
         Picasso.get().load(article.getThumbnail()).into(holder.icon);
         holder.title.setText(article.getTitle());
+        holder.date.setText(this.formatArticleDate(article.getPublishedAt()));
 
         int background;
         if (position % 2 == 0) {
             background = ResourcesLoader.getColorFromId(context, R.color.lightGreyMaterial);
-            holder.layout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         } else {
             background = ResourcesLoader.getColorFromId(context, R.color.materialWhite);
         }
@@ -82,6 +87,8 @@ public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolki
         public ImageView icon;
         @BindView(R.id.article_title)
         public TextView title;
+        @BindView(R.id.article_date)
+        public TextView date;
         @BindView(R.id.news_list_item)
         public LinearLayout layout;
 
@@ -97,6 +104,20 @@ public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolki
             Article article = getItem(getAdapterPosition());
             itemListener.onArticleClick(article);
         }
+    }
+
+    private String formatArticleDate(String articleDate) {
+        String dateText = "";
+
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            Date artDate = format.parse(articleDate);
+            dateText = DateFormat.getDateInstance(DateFormat.MEDIUM).format(artDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return dateText;
     }
 
     //TODO: Implement filters

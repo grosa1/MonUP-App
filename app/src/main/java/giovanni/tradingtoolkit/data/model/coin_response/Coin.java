@@ -124,15 +124,15 @@ public class Coin {
     }
 
     public Double getPercentChange1h() {
-        return this.getQuote().getCurrencyQuote().getPercentChange1h();
+        return this.roundToDecimalPlaces(this.getQuote().getCurrencyQuote().getPercentChange1h(), 2);
     }
 
     public Double getPercentChange24h() {
-        return this.getQuote().getCurrencyQuote().getPercentChange24h();
+        return this.roundToDecimalPlaces(this.getQuote().getCurrencyQuote().getPercentChange24h(), 2);
     }
 
     public Double getPercentChange7d() {
-        return this.getQuote().getCurrencyQuote().getPercentChange7d();
+        return this.roundToDecimalPlaces(this.getQuote().getCurrencyQuote().getPercentChange7d(), 2);
     }
 
     @Override
@@ -148,5 +148,10 @@ public class Coin {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    private Double roundToDecimalPlaces(Double value, int decimalPlaces) {
+        Double shift = Math.pow(10, decimalPlaces);
+        return Math.round(value * shift) / shift;
     }
 }

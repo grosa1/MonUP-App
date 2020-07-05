@@ -24,6 +24,7 @@ import java.util.List;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.coin_response.Coin;
 import giovanni.tradingtoolkit.main.SharedPrefs;
+import giovanni.tradingtoolkit.main.ToastManager;
 import giovanni.tradingtoolkit.marketprices.CoinsListAdapter;
 
 /**
@@ -49,7 +50,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
         String requested_coin = textArea.getText().toString();
         filter(requested_coin);
         if (filteredList.size() != 1) {
-            makeToast(getResources().getString(R.string.incorrect_coin_name));
+            ToastManager.create(this, R.string.incorrect_coin_name);
         } else {
             setToObserve(filteredList.get(SELECTED_COIN).getSymbol());
         }
@@ -57,7 +58,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
 
     View.OnClickListener addWidgetBtnClickListener = v -> {
         if (coinsToObserve.isEmpty()) {
-            makeToast(getResources().getString(R.string.no_coin_to_observe));
+            ToastManager.create(this, getResources().getString(R.string.no_coin_to_observe));
         } else {
             if (getWidgetNumber() == INVALID_WIDGET_ID) {
                 storeWidgetNumber();
@@ -201,7 +202,7 @@ public class CoinListWidgetConfigureActivity extends Activity {
     private void refreshObservedCoinRecycleView() {
         CoinsListAdapter.CoinItemListener removeCoinListener = coinSymbol -> {
             removeCoinBySymbol(coinSymbol);
-            makeToast(getResources().getString(R.string.coin_removed));
+            ToastManager.create(this, getResources().getString(R.string.coin_removed));
         };
         CoinsListAdapter coinsListAdapter = new CoinsListAdapter(context, coinsToShow, removeCoinListener);
         observedCoinListView.setAdapter(coinsListAdapter);
@@ -213,14 +214,10 @@ public class CoinListWidgetConfigureActivity extends Activity {
             coinsToObserve = coinsToObserve + "," + coinSymbol.toUpperCase();
             loadObservedCoinListView();
             refreshObservedCoinRecycleView();
-            makeToast(getResources().getString(R.string.coin_added_to_observer) + coinSymbol);
+            ToastManager.create(this, getResources().getString(R.string.coin_added_to_observer) + coinSymbol);
         } else {
-            makeToast(getResources().getString(R.string.coin_already_observed));
+            ToastManager.create(this, getResources().getString(R.string.coin_already_observed));
         }
-    }
-
-    private void makeToast(String text_content) {
-        Toast.makeText(this, text_content, Toast.LENGTH_SHORT).show();
     }
 
     private void storePreferences() {
