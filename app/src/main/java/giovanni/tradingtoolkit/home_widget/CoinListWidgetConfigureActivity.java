@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import giovanni.tradingtoolkit.R;
-import giovanni.tradingtoolkit.data.model.Coin;
+import giovanni.tradingtoolkit.data.model.coin_response.Coin;
 import giovanni.tradingtoolkit.main.SharedPrefs;
 import giovanni.tradingtoolkit.marketprices.CoinsListAdapter;
 

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import giovanni.tradingtoolkit.R;
-import giovanni.tradingtoolkit.data.model.Coin;
+import giovanni.tradingtoolkit.data.model.coin_response.Coin;
 import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
 import giovanni.tradingtoolkit.main.ResourcesLoader;
 import giovanni.tradingtoolkit.main.SharedPrefs;

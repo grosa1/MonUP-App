@@ -1,10 +1,10 @@
 
-package giovanni.tradingtoolkit.data.model;
+package giovanni.tradingtoolkit.data.model.coin_response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class USD {
+public class Price {
 
     @SerializedName("price")
     @Expose
