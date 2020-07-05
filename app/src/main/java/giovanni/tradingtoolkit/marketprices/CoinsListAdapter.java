@@ -64,7 +64,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
             holder.coinPrice.setText(String.format(Locale.getDefault(), "%.2f €", roundToDecimalPlaces(coin.getPriceEur(), 2)));
             holder.coinPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         } else if (CoinsFragment.currency.equals("BTC")) {
-            holder.coinPrice.setText(String.format(Locale.getDefault(), "%.6f B", roundToDecimalPlaces(coin.getPriceUsd(), 6)));
+            holder.coinPrice.setText(String.format(Locale.getDefault(), "%.6f B", roundToDecimalPlaces(coin.getPriceBtc(), 6)));
             holder.coinPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
         } else {
             holder.coinPrice.setText(String.format(Locale.getDefault(), "%.2f $", roundToDecimalPlaces(coin.getPriceUsd(), 2)));
@@ -72,45 +72,47 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         }
 
         // Set percentage 1 hour
-        Double variation = coin.getPercentChange1h();
+        Double coinPercentChange1h = coin.getPercentChange1h();
         int colorId;
-        String perc;
-        if (variation < 0) {
+        String percentage1h;
+        if (coinPercentChange1h < 0) {
             colorId = R.color.materialRed;
-            perc = String.format(Locale.getDefault(), "- %.2f%s", Math.abs(variation), "%");
+            percentage1h = String.format(Locale.getDefault(), "- %.2f%s", Math.abs(coinPercentChange1h), "%");
         } else {
             colorId = R.color.materialGreen;
-            perc = String.format(Locale.getDefault(), "+ %.2f%s", variation, "%");
+            percentage1h = String.format(Locale.getDefault(), "+ %.2f%s", coinPercentChange1h, "%");
         }
         holder.percentageVariation1h.setBackgroundColor(context.getResources().getColor(colorId));
-        holder.percentageVariation1h.setText(perc);
+        holder.percentageVariation1h.setText(percentage1h);
         holder.percentageVariation1h.setTextColor(Color.WHITE);
 
         // Set percentage 1 day
-        variation = coin.getPercentChange24h();
-        if (variation < 0) {
+        Double coinPercentChange24h = coin.getPercentChange24h();
+        String percentage24h;
+        if (coinPercentChange24h < 0) {
             colorId = R.color.materialRed;
-            perc = String.format(Locale.getDefault(), "- %.2f%s", Math.abs(variation), "%");
+            percentage24h = String.format(Locale.getDefault(), "- %.2f%s", Math.abs(coinPercentChange24h), "%");
         } else {
             colorId = R.color.materialGreen;
-            perc = String.format(Locale.getDefault(), "+ %.2f%s", variation, "%");
+            percentage24h = String.format(Locale.getDefault(), "+ %.2f%s", coinPercentChange24h, "%");
         }
         holder.percentageVariation1d.setBackgroundColor(context.getResources().getColor(colorId));
-        holder.percentageVariation1d.setText(perc);
+        holder.percentageVariation1d.setText(percentage24h);
         holder.percentageVariation1d.setTextColor(Color.WHITE);
 
 
         // Set percentage 1 week
-        variation = coin.getPercentChange7d();
-        if (variation < 0) {
+        Double coinPercentChange7d = coin.getPercentChange7d();
+        String percentage7d;
+        if (coinPercentChange7d < 0) {
             colorId = R.color.materialRed;
-            perc = String.format(Locale.getDefault(), "- %.2f%s", Math.abs(variation), "%");
+            percentage7d = String.format(Locale.getDefault(), "- %.2f%s", Math.abs(coinPercentChange7d), "%");
         } else {
             colorId = R.color.materialGreen;
-            perc = String.format(Locale.getDefault(), "+ %.2f%s", variation, "%");
+            percentage7d = String.format(Locale.getDefault(), "+ %.2f%s", coinPercentChange7d, "%");
         }
         holder.percentageVariation1w.setBackgroundColor(context.getResources().getColor(colorId));
-        holder.percentageVariation1w.setText(perc);
+        holder.percentageVariation1w.setText(percentage7d);
         holder.percentageVariation1w.setTextColor(Color.WHITE);
 
         int background;
@@ -149,11 +151,11 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         @BindView(R.id.coin_name)
         public TextView coinName;
         @BindView(R.id.percentage_variation_1h)
-        public TextView percentageVariation1d;
-        @BindView(R.id.percentage_variation_1d)
-        public TextView percentageVariation1w;
-        @BindView(R.id.percentage_variation_1w)
         public TextView percentageVariation1h;
+        @BindView(R.id.percentage_variation_1d)
+        public TextView percentageVariation1d;
+        @BindView(R.id.percentage_variation_1w)
+        public TextView percentageVariation1w;
         @BindView(R.id.price)
         public TextView coinPrice;
         @BindView(R.id.icon)
@@ -173,15 +175,6 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
             notifyDataSetChanged();
         }
     }
-
-//    private Double computePercentageVariation(Double openPrice, Double currentPrice) {
-//        Double result = 0d;
-//        if(openPrice != null && currentPrice != null) {
-//            result = ((currentPrice - openPrice)/currentPrice)*100;
-//            //result = roundToDecimalPlaces(result, 2);
-//        }
-//        return result;
-//    }
 
     private Double roundToDecimalPlaces(Double value, int decimalPlaces) {
         Double shift = Math.pow(10, decimalPlaces);
