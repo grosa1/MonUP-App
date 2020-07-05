@@ -27,7 +27,7 @@
     <string name="no_coin_to_observe">Inserire almeno una Coin</string>
     <string name="incorrect_coin_name">Inserire nome Coin corretto o selezionane una dalla lista</string>
     <string name="no_active_widget">Aggiungi prima il widget nella home</string>
-    <string name="widget_refreshed">Aggiornato</string>
+    <string name="widget_refreshed">Widget aggiornato</string>
     <string name="coin_removed">Coin rimossa</string>
     <string name="coin_added_to_observer">"Coin aggiunta all'osservatore: "</string>
     <string name="coin_already_observed">Coin già osservata</string>

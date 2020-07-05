@@ -58,7 +58,7 @@
     <string name="no_coin_to_observe">Insert at least one coin</string>
     <string name="incorrect_coin_name">Insert correct name or select once from list</string>
     <string name="no_active_widget">Add widget in home first</string>
-    <string name="widget_refreshed">Refreshed</string>
+    <string name="widget_refreshed">Widget refreshed</string>
     <string name="not_connected">Check your connection and retry</string>
 
     <!-- news and article -->

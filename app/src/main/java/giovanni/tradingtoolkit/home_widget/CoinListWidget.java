@@ -11,6 +11,7 @@ import android.widget.RemoteViews;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
 import giovanni.tradingtoolkit.data.remote.LoadCoinService;
+import giovanni.tradingtoolkit.main.ToastManager;
 
 /**
  * Implementation of App Widget functionality.
@@ -54,6 +55,7 @@ public class CoinListWidget extends AppWidgetProvider {
         if (REFRESH_ON_CLICK.equals(intent.getAction())) {
             runService(context);
             refresh(context);
+            ToastManager.create(context, R.string.widget_refreshed);
         }
         super.onReceive(context, intent);
     }
@@ -65,7 +67,6 @@ public class CoinListWidget extends AppWidgetProvider {
     }
 
     public static void refresh(Context context) {
-//        ToastManager.create(context, R.string.widget_refreshed);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         ComponentName watchWidget;
         watchWidget = new ComponentName(context, CoinListWidget.class);
