@@ -30,6 +30,7 @@ import butterknife.ButterKnife;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.remote.LoadNewsReceiver;
 import giovanni.tradingtoolkit.main.SharedPrefs;
+import giovanni.tradingtoolkit.main.ToastManager;
 import io.cryptocontrol.cryptonewsapi.models.Article;
 
 public class NewsFragment extends Fragment {
@@ -74,7 +75,7 @@ public class NewsFragment extends Fragment {
         context = this.getContext();
 
         btnRefresh.setOnClickListener(v -> {
-            Toast.makeText(context, R.string.news_refreshed, Toast.LENGTH_SHORT).show();
+            ToastManager.create(context, R.string.news_refreshed);
             refresh();
         });
 

@@ -97,7 +97,7 @@ public class CalculatorFragment extends Fragment {
     }
 
     private void showValuesError() {
-        ToastManager.create(getContext(), getResources().getString(R.string.calculator_error));
+        ToastManager.create(getContext(), R.string.calculator_error);
     }
 
 }

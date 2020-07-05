@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import giovanni.tradingtoolkit.R;
+import giovanni.tradingtoolkit.main.ToastManager;
 
 public class LoadNewsReceiver extends BroadcastReceiver {
 
@@ -18,7 +19,7 @@ public class LoadNewsReceiver extends BroadcastReceiver {
             Intent i = new Intent(context, LoadNewsService.class);
             ContextCompat.startForegroundService(context, i);
         } else {
-            Toast.makeText(context, R.string.not_connected, Toast.LENGTH_SHORT).show();
+            ToastManager.create(context, R.string.not_connected);
         }
     }
 

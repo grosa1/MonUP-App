@@ -19,4 +19,8 @@ public class ToastManager {
         toastMessage.show();
     }
 
+    public static void create(Context c, int strResourceId) {
+        ToastManager.create(c, c.getResources().getString(strResourceId));
+    }
+
 }

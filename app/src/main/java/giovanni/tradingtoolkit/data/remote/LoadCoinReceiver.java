@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import giovanni.tradingtoolkit.R;
+import giovanni.tradingtoolkit.main.ToastManager;
 
 public class LoadCoinReceiver extends BroadcastReceiver {
 
@@ -19,7 +20,7 @@ public class LoadCoinReceiver extends BroadcastReceiver {
             Intent i = new Intent(context, LoadCoinService.class);
             ContextCompat.startForegroundService(context, i);
         } else {
-            Toast.makeText(context, R.string.not_connected, Toast.LENGTH_SHORT).show();
+            ToastManager.create(context, R.string.not_connected);
         }
     }
 

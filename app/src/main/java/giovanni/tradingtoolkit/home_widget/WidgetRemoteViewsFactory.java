@@ -14,6 +14,7 @@ import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.coin_response.Coin;
@@ -127,11 +128,14 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     }
 
     private String setPercentageText(Double value) {
-        String finalValue = Double.toString(value);
-        if (value > 0) {
-            finalValue = "+" + finalValue;
+        String percentage;
+        if (value < 0) {
+            percentage = String.format(Locale.getDefault(), "- %.2f%s", Math.abs(value), "%");
+        } else {
+            percentage = String.format(Locale.getDefault(), "+ %.2f%s", value, "%");
         }
-        return finalValue + "%";
+
+        return percentage;
     }
 
     private Coin getCoinBySymbol(String coinSymbol) {

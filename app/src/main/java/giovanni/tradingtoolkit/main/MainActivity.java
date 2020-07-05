@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.viewpager)
     ViewPager viewPager;
     private int[] tabIcons = {
-            //R.drawable.ic_notifications_black_24dp,
             R.drawable.ic_marketplace_black_24dp,
             R.drawable.ic_tools_black_24dp,
             R.drawable.ic_news
@@ -63,23 +62,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         setupViewPager(viewPager);
-        //viewPager.setCurrentItem(1);
 
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
-
-        //        1514505600
-//        int t = (int) e.getX();
-//        tvDate.setText();
-//        Timestamp tr = ChartActivity.timestamp.get(t);
-//        1517176991155
-//        String str = "1514505600000";
-//                        1516752000000
-//        Date d = new Date(Long.valueOf(str));
-//        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-//        Log.d("TIME", ChartActivity.timestamp.get(t).toString());
-//                Log.d("TSTAMP", dateFormat.format(d));
-
 
         this.loadCoins();
         this.loadNews();
@@ -125,12 +110,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-//            case R.id.update:
-//                return true;
-//
-//            case R.id.settings:
-//                return true;
-
             case R.id.configure_widget: {
                 // TODO integrate with CoinListWidgetConfigureActivity
                 String widgetId = SharedPrefs.restoreString(this, SharedPrefs.KEY_WIDGET_ID);
@@ -140,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     configIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, Integer.parseInt(widgetId));
                     startActivity(configIntent);
                 } else {
-                    Toast.makeText(this, R.string.no_active_widget, Toast.LENGTH_SHORT).show();
+                    ToastManager.create(this, R.string.no_active_widget);
                 }
                 return true;
             }
@@ -148,12 +127,18 @@ public class MainActivity extends AppCompatActivity {
             case R.id.reset_widget: {
                 // TODO integrate with CoinListWidgetConfigureActivity
                 String widgetId = SharedPrefs.restoreString(this, SharedPrefs.KEY_WIDGET_ID);
-                AppWidgetHost host = new AppWidgetHost(this, 1);
-                host.deleteAppWidgetId(Integer.parseInt(widgetId));
 
-                SharedPrefs.storeString(this, SharedPrefs.KEY_WIDGET_COINS, null);
-                SharedPrefs.storeString(this, SharedPrefs.KEY_WIDGET_ID, null);
-                Toast.makeText(this, R.string.widget_resetted, Toast.LENGTH_SHORT).show();
+                if (!widgetId.isEmpty()) {
+                    AppWidgetHost host = new AppWidgetHost(this, 1);
+                    host.deleteAppWidgetId(Integer.parseInt(widgetId));
+
+                    SharedPrefs.storeString(this, SharedPrefs.KEY_WIDGET_COINS, null);
+                    SharedPrefs.storeString(this, SharedPrefs.KEY_WIDGET_ID, null);
+                    ToastManager.create(this, R.string.widget_resetted);
+                } else {
+                    ToastManager.create(this, R.string.no_active_widget);
+                }
+
                 return true;
             }
 
@@ -200,12 +185,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        //adapter.addFrag(NotificationsFragment.newInstance(), "Notifications");
-        //adapter.addFrag(CoinsFragment.newInstance(""), "Market prices");
-        //adapter.addFrag(CalculatorFragment.newInstance(), "Tools");
-
-//        adapter.addFrag(CoinsFragment.newInstance(), getResources().getString(R.string.coins));
-//        adapter.addFrag(CalculatorFragment.newInstance(), getResources().getString(R.string.tools));
 
         adapter.addFrag(CoinsFragment.newInstance(), "");
         adapter.addFrag(CalculatorFragment.newInstance(), "");
