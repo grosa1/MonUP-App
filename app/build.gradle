@@ -9,7 +9,7 @@ android {
         versionCode 18
         versionName "1.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "COINMARKETCAP_API_KEY", "\"<REPLACE WITH COINMARKETCAP API KEY>\""
+        buildConfigField "String", "COINMARKETCAP_API_KEY", "\"" + System.getenv("COINMARKETCAP_API_KEY") + "\""
     }
     buildTypes {
         release {
