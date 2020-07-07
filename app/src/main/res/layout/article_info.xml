@@ -19,7 +19,6 @@
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"
         android:text="@string/news_title_place_holder"
-        android:fontFamily="sans-serif-medium"
-        android:textSize="22sp" />
+        android:textSize="20sp" />
 
 </LinearLayout>
