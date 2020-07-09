@@ -67,7 +67,7 @@
             android:text="@string/add_coin" />
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="160dp"
@@ -85,7 +85,7 @@
         android:textStyle="bold"
         android:text="@string/coin_observed" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/coins_observed_view"
         android:layout_width="match_parent"
         android:layout_height="240dp"

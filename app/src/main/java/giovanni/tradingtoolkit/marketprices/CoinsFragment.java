@@ -2,12 +2,6 @@ package giovanni.tradingtoolkit.marketprices;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +10,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,9 +30,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import giovanni.tradingtoolkit.R;
+import giovanni.tradingtoolkit.data.model.Variation;
 import giovanni.tradingtoolkit.data.model.coin_response.Coin;
 import giovanni.tradingtoolkit.data.model.coin_response.ResponseData;
-import giovanni.tradingtoolkit.data.model.Variation;
 import giovanni.tradingtoolkit.data.remote.CoinMarketCapService;
 import giovanni.tradingtoolkit.data.remote.RetrofitClient;
 import giovanni.tradingtoolkit.main.ProgressDialogManager;

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -13,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         }
         holder.coinIcon.setImageDrawable(drawable);
 
-        holder.coinPosition.setText(String.format("%s", String.valueOf(coin.getRank())));
+        holder.coinPosition.setText(String.format("%s", coin.getRank()));
         holder.coinName.setText(String.format("%s (%s)", coin.getName(), coin.getSymbol()));
 
         if (CoinsFragment.currency.equals("EUR")) {

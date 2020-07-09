@@ -2,10 +2,11 @@ package giovanni.tradingtoolkit.marketprices;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -140,13 +141,13 @@ public class ChartActivity extends AppCompatActivity {
         this.weekEntry = new ArrayList<>();
         this.monthEntry = new ArrayList<>();
         this.fullEntry = new ArrayList<>();
-        this.timestamp = new ArrayList<>();
+        timestamp = new ArrayList<>();
 
         ArrayList<Entry> entries = new ArrayList<>();
         int size = prices.size();
         for (int i = 0; i < size; i++) {
             entries.add(new Entry(i, prices.get(i).getClose().floatValue()));
-            this.timestamp.add(prices.get(i).getTime());
+            timestamp.add(prices.get(i).getTime());
 
             if (size - i <= WEEK)
                 this.weekEntry.add(entries.get(i));

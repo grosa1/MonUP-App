@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v4.content.ContextCompat;
-import android.widget.Toast;
+
+import androidx.core.content.ContextCompat;
 
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.main.ToastManager;

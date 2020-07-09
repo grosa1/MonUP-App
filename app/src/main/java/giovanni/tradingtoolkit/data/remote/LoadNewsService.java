@@ -8,8 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
 
 import com.google.gson.Gson;
 
@@ -32,7 +33,6 @@ public class LoadNewsService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
