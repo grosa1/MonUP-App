@@ -39,7 +39,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="end"
             android:text="@string/price_title"
             android:textAlignment="center"
             android:textColor="@android:color/white"
@@ -75,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"
-            tools:context="giovanni.tradingtoolkit.marketprices.CoinsFragment"
+            tools:context="pz_apps.monup.giovanni.monup.marketprices.CoinsFragment"
             tools:listitem="@layout/coin_list_item" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

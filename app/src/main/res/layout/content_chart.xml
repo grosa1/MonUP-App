@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="giovanni.tradingtoolkit.marketprices.ChartActivity"
+    tools:context="pz_apps.monup.marketprices.ChartActivity"
     tools:showIn="@layout/activity_chart">
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,7 +41,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="end"
             android:text="@string/chart_button_90gg"
             android:textAlignment="center"
             android:textColor="@android:color/white"

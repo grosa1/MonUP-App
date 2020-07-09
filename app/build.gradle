@@ -3,11 +3,11 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "giovanni.tradingtoolkit"
+        applicationId "pz_apps.monup"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 20
-        versionName "2.0"
+        versionCode 22
+        versionName "2.2"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
         Properties properties = new Properties()

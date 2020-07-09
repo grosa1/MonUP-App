@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="giovanni.tradingtoolkit">
+    package="pz_apps.monup">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,13 +17,13 @@
         android:theme="@style/MyMaterialTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".home_widget.CoinListWidgetConfigureActivity">
+        <activity android:name="pz_apps.monup.home_widget.CoinListWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".main.MainActivity"
+            android:name="pz_apps.monup.main.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,21 +31,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".marketprices.ChartActivity"
+            android:name="pz_apps.monup.marketprices.ChartActivity"
             android:label="@string/title_activity_chart"
             android:theme="@style/MyMaterialTheme" />
         <activity
-            android:name=".settings.AboutActivity"
+            android:name="pz_apps.monup.settings.AboutActivity"
             android:label="@string/title_activity_about"
             android:theme="@style/MyMaterialTheme" />
-        <activity android:name=".news.NewsFragment" />
 
         <service
-            android:name=".home_widget.WidgetService"
+            android:name="pz_apps.monup.home_widget.WidgetService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-        <receiver android:name=".home_widget.CoinListWidget">
+        <receiver android:name="pz_apps.monup.home_widget.CoinListWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -56,20 +55,20 @@
         </receiver>
 
         <service
-            android:name=".data.remote.LoadCoinService"
+            android:name="pz_apps.monup.data.remote.LoadCoinService"
             android:enabled="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name=".data.remote.LoadNewsService"
+            android:name="pz_apps.monup.data.remote.LoadNewsService"
             android:enabled="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <receiver android:name=".data.remote.LoadCoinReceiver">
+        <receiver android:name="pz_apps.monup.data.remote.LoadCoinReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".data.remote.LoadNewsReceiver">
+        <receiver android:name="pz_apps.monup.data.remote.LoadNewsReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
