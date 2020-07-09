@@ -150,7 +150,7 @@ public class Coin {
         return id != null ? id.hashCode() : 0;
     }
 
-    private Double roundToDecimalPlaces(Double value, int decimalPlaces) {
+    public Double roundToDecimalPlaces(Double value, int decimalPlaces) {
         Double shift = Math.pow(10, decimalPlaces);
         return Math.round(value * shift) / shift;
     }

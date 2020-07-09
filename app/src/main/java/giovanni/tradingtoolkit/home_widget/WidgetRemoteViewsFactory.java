@@ -91,6 +91,7 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     private RemoteViews setItemInfo(RemoteViews rv, Coin coinItem, int position) {
         int iconToLoad = ResourcesLoader.getResId(coinItem.getSymbol().toLowerCase());
         DecimalFormat decimalFormat = new DecimalFormat("###,###.##");
+        decimalFormat.setMinimumFractionDigits(2);
         String numberAsString = decimalFormat.format(coinItem.getPriceUsd());
 
         rv.setTextViewText(R.id.coin_name, coinItem.getName());
