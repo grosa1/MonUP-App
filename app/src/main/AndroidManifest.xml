@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="pz_apps.monup">
+    package="giovanni.tradingtoolkit">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,13 +17,13 @@
         android:theme="@style/MyMaterialTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name="pz_apps.monup.home_widget.CoinListWidgetConfigureActivity">
+        <activity android:name="giovanni.tradingtoolkit.home_widget.CoinListWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
         <activity
-            android:name="pz_apps.monup.main.MainActivity"
+            android:name="giovanni.tradingtoolkit.main.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,20 +31,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="pz_apps.monup.marketprices.ChartActivity"
+            android:name="giovanni.tradingtoolkit.marketprices.ChartActivity"
             android:label="@string/title_activity_chart"
             android:theme="@style/MyMaterialTheme" />
         <activity
-            android:name="pz_apps.monup.settings.AboutActivity"
+            android:name="giovanni.tradingtoolkit.settings.AboutActivity"
             android:label="@string/title_activity_about"
             android:theme="@style/MyMaterialTheme" />
 
         <service
-            android:name="pz_apps.monup.home_widget.WidgetService"
+            android:name="giovanni.tradingtoolkit.home_widget.WidgetService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-        <receiver android:name="pz_apps.monup.home_widget.CoinListWidget">
+        <receiver android:name="giovanni.tradingtoolkit.home_widget.CoinListWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -55,20 +55,20 @@
         </receiver>
 
         <service
-            android:name="pz_apps.monup.data.remote.LoadCoinService"
+            android:name="giovanni.tradingtoolkit.data.remote.LoadCoinService"
             android:enabled="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name="pz_apps.monup.data.remote.LoadNewsService"
+            android:name="giovanni.tradingtoolkit.data.remote.LoadNewsService"
             android:enabled="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <receiver android:name="pz_apps.monup.data.remote.LoadCoinReceiver">
+        <receiver android:name="giovanni.tradingtoolkit.data.remote.LoadCoinReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="pz_apps.monup.data.remote.LoadNewsReceiver">
+        <receiver android:name="giovanni.tradingtoolkit.data.remote.LoadNewsReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

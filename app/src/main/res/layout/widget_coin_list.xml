@@ -39,7 +39,7 @@
         android:name="giovanni.tradingtoolkit.marketprices.CoinsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="pz_apps.monup.giovanni.monup.marketprices.CoinsFragment"
+        tools:context="giovanni.tradingtoolkit.giovanni.monup.marketprices.CoinsFragment"
         tools:listitem="@layout/widget_coin_list_item"
         android:divider="@android:color/transparent"
         android:dividerHeight="0sp" />
