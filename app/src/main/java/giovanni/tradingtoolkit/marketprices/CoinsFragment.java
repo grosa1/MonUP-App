@@ -279,35 +279,40 @@ public class CoinsFragment extends Fragment {
 
                 } else {
                     isConnected = false;
-                    restoreCache();
+                    boolean isCache = restoreCache();
+
+                    int statusCode = response.code();
+                    Log.e("ERROR_CODE", String.valueOf(statusCode));
                     Log.d("ERR_RES", response.errorBody().toString());
+                    
                     ProgressDialogManager.close();
                     if (pullDown != null) {
                         pullDown.setRefreshing(false);
                     }
 
-                    int statusCode = response.code();
-                    Log.e("ERROR_CODE", String.valueOf(statusCode));
-
-                    ToastManager.makeAlert(getContext(),
-                            "",
-                            getResources().getString(R.string.coins_request_error));
+                    if (isCache) {
+                        ToastManager.create(getContext(), R.string.coins_request_error);
+                    } else {
+                        ToastManager.makeAlert(getContext(), "Error", getResources().getString(R.string.coins_request_error));
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseData> call, Throwable t) {
                 isConnected = false;
-                restoreCache();
+                boolean isCache = restoreCache();
                 ProgressDialogManager.close();
 
                 if (pullDown != null) {
                     pullDown.setRefreshing(false);
                 }
 
-                ToastManager.makeAlert(getContext(),
-                        "",
-                        getResources().getString(R.string.coins_request_error));
+                if (isCache) {
+                    ToastManager.create(getContext(), R.string.coins_request_error);
+                } else {
+                    ToastManager.makeAlert(getContext(), "Error", getResources().getString(R.string.coins_request_error));
+                }
                 Log.e("REQUEST_ERROR", t.toString());
             }
         });
