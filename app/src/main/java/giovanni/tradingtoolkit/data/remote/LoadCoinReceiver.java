@@ -8,8 +8,8 @@ import android.net.NetworkInfo;
 
 import androidx.core.content.ContextCompat;
 
-import giovanni.tradingtoolkit.main.ToastManager;
 import giovanni.tradingtoolkit.R;
+import giovanni.tradingtoolkit.main.ToastManager;
 
 public class LoadCoinReceiver extends BroadcastReceiver {
 

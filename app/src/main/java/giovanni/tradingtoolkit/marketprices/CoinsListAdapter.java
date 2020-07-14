@@ -21,9 +21,9 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.coin_response.Coin;
 import giovanni.tradingtoolkit.main.ResourcesLoader;
-import giovanni.tradingtoolkit.R;
 
 public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.ViewHolder> {
 

@@ -1,7 +1,7 @@
 package giovanni.tradingtoolkit.data.remote;
 
-import giovanni.tradingtoolkit.data.model.coin_response.ResponseData;
 import giovanni.tradingtoolkit.BuildConfig;
+import giovanni.tradingtoolkit.data.model.coin_response.ResponseData;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;

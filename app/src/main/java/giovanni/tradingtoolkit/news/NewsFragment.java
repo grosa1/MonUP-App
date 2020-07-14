@@ -27,8 +27,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import giovanni.tradingtoolkit.data.remote.LoadNewsReceiver;
 import giovanni.tradingtoolkit.R;
+import giovanni.tradingtoolkit.data.remote.LoadNewsReceiver;
 import giovanni.tradingtoolkit.main.SharedPrefs;
 import giovanni.tradingtoolkit.main.ToastManager;
 import io.cryptocontrol.cryptonewsapi.models.Article;

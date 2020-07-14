@@ -29,6 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.Variation;
 import giovanni.tradingtoolkit.data.model.coin_response.Coin;
 import giovanni.tradingtoolkit.data.model.coin_response.ResponseData;
@@ -36,7 +37,7 @@ import giovanni.tradingtoolkit.data.remote.CoinMarketCapService;
 import giovanni.tradingtoolkit.data.remote.RetrofitClient;
 import giovanni.tradingtoolkit.main.ProgressDialogManager;
 import giovanni.tradingtoolkit.main.SharedPrefs;
-import giovanni.tradingtoolkit.R;
+import giovanni.tradingtoolkit.main.ToastManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -287,7 +288,10 @@ public class CoinsFragment extends Fragment {
 
                     int statusCode = response.code();
                     Log.e("ERROR_CODE", String.valueOf(statusCode));
-                    //ToastManager.create(getContext(), getResources().getString(R.string.coins_request_error));
+
+                    ToastManager.makeAlert(getContext(),
+                            "",
+                            getResources().getString(R.string.coins_request_error));
                 }
             }
 
@@ -300,7 +304,10 @@ public class CoinsFragment extends Fragment {
                 if (pullDown != null) {
                     pullDown.setRefreshing(false);
                 }
-                //ToastManager.create(getContext(), getResources().getString(R.string.coins_request_error));
+
+                ToastManager.makeAlert(getContext(),
+                        "",
+                        getResources().getString(R.string.coins_request_error));
                 Log.e("REQUEST_ERROR", t.toString());
             }
         });

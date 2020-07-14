@@ -23,8 +23,8 @@ import java.util.Objects;
 
 import giovanni.tradingtoolkit.data.model.coin_response.Coin;
 import giovanni.tradingtoolkit.data.model.coin_response.ResponseData;
-import giovanni.tradingtoolkit.main.SharedPrefs;
 import giovanni.tradingtoolkit.home_widget.CoinListWidget;
+import giovanni.tradingtoolkit.main.SharedPrefs;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

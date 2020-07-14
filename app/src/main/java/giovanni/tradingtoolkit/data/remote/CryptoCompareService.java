@@ -1,5 +1,7 @@
 package giovanni.tradingtoolkit.data.remote;
 
+import com.google.gson.JsonObject;
+
 import giovanni.tradingtoolkit.data.model.HystoPriceResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;

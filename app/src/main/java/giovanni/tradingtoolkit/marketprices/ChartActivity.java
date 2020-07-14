@@ -19,6 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.model.HystoPrice;
 import giovanni.tradingtoolkit.data.model.HystoPriceResponse;
 import giovanni.tradingtoolkit.data.remote.CryptoCompareService;
@@ -26,7 +27,6 @@ import giovanni.tradingtoolkit.data.remote.RetrofitClient;
 import giovanni.tradingtoolkit.main.ProgressDialogManager;
 import giovanni.tradingtoolkit.main.ResourcesLoader;
 import giovanni.tradingtoolkit.main.ToastManager;
-import giovanni.tradingtoolkit.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

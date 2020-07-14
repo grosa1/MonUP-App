@@ -1,5 +1,5 @@
 <resources>
-    <string name="title_activity_about" translatable="false">MonUP - v2.2</string>
+    <string name="title_activity_about" translatable="false">MonUP - v2.4</string>
     <string name="app_name" translatable="false">MonUP</string>
     <string name="action_settings" translatable="false">About</string>
 
@@ -22,7 +22,7 @@
 
     <!-- coins list -->
     <string name="title_dashboard" translatable="false">Market Prices</string>
-    <string name="coins_request_error">Error: please try later</string>
+    <string name="coins_request_error">Error: Unable to fetch coin list, please try later</string>
     <string name="daily" translatable="false">Day</string>
     <string name="weekly" translatable="false">Week</string>
     <string name="list_position_place_holder" translatable="false">n.</string>

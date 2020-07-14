@@ -17,8 +17,8 @@ import com.google.gson.Gson;
 import java.util.List;
 import java.util.Objects;
 
-import giovanni.tradingtoolkit.main.SharedPrefs;
 import giovanni.tradingtoolkit.BuildConfig;
+import giovanni.tradingtoolkit.main.SharedPrefs;
 import io.cryptocontrol.cryptonewsapi.CryptoControlApi;
 import io.cryptocontrol.cryptonewsapi.models.Article;
 

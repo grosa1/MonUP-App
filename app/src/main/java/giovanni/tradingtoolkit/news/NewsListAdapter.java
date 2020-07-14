@@ -24,7 +24,7 @@ import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.main.ResourcesLoader;
 import io.cryptocontrol.cryptonewsapi.models.Article;
 
-public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHolder> {
+public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolkit.news.NewsListAdapter.ViewHolder> {
 
     private List<Article> news;
     private Context context;
@@ -37,15 +37,15 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     }
 
     @Override
-    public NewsListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public giovanni.tradingtoolkit.news.NewsListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.news_list_item, parent, false);
-        return new NewsListAdapter.ViewHolder(view, this.itemListener);
+        return new giovanni.tradingtoolkit.news.NewsListAdapter.ViewHolder(view, this.itemListener);
     }
 
     @Override
-    public void onBindViewHolder(NewsListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(giovanni.tradingtoolkit.news.NewsListAdapter.ViewHolder holder, int position) {
         Article article = news.get(position);
 
         Picasso.get().load(article.getThumbnail()).into(holder.icon);
@@ -92,7 +92,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         @BindView(R.id.news_list_item)
         public LinearLayout layout;
 
-        ViewHolder(View itemView, NewsListAdapter.ArticleItemListener articleItemListener) {
+        ViewHolder(View itemView, giovanni.tradingtoolkit.news.NewsListAdapter.ArticleItemListener articleItemListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemListener = articleItemListener;

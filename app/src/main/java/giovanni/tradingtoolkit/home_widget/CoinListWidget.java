@@ -8,10 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
+import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
 import giovanni.tradingtoolkit.data.remote.LoadCoinService;
 import giovanni.tradingtoolkit.main.ToastManager;
-import giovanni.tradingtoolkit.R;
 
 /**
  * Implementation of App Widget functionality.
