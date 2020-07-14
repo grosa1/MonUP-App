@@ -1,6 +1,7 @@
 package giovanni.tradingtoolkit.news;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +27,7 @@ import giovanni.tradingtoolkit.main.ResourcesLoader;
 import io.cryptocontrol.cryptonewsapi.models.Article;
 
 public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolkit.news.NewsListAdapter.ViewHolder> {
-
+    public static final int NEWS_TITLE_MAX_LENGTH = 18;
     private List<Article> news;
     private Context context;
     private ArticleItemListener itemListener;
@@ -49,7 +51,15 @@ public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolki
         Article article = news.get(position);
 
         Picasso.get().load(article.getThumbnail()).into(holder.icon);
-        holder.title.setText(article.getTitle());
+
+        String title = article.getTitle();
+        String[] titleTrimmed = title.split(" ");
+        if (titleTrimmed.length > NewsListAdapter.NEWS_TITLE_MAX_LENGTH) {
+            titleTrimmed = Arrays.copyOfRange(titleTrimmed, 0, NewsListAdapter.NEWS_TITLE_MAX_LENGTH);
+            title = TextUtils.join(" ", titleTrimmed) + "...";
+        }
+        holder.title.setText(title);
+
         holder.date.setText(this.formatArticleDate(article.getPublishedAt()));
 
         int background;
