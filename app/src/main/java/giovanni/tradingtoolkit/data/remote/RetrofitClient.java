@@ -8,16 +8,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitClient {
-    private static Retrofit retrofit = null;
 
     public static Retrofit getClient(String baseUrl) { //SET BASE URL FOR RETROFIT INSTANCE
-//        if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(baseUrl)
-                    .addConverterFactory(GsonConverterFactory.create())  //USE GSON AS JSON CONVERTER
-                    .build();
-//        }
-        return retrofit;
+        return new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())  //USE GSON AS JSON CONVERTER
+                .build();
     }
 
     public static CoinMarketCapService getCoinMarketCapService() {

@@ -19,7 +19,7 @@
     <string name="calculator_purchase_price">Prezzo di acquisto:</string>
     <string name="calculator_selling_price">Prezzo di vendita:</string>
     <string name="appwidget_text">CryptoTrading</string>
-    <string name="configure">Configura Widget</string>
+    <string name="configure_widget">Configura Widget</string>
     <string name="add_widget">Aggiungi widget</string>
     <string name="add_coin">Aggiungi</string>
     <string name="search_coin_hint">Cerca una Coin</string>
@@ -40,4 +40,7 @@
     <string name="news_refreshed">News aggiornate</string>
     <string name="reset_widget">Ripristina Widget</string>
     <string name="widget_resetted">Widget ripristinato</string>
+    <string name="settings">Impostazioni</string>
+    <string name="setting_color_mode">Tema scuro</string>
+    <string name="title_activity_settings">Impostazioni</string>
 </resources>

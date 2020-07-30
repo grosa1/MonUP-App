@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -21,6 +23,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +37,7 @@ import giovanni.tradingtoolkit.home_widget.CoinListWidgetConfigureActivity;
 import giovanni.tradingtoolkit.marketprices.CoinsFragment;
 import giovanni.tradingtoolkit.news.NewsFragment;
 import giovanni.tradingtoolkit.settings.AboutActivity;
+import giovanni.tradingtoolkit.settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,6 +73,16 @@ public class MainActivity extends AppCompatActivity {
 
         this.loadCoins();
         this.loadNews();
+        this.restoreColorMode();
+    }
+
+    public void restoreColorMode() {
+        boolean darkModeEnabled = SharedPrefs.restoreBoolean(getBaseContext(), SharedPrefs.KEY_SETTINGS_DARK_MODE);
+        if (darkModeEnabled) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
     public void loadCoins() { //TODO: make static
@@ -91,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isLoadServiceRunning(Class<?> serviceClass) { //TODO: make static
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        assert manager != null;
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
                 Log.i("isLoadCoinServiceRunn?", true + "");
@@ -111,6 +126,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+            case R.id.settings: {
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            }
+
             case R.id.configure_widget: {
                 // TODO integrate with CoinListWidgetConfigureActivity
                 String widgetId = SharedPrefs.restoreString(this, SharedPrefs.KEY_WIDGET_ID);
@@ -146,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.about: {
                 Intent intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
-
+                return true;
             }
             default:
                 return super.onOptionsItemSelected(item);
@@ -178,9 +199,9 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     private void setupTabIcons() {
-        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+        Objects.requireNonNull(tabLayout.getTabAt(0)).setIcon(tabIcons[0]);
+        Objects.requireNonNull(tabLayout.getTabAt(1)).setIcon(tabIcons[1]);
+        Objects.requireNonNull(tabLayout.getTabAt(2)).setIcon(tabIcons[2]);
         //tabLayout.getTabAt(2).setIcon(tabIcons[2]);
     }
 
@@ -194,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+    static class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
@@ -202,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
             super(manager);
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
             return mFragmentList.get(position);

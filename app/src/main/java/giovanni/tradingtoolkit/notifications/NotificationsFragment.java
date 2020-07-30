@@ -17,8 +17,7 @@ public class NotificationsFragment extends Fragment {
     }
 
     public static NotificationsFragment newInstance() {
-        NotificationsFragment fragment = new NotificationsFragment();
-        return fragment;
+        return new NotificationsFragment();
     }
 
     @Override

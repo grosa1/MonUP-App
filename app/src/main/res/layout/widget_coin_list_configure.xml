@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/colorPrimary"
+    android:padding="16dp"
+    tools:context="giovanni.tradingtoolkit.home_widget.CoinListWidgetConfigureActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,8 +21,10 @@
             android:layout_weight="80"
             android:gravity="center"
             android:padding="2dp"
-            android:text="@string/configure"
+            android:text="@string/configure_widget"
             android:textSize="20sp"
+            android:textColor="@color/textColorPrimary"
+            android:textColorHint="@color/lightGreyMaterial"
             android:textStyle="bold" />
 
         <Button
@@ -29,7 +34,9 @@
             android:layout_gravity="end"
             android:layout_weight="20"
             android:padding="2dp"
-            android:text="@string/add_widget" />
+            android:background="@color/materialGreen"
+            android:text="@string/add_widget"
+            android:textColor="@color/textColorPrimary" />
 
     </LinearLayout>
 
@@ -41,7 +48,9 @@
         android:padding="6dp"
         android:layout_marginTop="6dp"
         android:textStyle="bold"
-        android:text="@string/configure_description" />
+        android:text="@string/configure_description"
+        android:textColor="@color/textColorPrimary"
+        android:textColorHint="@color/lightGreyMaterial" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,7 +65,9 @@
             android:layout_weight="4"
             android:autofillHints="@string/search_coin_hint"
             android:hint="@string/search_coin_hint"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textColor="@color/textColorPrimary"
+            android:textColorHint="@color/textColorPrimary" />
 
         <Button
             android:id="@+id/add_coin_button"
@@ -64,7 +75,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="@string/add_coin" />
+            android:background="@color/materialGreen"
+            android:text="@string/add_coin"
+            android:textColor="@color/textColorPrimary" />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -83,6 +97,8 @@
         android:padding="6dp"
         android:layout_marginTop="6dp"
         android:textStyle="bold"
+        android:textColor="@color/textColorPrimary"
+        android:textColorHint="@color/lightGreyMaterial"
         android:text="@string/coin_observed" />
 
     <androidx.recyclerview.widget.RecyclerView

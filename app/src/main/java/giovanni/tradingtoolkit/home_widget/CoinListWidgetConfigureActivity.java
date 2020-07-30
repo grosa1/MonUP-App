@@ -1,6 +1,5 @@
 package giovanni.tradingtoolkit.home_widget;
 
-import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +30,7 @@ import giovanni.tradingtoolkit.marketprices.CoinsListAdapter;
 /**
  * The configuration screen for the {@link CoinListWidget CoinListWidget} AppWidget.
  */
-public class CoinListWidgetConfigureActivity extends Activity {
+public class CoinListWidgetConfigureActivity extends AppCompatActivity {
 
     private static final int SELECTED_COIN = 0;
     public static final int INVALID_WIDGET_ID = -1;

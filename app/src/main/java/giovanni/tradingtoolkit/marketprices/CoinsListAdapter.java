@@ -2,7 +2,6 @@ package giovanni.tradingtoolkit.marketprices;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.util.TypedValue;
@@ -13,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -37,6 +37,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         this.itemListener = itemListener;
     }
 
+    @NonNull
     @Override
     public CoinsListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -46,14 +47,14 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(CoinsListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CoinsListAdapter.ViewHolder holder, int position) {
         Coin coin = coins.get(position);
         Drawable drawable;
 
         try {
             drawable = ResourcesLoader.getDrawable(context, coin.getSymbol().toLowerCase());
         } catch (Resources.NotFoundException e) {
-            Log.e("RES_ERROR", "Icon not found, set default");
+            Log.d("RES_ERROR", "Icon not found, set default");
             drawable = ResourcesLoader.getDrawableFromId(context, R.drawable.ic_no_image);
         }
         holder.coinIcon.setImageDrawable(drawable);
@@ -85,7 +86,6 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         }
         holder.percentageVariation1h.setBackgroundColor(context.getResources().getColor(colorId));
         holder.percentageVariation1h.setText(percentage1h);
-        holder.percentageVariation1h.setTextColor(Color.WHITE);
 
         // Set percentage 1 day
         Double coinPercentChange24h = coin.getPercentChange24h();
@@ -99,7 +99,6 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         }
         holder.percentageVariation1d.setBackgroundColor(context.getResources().getColor(colorId));
         holder.percentageVariation1d.setText(percentage24h);
-        holder.percentageVariation1d.setTextColor(Color.WHITE);
 
 
         // Set percentage 1 week
@@ -114,7 +113,6 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         }
         holder.percentageVariation1w.setBackgroundColor(context.getResources().getColor(colorId));
         holder.percentageVariation1w.setText(percentage7d);
-        holder.percentageVariation1w.setTextColor(Color.WHITE);
 
         int background;
         if (position % 2 == 0) {
@@ -123,6 +121,19 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
             background = ResourcesLoader.getColorFromId(context, R.color.materialWhite);
         }
         holder.listItem.setBackgroundColor(background);
+
+        // Setting Text Color
+        colorId = R.color.textColorSecondary;
+        holder.coinPosition.setTextColor(context.getResources().getColor(colorId));
+        holder.coinName.setTextColor(context.getResources().getColor(colorId));
+        holder.coinPrice.setTextColor(context.getResources().getColor(colorId));
+        holder.percentageVariation1hText.setTextColor(context.getResources().getColor(colorId));
+        holder.percentageVariation1dText.setTextColor(context.getResources().getColor(colorId));
+        holder.percentageVariation1wText.setTextColor(context.getResources().getColor(colorId));
+        colorId = R.color.textColorPrimary;
+        holder.percentageVariation1h.setTextColor(context.getResources().getColor(colorId));
+        holder.percentageVariation1d.setTextColor(context.getResources().getColor(colorId));
+        holder.percentageVariation1w.setTextColor(context.getResources().getColor(colorId));
 
     }
 
@@ -153,10 +164,16 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         public TextView coinName;
         @BindView(R.id.percentage_variation_1h)
         public TextView percentageVariation1h;
+        @BindView(R.id.percentage_variation_1h_text)
+        public TextView percentageVariation1hText;
         @BindView(R.id.percentage_variation_1d)
         public TextView percentageVariation1d;
+        @BindView(R.id.percentage_variation_1d_text)
+        public TextView percentageVariation1dText;
         @BindView(R.id.percentage_variation_1w)
         public TextView percentageVariation1w;
+        @BindView(R.id.percentage_variation_1w_text)
+        public TextView percentageVariation1wText;
         @BindView(R.id.price)
         public TextView coinPrice;
         @BindView(R.id.icon)

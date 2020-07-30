@@ -26,6 +26,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -95,7 +96,7 @@ public class CoinsFragment extends Fragment {
         View view = inflater.inflate(R.layout.coins_list_fragment, container, false);
         ButterKnife.bind(this, view);
 
-        currency = SharedPrefs.restoreString(getContext(), SharedPrefs.KEY_CURRENCY);
+        currency = SharedPrefs.restoreString(Objects.requireNonNull(getContext()), SharedPrefs.KEY_CURRENCY);
         if (currency.isEmpty()) {
             currency = DEFAULT_CURRENCY;
         }
@@ -129,7 +130,7 @@ public class CoinsFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (isConnected) {
                     CoinsFragment.currency = spinnerCurrency.getItemAtPosition(position).toString().trim();
-                    SharedPrefs.storeString(getContext(), SharedPrefs.KEY_CURRENCY, CoinsFragment.currency);
+                    SharedPrefs.storeString(Objects.requireNonNull(getContext()), SharedPrefs.KEY_CURRENCY, CoinsFragment.currency);
                     updateList(CoinsFragment.currency);
                 } else {
                     resetSpinner();
@@ -142,12 +143,7 @@ public class CoinsFragment extends Fragment {
         });
 
         //SET PULL DOWN LISTENER
-        pullDown.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                updateList(currency);
-            }
-        });
+        pullDown.setOnRefreshListener(() -> updateList(currency));
 
         //SET LIST SORTING
         tvVariation.setText(getContext().getString(R.string.percentage_variation_title));
@@ -158,7 +154,7 @@ public class CoinsFragment extends Fragment {
             sortNameAsc = true;
             sortPriceAsc = true;
 
-            Collections.sort(coins, (coin1, coin2) -> Integer.valueOf(coin1.getRank()).compareTo(coin2.getRank()));
+            Collections.sort(coins, (coin1, coin2) -> coin1.getRank().compareTo(coin2.getRank()));
             if (sortRankAsc) {
                 sortRankAsc = false;
             } else {
@@ -193,12 +189,16 @@ public class CoinsFragment extends Fragment {
             sortRankAsc = true;
             sortNameAsc = true;
 
-            if (currency.equals("USD")) {
-                Collections.sort(coins, (coin1, coin2) -> coin1.getPriceUsd().compareTo(coin2.getPriceUsd()));
-            } else if (currency.equals("EUR")) {
-                Collections.sort(coins, (coin1, coin2) -> coin1.getPriceEur().compareTo(coin2.getPriceEur()));
-            } else if (currency.equals("BTC")) {
-                Collections.sort(coins, (coin1, coin2) -> Double.valueOf(coin1.getPriceBtc()).compareTo(Double.valueOf(coin2.getPriceBtc())));
+            switch (currency) {
+                case "USD":
+                    Collections.sort(coins, (coin1, coin2) -> coin1.getPriceUsd().compareTo(coin2.getPriceUsd()));
+                    break;
+                case "EUR":
+                    Collections.sort(coins, (coin1, coin2) -> coin1.getPriceEur().compareTo(coin2.getPriceEur()));
+                    break;
+                case "BTC":
+                    Collections.sort(coins, (coin1, coin2) -> coin1.getPriceBtc().compareTo(coin2.getPriceBtc()));
+                    break;
             }
 
             if (sortPriceAsc) {
@@ -222,19 +222,19 @@ public class CoinsFragment extends Fragment {
             switch (currentVariation) {
                 case Weekly:    // IF WEEKLY SET TO HOUR
                     newVariation = getContext().getString(R.string.weekly);
-                    Collections.sort(coins, (coin1, coin2) -> Double.valueOf(coin2.getPercentChange1h()).compareTo(coin1.getPercentChange1h()));
+                    Collections.sort(coins, (coin1, coin2) -> coin2.getPercentChange1h().compareTo(coin1.getPercentChange1h()));
                     currentVariation = Variation.Hour;
                     break;
 
                 case Hour:    // IF HOUR SET TO DAILY
                     newVariation = getContext().getString(R.string.hour);
-                    Collections.sort(coins, (coin1, coin2) -> Double.valueOf(coin2.getPercentChange24h()).compareTo(coin1.getPercentChange24h()));
+                    Collections.sort(coins, (coin1, coin2) -> coin2.getPercentChange24h().compareTo(coin1.getPercentChange24h()));
                     currentVariation = Variation.Daily;
                     break;
 
                 case Daily:    // IF DAILY SET TO WEEKLY
                     newVariation = getContext().getString(R.string.daily);
-                    Collections.sort(coins, (coin1, coin2) -> Double.valueOf(coin2.getPercentChange7d()).compareTo(coin1.getPercentChange7d()));
+                    Collections.sort(coins, (coin1, coin2) -> coin2.getPercentChange7d().compareTo(coin1.getPercentChange7d()));
                     currentVariation = Variation.Weekly;
                     break;
             }
@@ -247,7 +247,7 @@ public class CoinsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         ProgressDialogManager.open(getContext());
@@ -283,6 +283,7 @@ public class CoinsFragment extends Fragment {
 
                     int statusCode = response.code();
                     Log.e("ERROR_CODE", String.valueOf(statusCode));
+                    assert response.errorBody() != null;
                     Log.d("ERR_RES", response.errorBody().toString());
                     
                     ProgressDialogManager.close();
@@ -299,7 +300,7 @@ public class CoinsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ResponseData> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseData> call, @NonNull Throwable t) {
                 isConnected = false;
                 boolean isCache = restoreCache();
                 ProgressDialogManager.close();
@@ -327,7 +328,7 @@ public class CoinsFragment extends Fragment {
 
     private void updateList(final String setCurrency) {
         try {
-            tvVariation.setText((getContext().getString(R.string.percentage_variation_title)));
+            tvVariation.setText((Objects.requireNonNull(getContext()).getString(R.string.percentage_variation_title)));
             loadCoinList(setCurrency, LIST_LIMIT);
         } catch (IOException e) {
             e.printStackTrace();
@@ -335,7 +336,7 @@ public class CoinsFragment extends Fragment {
     }
 
     private boolean restoreCache() {
-        String serialCoins = SharedPrefs.restoreString(getContext(), SharedPrefs.KEY_COINS_CACHE);
+        String serialCoins = SharedPrefs.restoreString(Objects.requireNonNull(getContext()), SharedPrefs.KEY_COINS_CACHE);
         if (!serialCoins.isEmpty()) {
             Type listType = new TypeToken<ArrayList<Coin>>() {
             }.getType();
@@ -347,9 +348,9 @@ public class CoinsFragment extends Fragment {
         return false;
     }
 
-    private boolean storeCache(final List<Coin> updatedCoins) {
+    private void storeCache(final List<Coin> updatedCoins) {
         String serialCoins = (new Gson()).toJson(updatedCoins);
-        return SharedPrefs.storeString(getContext(), SharedPrefs.KEY_COINS_CACHE, serialCoins);
+        SharedPrefs.storeString(Objects.requireNonNull(getContext()), SharedPrefs.KEY_COINS_CACHE, serialCoins);
     }
 
     private void resetSpinner() {
