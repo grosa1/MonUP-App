@@ -24,6 +24,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,7 +94,7 @@ public class NewsFragment extends Fragment {
 
         AlertDialog.Builder builder1 = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            builder1 = new AlertDialog.Builder(getContext());
+            builder1 = new AlertDialog.Builder(Objects.requireNonNull(getContext()), R.style.DialogTheme);
         }
         if (builder1 != null) {
             View dialogView = View.inflate(context, R.layout.article_info, null);
@@ -107,6 +108,12 @@ public class NewsFragment extends Fragment {
                         dialog.cancel();
                         showInBrowser(article.getUrl());
                     });
+
+
+            int colorId;
+            // Setting Text Color
+            colorId = R.color.textColorSecondary;
+            description.setTextColor(context.getResources().getColor(colorId));
 
             AlertDialog alert11 = builder1.create();
             alert11.show();
@@ -131,6 +138,7 @@ public class NewsFragment extends Fragment {
 
     private void refresh() {
         runService(context);
+        assert getFragmentManager() != null;
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         if (Build.VERSION.SDK_INT >= 26) {
             ft.setReorderingAllowed(false);

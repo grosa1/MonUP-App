@@ -38,6 +38,10 @@
             android:name=".settings.AboutActivity"
             android:label="@string/title_activity_about"
             android:theme="@style/MyMaterialTheme" />
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/MyMaterialTheme" />
 
         <service
             android:name=".home_widget.WidgetService"

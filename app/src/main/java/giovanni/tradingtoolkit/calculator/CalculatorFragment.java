@@ -1,6 +1,5 @@
 package giovanni.tradingtoolkit.calculator;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,8 +42,7 @@ public class CalculatorFragment extends Fragment {
     }
 
     public static CalculatorFragment newInstance() {
-        CalculatorFragment fragment = new CalculatorFragment();
-        return fragment;
+        return new CalculatorFragment();
     }
 
     @Override
@@ -82,12 +82,16 @@ public class CalculatorFragment extends Fragment {
                     } else {
                         revenue.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                     }
-                    revenue.setTextColor(Color.WHITE);
+
                     String strRevenue = String.format("%.2f", calc.getRevenue());
                     revenue.setText(strRevenue);
-                } catch (NullValueException e) {
-                    showValuesError();
-                } catch (NumberFormatException e) {
+                    int colorId = R.color.textColorPrimary;
+                    revenue.setTextColor(Objects.requireNonNull(getContext()).getResources().getColor((colorId)));
+                    expectedQuantity.setTextColor(Objects.requireNonNull(getContext()).getResources().getColor((colorId)));
+                    currentQuantity.setTextColor(Objects.requireNonNull(getContext()).getResources().getColor((colorId)));
+                    grossResult.setTextColor(Objects.requireNonNull(getContext()).getResources().getColor((colorId)));
+
+                } catch (NullValueException | NumberFormatException e) {
                     showValuesError();
                 }
             }

@@ -57,11 +57,12 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/percentage_variation_1h_text"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:gravity="center"
-                android:text="H"
+                android:text="@string/percentage_variation_1h_text"
                 android:textSize="12sp" />
 
             <TextView
@@ -83,11 +84,12 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/percentage_variation_1d_text"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:gravity="center"
-                android:text="D"
+                android:text="@string/percentage_variation_1d_text"
                 android:textSize="12sp" />
 
             <TextView
@@ -109,11 +111,12 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/percentage_variation_1w_text"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:gravity="center"
-                android:text="W"
+                android:text="@string/percentage_variation_1w_text"
                 android:textSize="12sp" />
 
             <TextView

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -38,6 +39,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolki
         this.itemListener = itemListener;
     }
 
+    @NonNull
     @Override
     public giovanni.tradingtoolkit.news.NewsListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -69,6 +71,12 @@ public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolki
             background = ResourcesLoader.getColorFromId(context, R.color.materialWhite);
         }
         holder.layout.setBackgroundColor(background);
+
+        int colorId;
+        // Setting Text Color
+        colorId = R.color.textColorSecondary;
+        holder.title.setTextColor(context.getResources().getColor(colorId));
+        holder.date.setTextColor(context.getResources().getColor(colorId));
     }
 
     @Override
@@ -122,6 +130,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolki
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             Date artDate = format.parse(articleDate);
+            assert artDate != null;
             dateText = DateFormat.getDateInstance(DateFormat.MEDIUM).format(artDate);
         } catch (ParseException e) {
             e.printStackTrace();

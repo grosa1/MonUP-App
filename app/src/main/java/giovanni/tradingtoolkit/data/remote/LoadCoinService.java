@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.google.gson.Gson;
@@ -92,7 +93,7 @@ public class LoadCoinService extends Service {
     public void loadCoinList(String currencyType, String limit) throws IOException {
         this.coinDataService.getList(currencyType, limit).enqueue(new Callback<ResponseData>() {
             @Override
-            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+            public void onResponse(@NonNull Call<ResponseData> call, @NonNull Response<ResponseData> response) {
 
                 if (response.isSuccessful()) {
                     ResponseData body = response.body();
@@ -109,7 +110,7 @@ public class LoadCoinService extends Service {
             }
 
             @Override
-            public void onFailure(Call<ResponseData> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseData> call, @NonNull Throwable t) {
                 restoreCache();
                 Log.e("REQUEST_ERROR", t.toString());
             }

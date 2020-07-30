@@ -36,7 +36,7 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
         Log.d("AppWidgetId", String.valueOf(appWidgetId));
         viewInit();
 
-        //Calling Service Refresh
+        // Calling Service Refresh
         Intent broadcastIntent = new Intent(context, LoadCoinReceiver.class);
         context.sendBroadcast(broadcastIntent);
     }
@@ -90,12 +90,14 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
 
     private RemoteViews setItemInfo(RemoteViews rv, Coin coinItem, int position) {
         int iconToLoad = ResourcesLoader.getResId(coinItem.getSymbol().toLowerCase());
+        int percentageColorId = R.color.widgetGreen;
+        int textColorId;
+
         DecimalFormat decimalFormat = new DecimalFormat("###,###.##");
         decimalFormat.setMinimumFractionDigits(2);
         String numberAsString = decimalFormat.format(coinItem.getPriceUsd());
 
         rv.setTextViewText(R.id.coin_name, coinItem.getName());
-        rv.setTextViewText(R.id.list_position, "TODO");
         rv.setTextViewText(R.id.price, numberAsString);
         rv.setTextViewText(R.id.percentage_variation_1h, setPercentageText(coinItem.getPercentChange1h()));
         rv.setTextViewText(R.id.percentage_variation_1d, setPercentageText(coinItem.getPercentChange24h()));
@@ -104,19 +106,38 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
         rv.setTextColor(R.id.percentage_variation_1d, setPercentageColor(coinItem.getPercentChange24h()));
         rv.setTextColor(R.id.percentage_variation_1w, setPercentageColor(coinItem.getPercentChange7d()));
 
-        if (setPercentageColor(coinItem.getPercentChange1h()) == context.getResources().getColor(R.color.widgetGreen)) {
+        if (setPercentageColor(coinItem.getPercentChange1h()) == context.getResources().getColor(percentageColorId)) {
             rv.setTextColor(R.id.percentage_variation_1h, context.getResources().getColor(R.color.widgetGreen));
             rv.setTextColor(R.id.price, context.getResources().getColor(R.color.widgetGreen));
         } else {
-            rv.setTextColor(R.id.percentage_variation_1h, context.getResources().getColor(R.color.widgetRed));
-            rv.setTextColor(R.id.price, context.getResources().getColor(R.color.widgetRed));
+            percentageColorId = R.color.widgetRed;
+            rv.setTextColor(R.id.percentage_variation_1h, context.getResources().getColor(percentageColorId));
+            rv.setTextColor(R.id.price, context.getResources().getColor(percentageColorId));
         }
 
-        if (position % 2 == 0) {
-            rv.setInt(R.id.coin_list_item, "setBackgroundColor", context.getResources().getColor(R.color.widgetItemPrimaryColor));
+        if (isDarkModeEnabled()) {
+            textColorId = R.color.textColorPrimary;
+
+            if (position % 2 == 0) {
+                percentageColorId = R.color.widgetItemPrimaryColorDark;
+            } else {
+                percentageColorId = R.color.widgetItemSecondaryColorDark;
+            }
         } else {
-            rv.setInt(R.id.coin_list_item, "setBackgroundColor", context.getResources().getColor(R.color.widgetItemSecondaryColor));
+            textColorId = R.color.textColorSecondary;
+
+            if (position % 2 == 0) {
+                percentageColorId = R.color.widgetItemPrimaryColor;
+            } else {
+                percentageColorId = R.color.widgetItemSecondaryColor;
+            }
         }
+        rv.setTextColor(R.id.coin_name, context.getResources().getColor(textColorId));
+        rv.setTextColor(R.id.widget_percentage_variation_1h_text, context.getResources().getColor(textColorId));
+        rv.setTextColor(R.id.widget_percentage_variation_1d_text, context.getResources().getColor(textColorId));
+        rv.setTextColor(R.id.widget_percentage_variation_1w_text, context.getResources().getColor(textColorId));
+        rv.setInt(R.id.coin_list_item, "setBackgroundColor", context.getResources().getColor(percentageColorId));
+
         return rv;
     }
 
@@ -199,5 +220,9 @@ public class WidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsF
     public void onDestroy() {
         String INVALID_WIDGET_ID = Integer.toString(CoinListWidgetConfigureActivity.INVALID_WIDGET_ID);
         SharedPrefs.storeString(context, SharedPrefs.KEY_WIDGET_ID, INVALID_WIDGET_ID);
+    }
+
+    private boolean isDarkModeEnabled() {
+        return SharedPrefs.restoreBoolean(this.context, SharedPrefs.KEY_SETTINGS_DARK_MODE);
     }
 }

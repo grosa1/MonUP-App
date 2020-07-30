@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!--<item-->
-        <!--android:id="@+id/update"-->
-        <!--android:title="Update"-->
-        <!--android:icon="@drawable/ic_update"-->
-        <!--app:showAsAction="always"/>-->
+    <!--android:id="@+id/update"-->
+    <!--android:title="Update"-->
+    <!--android:icon="@drawable/ic_update"-->
+    <!--app:showAsAction="always"/>-->
 
     <!--<item-->
     <!--android:id="@+id/settings"-->
@@ -14,8 +14,13 @@
     <!--app:showAsAction="never"/>-->
 
     <item
+        android:id="@+id/settings"
+        android:title="@string/settings"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/configure_widget"
-        android:title="@string/configure"
+        android:title="@string/configure_widget"
         app:showAsAction="never" />
 
     <item

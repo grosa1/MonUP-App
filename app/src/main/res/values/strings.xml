@@ -1,7 +1,5 @@
 <resources>
-    <string name="title_activity_about" translatable="false">MonUP - v2.4</string>
     <string name="app_name" translatable="false">MonUP</string>
-    <string name="action_settings" translatable="false">About</string>
 
     <!-- calcualtor -->
     <string name="title_calculator" translatable="false">Tools</string>
@@ -36,16 +34,21 @@
     <string name="percentage_variation_title">Change</string>
     <string name="price_title">Price</string>
     <string name="coin_name">Coin</string>
+    <string name="percentage_variation_1h_text" translatable="false">H</string>
+    <string name="percentage_variation_1d_text" translatable="false">D</string>
+    <string name="percentage_variation_1w_text" translatable="false">W</string>
 
     <!-- about -->
+    <string name="action_settings" translatable="false">About</string>
+    <string name="title_activity_about" translatable="false">MonUP - v2.4</string>
     <string name="github" translatable="false">https://github.com/grosa1/crypto-trading-toolkit-android</string>
     <string name="about_thanks">Thanks to:</string>
     <string name="about_support">Support the app!</string>
     <string name="developed_by">Developed by</string>
 
     <!-- widget -->
-    <string name="appwidget_text">CryptoTrading</string>
-    <string name="configure">Configure Widget</string>
+    <string name="appwidget_text">MonUP</string>
+    <string name="configure_widget">Configure Widget</string>
     <string name="reset_widget">Reset Widget</string>
     <string name="widget_resetted">Resetted Widget</string>
     <string name="add_widget">Add widget</string>
@@ -65,8 +68,16 @@
     <!-- news and article -->
     <string name="news_text">News</string>
     <string name="news_title_place_holder">News title</string>
-    <string name="news_date_place_holder"></string>
+    <string name="news_date_place_holder" />
     <string name="article_url">Go to original post</string>
     <string name="news_refreshed">News refreshed</string>
+
+    <!--  settings  -->
+    <string name="title_activity_settings">Settings</string>
+    <string name="settings">Settings</string>
+    <string name="setting_disabled" translatable="false">OFF</string>
+    <string name="setting_enabled" translatable="false">ON</string>
+    <string name="setting_color_mode">Dark Mode</string>
+
 
 </resources>

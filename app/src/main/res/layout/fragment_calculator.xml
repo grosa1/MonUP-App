@@ -2,11 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/FragmentCalculator"
     tools:context="giovanni.tradingtoolkit.calculator.CalculatorFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp">
 
         <EditText
@@ -18,7 +20,10 @@
             android:inputType="numberDecimal"
             android:layout_marginStart="21dp"
             android:layout_below="@+id/textView1"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:autofillHints=""
+            android:textColor="@color/textColorPrimary"
+            app:backgroundTint="@color/textColorSecondary" />
 
         <EditText
             android:id="@+id/editExpectedUnitPrice"
@@ -29,7 +34,10 @@
             android:inputType="numberDecimal"
             android:layout_marginEnd="16dp"
             android:layout_below="@+id/textView2"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:autofillHints=""
+            android:textColor="@color/textColorPrimary"
+            app:backgroundTint="@color/textColorSecondary" />
 
         <EditText
             android:id="@+id/editBudget"
@@ -40,7 +48,10 @@
             android:inputType="numberDecimal"
             android:layout_marginTop="53dp"
             android:layout_below="@+id/editCurrentUnitPrice"
-            android:layout_alignStart="@+id/editCurrentUnitPrice" />
+            android:layout_alignStart="@+id/editCurrentUnitPrice"
+            android:autofillHints=""
+            android:textColor="@color/textColorPrimary"
+            app:backgroundTint="@color/textColorSecondary" />
 
         <TextView
             android:id="@+id/textViewRevenue"

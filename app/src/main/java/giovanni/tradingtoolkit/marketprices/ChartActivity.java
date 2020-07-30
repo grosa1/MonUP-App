@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -16,6 +17,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,7 +69,7 @@ public class ChartActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         this.coinSym = getIntent().getStringExtra(CoinsFragment.ARG_CHART_SYM);
         toolbar.setTitle(coinSym);
-        getSupportActionBar().setTitle(coinSym);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(coinSym);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.hystoService = RetrofitClient.getCryptoCompareService();
@@ -162,7 +164,7 @@ public class ChartActivity extends AppCompatActivity {
     public void loadData(String coinSym, String currency, String daysCount) {
         hystoService.getList(coinSym, currency, daysCount).enqueue(new Callback<HystoPriceResponse>() {
             @Override
-            public void onResponse(Call<HystoPriceResponse> call, Response<HystoPriceResponse> response) {
+            public void onResponse(@NonNull Call<HystoPriceResponse> call, @NonNull Response<HystoPriceResponse> response) {
 
                 if (response.body() != null) {
                     String responseStatus = response.body().getResponse();
@@ -180,7 +182,7 @@ public class ChartActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<HystoPriceResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<HystoPriceResponse> call, @NonNull Throwable t) {
                 ProgressDialogManager.close();
                 showError();
             }
