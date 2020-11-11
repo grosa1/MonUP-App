@@ -10,7 +10,7 @@ task checkstyle(type: Checkstyle) {
     description 'Runs Checkstyle inspection'
     group = 'verification'
 
-    ignoreFailures = false
+    ignoreFailures = true
     showViolations = false
     source 'src/main', 'src/release', 'src/androidTest/java'
     include '**/*.java'
