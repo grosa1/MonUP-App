@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Puppy Crawl//DTD Check Configuration 1.2//EN"
+        "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
+
+<module name="Checker">
+
+  <module name="TreeWalker">
+
+    <!-- https://source.android.com/source/code-style.html#dont-ignore-exceptions -->
+    <module name="EmptyCatchBlockCheck">
+      <property name="commentFormat" value=".+"/>
+    </module>
+
+    <!-- https://source.android.com/source/code-style.html#dont-catch-generic-exception -->
+    <module name="IllegalCatch">
+      <property name="illegalClassNames" value="java.lang.Exception, java.lang.Throwable"/>
+    </module>
+
+    <!-- https://source.android.com/source/code-style.html#dont-use-finalizers -->
+    <module name="NoFinalizer"/>
+
+    <!-- https://source.android.com/source/code-style.html#fully-qualify-imports -->
+    <module name="AvoidStarImport">
+      <property name="excludes" value="java.io,java.util,junit.framework"/>
+    </module>
+
+    <!-- https://source.android.com/source/code-style.html#use-spaces-for-indentation -->
+    <module name="Indentation">
+      <property name="basicOffset" value="4"/>
+      <property name="lineWrappingIndentation" value="8"/>
+    </module>
+
+    <!--https://source.android.com/source/code-style.html#follow-field-naming-conventions -->
+    <module name="MemberName">
+      <!-- non-public members should start with an 'm' -->
+      <property name="format" value="^m[A-Z][a-zA-Z0-9]*$"/>
+      <property name="applyToPublic" value="false"></property>
+      <property name="applyToProtected" value="true"></property>
+      <property name="applyToPrivate" value="true"></property>
+      <property name="applyToPackage" value="true"></property>
+    </module>
+
+    <!--https://source.android.com/source/code-style.html#follow-field-naming-conventions -->
+    <module name="StaticVariableName">
+      <!-- static members should start with an 's' -->
+      <property name="format" value="^s[A-Z][a-zA-Z0-9]*$"/>
+      <property name="applyToPublic" value="false"></property>
+    </module>
+
+    <!--https://source.android.com/source/code-style.html#follow-field-naming-conventions -->
+    <module name="MemberName">
+      <!-- public members should not start with an 'm' -->
+      <property name="format" value="^(?:[a-l|n-z][a-zA-Z0-9]*)$|^(?:m[a-z]+[a-zA-Z0-9]*)$"/>
+      <property name="applyToPublic" value="true"></property>
+      <property name="applyToProtected" value="false"></property>
+      <property name="applyToPrivate" value="false"></property>
+      <property name="applyToPackage" value="false"></property>
+    </module>
+
+    <!--https://source.android.com/source/code-style.html#follow-field-naming-conventions -->
+    <module name="ConstantName"/>
+
+    <module name="FileContentsHolder"/> <!-- Required by comment suppression filters -->
+
+  </module>
+
+  <!-- https://source.android.com/source/code-style.html#use-spaces-for-indentation -->
+  <module name="FileTabCharacter"/>
+
+  <!-- Enable suppression comments -->
+  <module name="SuppressionCommentFilter">
+    <property name="offCommentFormat" value="CHECKSTYLE IGNORE\s+(\S+)"/>
+    <property name="onCommentFormat" value="CHECKSTYLE END IGNORE\s+(\S+)"/>
+    <property name="checkFormat" value="$1"/>
+  </module>
+  <module name="SuppressWithNearbyCommentFilter">
+    <!-- Syntax is "SUPPRESS CHECKSTYLE name" -->
+    <property name="commentFormat" value="SUPPRESS CHECKSTYLE (\w+)"/>
+    <property name="checkFormat" value="$1"/>
+    <property name="influenceFormat" value="1"/>
+  </module>
+</module>

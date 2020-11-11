@@ -1,5 +1,44 @@
 apply plugin: 'com.android.application'
+apply plugin: 'checkstyle'
 
+// checkstyle tasks setup
+checkstyle {
+    toolVersion = "6.5"
+}
+
+task checkstyle(type: Checkstyle) {
+    description 'Runs Checkstyle inspection'
+    group = 'verification'
+
+    ignoreFailures = false
+    showViolations = false
+    source 'src/main', 'src/release', 'src/androidTest/java'
+    include '**/*.java'
+    exclude '**/gen/**'
+    exclude '**/R.java'
+    exclude '**/BuildConfig.java'
+    reports {
+        xml {
+            destination file("$project.buildDir/reports/checkstyle/checkstyle-report.xml")
+        }
+    }
+    classpath = files()
+    configFile file("$project.rootDir/tools/checkstyle.xml")
+
+    configProperties.lineWidth = 120
+}
+
+task checkstyleReport doLast  {
+    dependsOn 'checkstyle'
+    if (file("$buildDir/reports/checkstyle/checkstyle-report.xml").exists()) {
+        ant.xslt(in: "$project.buildDir/reports/checkstyle/checkstyle-report.xml",
+                style: "$project.rootDir/tools/checkstyle-noframes-sorted.xsl",
+                out: "$project.buildDir/reports/checkstyle/checkstyle-report.html"
+        )
+    }
+}
+
+// android tasks
 android {
     compileSdkVersion 29
     defaultConfig {
@@ -10,6 +49,7 @@ android {
         versionName "2.4"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
+        // setup env vars
         Properties properties = new Properties()
         def propertiesFile = project.rootProject.file('local.properties')
         if (propertiesFile.exists()) {
