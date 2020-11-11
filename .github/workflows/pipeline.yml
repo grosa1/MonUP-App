@@ -25,7 +25,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: app
-          path: app/build/reports/checkstyle.html
+          path: app/build/reports/checkstyle/checkstyle.html
   apk:
     name: Generate APK
     runs-on: ubuntu-18.04
