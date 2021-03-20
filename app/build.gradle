@@ -1,5 +1,30 @@
 apply plugin: 'com.android.application'
+apply plugin: 'checkstyle'
 
+// checkstyle tasks setup
+checkstyle {
+    toolVersion = "6.5"
+}
+
+task checkstyle(type: Checkstyle) {
+    description 'Runs Checkstyle inspection'
+    group = 'verification'
+
+    ignoreFailures = true
+    showViolations = false
+    source 'src/main', 'src/release', 'src/androidTest/java'
+    include '**/*.java'
+    exclude '**/gen/**'
+    exclude '**/R.java'
+    exclude '**/BuildConfig.java'
+
+    classpath = files()
+    configFile file("$project.rootDir/tools/checkstyle.xml")
+
+    configProperties.lineWidth = 120
+}
+
+// android tasks
 android {
     compileSdkVersion 29
     defaultConfig {
@@ -10,6 +35,7 @@ android {
         versionName "2.4"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
+        // setup env vars
         Properties properties = new Properties()
         def propertiesFile = project.rootProject.file('local.properties')
         if (propertiesFile.exists()) {
