@@ -171,30 +171,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    protected void onPause() {
-//
-//        Intent intent = new Intent(MainActivity.this, LoadCoinService.class);
-//        startService(intent);
-//        super.onPause();
-//    }
-//
-//    @Override
-//    protected void onDestroy() {
-//
-//        Intent intent = new Intent(MainActivity.this, LoadCoinService.class);
-//        startService(intent);
-//        super.onDestroy();
-//    }
-//
-//    @Override
-//    protected void onResume() {
-//
-//        Intent intent = new Intent(MainActivity.this, LoadCoinService.class);
-//        stopService(intent);
-//        super.onResume();
-//    }
-
     private void setupTabIcons() {
         Objects.requireNonNull(tabLayout.getTabAt(0)).setIcon(tabIcons[0]);
         Objects.requireNonNull(tabLayout.getTabAt(1)).setIcon(tabIcons[1]);
