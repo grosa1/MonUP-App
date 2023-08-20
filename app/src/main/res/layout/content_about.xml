@@ -9,28 +9,28 @@
     tools:showIn="@layout/activity_about">
 
     <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView1"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="36dp"
             android:layout_above="@id/textView2"
-            android:gravity="center"
+            android:gravity="center_vertical|left"
             android:text="@string/about_thanks"
             android:textStyle="bold" />
 
         <RelativeLayout
             android:id="@+id/textView2"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:gravity="center_vertical">
+            android:layout_height="48dp"
+            android:gravity="center_vertical|left">
 
             <TextView
                 android:id="@+id/textView3"
@@ -38,7 +38,6 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/textView4"
                 android:layout_alignParentStart="true"
-                android:gravity="center"
                 android:text="CoinMarketCap public APIs" />
 
             <TextView
@@ -47,7 +46,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:autoLink="web"
-                android:gravity="center"
                 android:text="https://coinmarketcap.com/" />
 
         </RelativeLayout>
@@ -55,9 +53,7 @@
         <RelativeLayout
             android:id="@+id/textView18"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_height="48dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -66,7 +62,6 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/textView20"
                 android:layout_alignParentStart="true"
-                android:gravity="center"
                 android:text="Crypto Compare public APIs" />
 
             <TextView
@@ -75,7 +70,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:autoLink="web"
-                android:gravity="center"
                 android:text="https://www.cryptocompare.com/" />
 
         </RelativeLayout>
@@ -83,9 +77,7 @@
         <RelativeLayout
             android:id="@+id/textView5"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_height="48dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -94,7 +86,6 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/textView7"
                 android:layout_alignParentStart="true"
-                android:gravity="center"
                 android:text="Cryptocurrency icons" />
 
             <TextView
@@ -103,7 +94,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:autoLink="web"
-                android:gravity="center"
                 android:text="https://github.com/cjdowner/cryptocurrency-icons" />
 
         </RelativeLayout>
@@ -111,9 +101,7 @@
         <RelativeLayout
             android:id="@+id/textView111"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_height="48dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -122,7 +110,6 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/textView113"
                 android:layout_alignParentStart="true"
-                android:gravity="center"
                 android:text="GNews API" />
 
             <TextView
@@ -131,105 +118,73 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:autoLink="web"
-                android:gravity="center"
                 android:text="https://gnews.io/" />
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_below="@id/textView7"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:gravity="center"
-            android:text="@string/about_support"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_below="@id/textView5"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+        <RelativeLayout
+            android:id="@+id/textView216"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:autoLink="web"
-            android:gravity="center"
-            android:text="@string/github"
-            android:textIsSelectable="true" />
+            android:gravity="center_vertical">
 
-
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_above="@+id/textView14"
-            android:layout_alignParentStart="true"
-            android:layout_width="match_parent"
-            android:layout_marginTop="16dp"
-            android:layout_height="28dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:gravity="center"
-            android:text="@string/developed_by"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:layout_gravity="center">
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:gravity="center_vertical"
+                android:text="@string/developed_by"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView14"
+                android:layout_below="@id/textView13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:textColor="@color/colorPrimary"
-                android:gravity="center"
                 android:text="G. Rosa"
-                android:layout_marginEnd="10dp"/>
-        </LinearLayout>
+                android:textColor="@color/colorPrimary" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:layout_gravity="center">
             <TextView
                 android:id="@+id/textView16"
+                android:layout_below="@id/textView14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:textColor="@color/colorPrimary"
-                android:gravity="center"
                 android:text="F. Zappone"
-                android:layout_marginEnd="10dp"/>
-        </LinearLayout>
+                android:textColor="@color/colorPrimary" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:layout_gravity="center">
             <TextView
                 android:id="@+id/textView22"
+                android:layout_below="@id/textView16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:textColor="@color/colorPrimary"
-                android:gravity="center"
                 android:text="S. Dalla Palma"
-                android:textStyle="italic"
-                android:layout_marginEnd="10dp" />
-        </LinearLayout>
+                android:textColor="@color/colorPrimary" />
+        </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/textView212"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:gravity="center_vertical"
+                android:text="@string/about_support"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView9"
+                android:autoLink="web"
+                android:text="@string/github"
+                android:textIsSelectable="true"
+                android:textSize="13sp" />
+        </RelativeLayout>
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -43,7 +43,7 @@
     <string name="action_settings" translatable="false">About</string>
     <string name="title_activity_about" translatable="false">MonUP - v2.4</string>
     <string name="github" translatable="false">https://github.com/grosa1/MonUP-App</string>
-    <string name="about_thanks">Thanks to:</string>
+    <string name="about_thanks" translatable="false">Credits</string>
     <string name="about_support">Support the app!</string>
     <string name="developed_by" translatable="false">Contributors</string>
 
