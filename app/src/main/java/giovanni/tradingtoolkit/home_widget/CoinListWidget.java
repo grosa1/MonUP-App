@@ -9,8 +9,8 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import giovanni.tradingtoolkit.R;
-import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
-import giovanni.tradingtoolkit.data.remote.LoadCoinService;
+import giovanni.tradingtoolkit.marketprices.remote.LoadCoinReceiver;
+import giovanni.tradingtoolkit.marketprices.remote.LoadCoinService;
 import giovanni.tradingtoolkit.main.ToastManager;
 
 /**

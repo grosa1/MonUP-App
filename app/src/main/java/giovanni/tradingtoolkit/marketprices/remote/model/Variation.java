@@ -1,4 +1,4 @@
-package giovanni.tradingtoolkit.data.model;
+package giovanni.tradingtoolkit.marketprices.remote.model;
 
 /**
  *@author Stefano Dalla Palma

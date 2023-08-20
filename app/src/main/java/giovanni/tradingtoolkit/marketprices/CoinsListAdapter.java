@@ -22,7 +22,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import giovanni.tradingtoolkit.R;
-import giovanni.tradingtoolkit.data.model.coin_response.Coin;
+import giovanni.tradingtoolkit.marketprices.remote.model.coin_response.Coin;
 import giovanni.tradingtoolkit.main.ResourcesLoader;
 
 public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.ViewHolder> {
@@ -55,17 +55,17 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
             drawable = ResourcesLoader.getDrawable(context, coin.getSymbol().toLowerCase());
         } catch (Resources.NotFoundException e) {
             Log.d("RES_ERROR", "Icon not found, set default");
-            drawable = ResourcesLoader.getDrawableFromId(context, R.drawable.ic_no_image);
+            drawable = ResourcesLoader.getDrawableFromId(context, R.drawable.trading_toolkit);
         }
         holder.coinIcon.setImageDrawable(drawable);
 
         holder.coinPosition.setText(String.format("%s", coin.getRank()));
         holder.coinName.setText(String.format("%s (%s)", coin.getName(), coin.getSymbol()));
 
-        if (CoinsFragment.currency.equals("EUR")) {
+        if (CoinsFragment.currency.equals(CoinsFragment.CURRENCY_EUR)) {
             holder.coinPrice.setText(String.format(Locale.getDefault(), "%.2f €", roundToDecimalPlaces(coin.getPriceEur(), 2)));
             holder.coinPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-        } else if (CoinsFragment.currency.equals("BTC")) {
+        } else if (CoinsFragment.currency.equals(CoinsFragment.CURRENCY_BTC)) {
             holder.coinPrice.setText(String.format(Locale.getDefault(), "%.6f B", roundToDecimalPlaces(coin.getPriceBtc(), 6)));
             holder.coinPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
         } else {

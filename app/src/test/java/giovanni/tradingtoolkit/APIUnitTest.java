@@ -4,11 +4,11 @@ import org.junit.Test;
 
 import java.lang.reflect.Method;
 
-import giovanni.tradingtoolkit.data.model.HystoPrice;
-import giovanni.tradingtoolkit.data.model.HystoPriceResponse;
-import giovanni.tradingtoolkit.data.model.coin_response.Coin;
-import giovanni.tradingtoolkit.data.model.coin_response.ResponseData;
-import giovanni.tradingtoolkit.data.remote.RetrofitClient;
+import giovanni.tradingtoolkit.marketprices.remote.model.HystoPrice;
+import giovanni.tradingtoolkit.marketprices.remote.model.HystoPriceResponse;
+import giovanni.tradingtoolkit.marketprices.remote.model.coin_response.Coin;
+import giovanni.tradingtoolkit.marketprices.remote.model.coin_response.ResponseData;
+import giovanni.tradingtoolkit.marketprices.remote.RetrofitClient;
 import giovanni.tradingtoolkit.marketprices.CoinsFragment;
 import retrofit2.Response;
 

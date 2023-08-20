@@ -1,4 +1,4 @@
-package giovanni.tradingtoolkit.data.remote;
+package giovanni.tradingtoolkit.marketprices.remote;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

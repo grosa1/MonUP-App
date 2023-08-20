@@ -26,5 +26,4 @@ public class AboutActivity extends AppCompatActivity {
         finish();
         return true;
     }
-
 }

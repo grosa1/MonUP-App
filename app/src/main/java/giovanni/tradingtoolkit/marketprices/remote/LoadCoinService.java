@@ -1,4 +1,4 @@
-package giovanni.tradingtoolkit.data.remote;
+package giovanni.tradingtoolkit.marketprices.remote;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import giovanni.tradingtoolkit.data.model.coin_response.Coin;
-import giovanni.tradingtoolkit.data.model.coin_response.ResponseData;
+import giovanni.tradingtoolkit.marketprices.remote.model.coin_response.Coin;
+import giovanni.tradingtoolkit.marketprices.remote.model.coin_response.ResponseData;
 import giovanni.tradingtoolkit.home_widget.CoinListWidget;
 import giovanni.tradingtoolkit.main.SharedPrefs;
 import retrofit2.Call;

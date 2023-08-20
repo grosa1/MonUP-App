@@ -17,7 +17,8 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/imageView_content_description"
         android:layout_gravity="center_vertical"
-        android:src="@color/colorPrimaryDark" />
+        android:src="@drawable/trading_toolkit"
+        android:background="@color/colorAccent"/>
 
 
     <LinearLayout
@@ -25,28 +26,44 @@
         android:layout_height="match_parent"
         android:layout_weight="10"
         android:orientation="vertical"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="6dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         android:layout_gravity="center_horizontal">
 
         <TextView
             android:id="@+id/article_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:gravity="center_vertical|start"
             android:text="@string/news_title_place_holder"
-            android:textAlignment="center"
             android:layout_weight="2"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/article_date"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="7"
-            android:gravity="bottom|right"
-            android:text="@string/news_date_place_holder"
-            android:textSize="10sp" />
+            android:layout_weight="10"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/article_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:gravity="bottom|left"
+                android:text="@string/news_date_place_holder"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/article_source"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:gravity="bottom|right"
+                android:text="News Source"
+                android:textSize="10sp" />
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -1,6 +1,7 @@
 package giovanni.tradingtoolkit.marketprices;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,11 +32,11 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import giovanni.tradingtoolkit.R;
-import giovanni.tradingtoolkit.data.model.Variation;
-import giovanni.tradingtoolkit.data.model.coin_response.Coin;
-import giovanni.tradingtoolkit.data.model.coin_response.ResponseData;
-import giovanni.tradingtoolkit.data.remote.CoinMarketCapService;
-import giovanni.tradingtoolkit.data.remote.RetrofitClient;
+import giovanni.tradingtoolkit.marketprices.remote.model.Variation;
+import giovanni.tradingtoolkit.marketprices.remote.model.coin_response.Coin;
+import giovanni.tradingtoolkit.marketprices.remote.model.coin_response.ResponseData;
+import giovanni.tradingtoolkit.marketprices.remote.CoinMarketCapService;
+import giovanni.tradingtoolkit.marketprices.remote.RetrofitClient;
 import giovanni.tradingtoolkit.main.ProgressDialogManager;
 import giovanni.tradingtoolkit.main.SharedPrefs;
 import giovanni.tradingtoolkit.main.ToastManager;
@@ -48,6 +49,9 @@ public class CoinsFragment extends Fragment {
     public static final String ARG_CHART_CURRENCY = "currency_data";
     public static final String DEFAULT_CURRENCY = "USD";
     public static final String LIST_LIMIT = "200";
+
+    public static final String CURRENCY_EUR = "EUR";
+    public static final String CURRENCY_BTC = "BTC";
 
     @BindView(R.id.list)
     RecyclerView recyclerView;
@@ -102,7 +106,7 @@ public class CoinsFragment extends Fragment {
         }
 
         listAdapter = new CoinsListAdapter(getContext(), coins, coinSym -> {
-            if (!(currency.equals("BTC") && coinSym.equals("BTC"))) {
+            if (!(currency.equals(CoinsFragment.CURRENCY_BTC) && coinSym.equals(CoinsFragment.CURRENCY_BTC))) {
                 this.showChart(coinSym, currency);
             }
         });
@@ -162,7 +166,8 @@ public class CoinsFragment extends Fragment {
                 Collections.reverse(coins);
             }
 
-            tvVariation.setText(getContext().getString(R.string.percentage_variation_title));
+            resetToolbarSortButtons();
+            tvRank.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
             listAdapter.notifyDataSetChanged();
         });
 
@@ -179,7 +184,9 @@ public class CoinsFragment extends Fragment {
                 sortNameAsc = true;
                 Collections.reverse(coins);
             }
-            tvVariation.setText(getContext().getString(R.string.percentage_variation_title));
+
+            resetToolbarSortButtons();
+            tvCoin.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
             listAdapter.notifyDataSetChanged();
         });
 
@@ -190,13 +197,13 @@ public class CoinsFragment extends Fragment {
             sortNameAsc = true;
 
             switch (currency) {
-                case "USD":
+                case CoinsFragment.DEFAULT_CURRENCY:
                     Collections.sort(coins, (coin1, coin2) -> coin1.getPriceUsd().compareTo(coin2.getPriceUsd()));
                     break;
-                case "EUR":
+                case CoinsFragment.CURRENCY_EUR:
                     Collections.sort(coins, (coin1, coin2) -> coin1.getPriceEur().compareTo(coin2.getPriceEur()));
                     break;
-                case "BTC":
+                case CoinsFragment.CURRENCY_BTC:
                     Collections.sort(coins, (coin1, coin2) -> coin1.getPriceBtc().compareTo(coin2.getPriceBtc()));
                     break;
             }
@@ -207,7 +214,9 @@ public class CoinsFragment extends Fragment {
                 sortPriceAsc = true;
                 Collections.reverse(coins);
             }
-            tvVariation.setText(getContext().getString(R.string.percentage_variation_title));
+            resetToolbarSortButtons();
+            tvPrice.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+
             listAdapter.notifyDataSetChanged();
         });
 
@@ -239,11 +248,21 @@ public class CoinsFragment extends Fragment {
                     break;
             }
             listAdapter.notifyDataSetChanged();
-            tvVariation.setText((getContext().getString(R.string.percentage_variation_sym)) + " " + newVariation);
 
+            resetToolbarSortButtons();
+            tvVariation.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+            tvVariation.setText((getContext().getString(R.string.percentage_variation_sym)) + " " + newVariation);
         });
 
         return view;
+    }
+
+    private void resetToolbarSortButtons() {
+        tvRank.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        tvCoin.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        tvPrice.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        tvVariation.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+        tvVariation.setText((Objects.requireNonNull(getContext()).getString(R.string.percentage_variation_title)));
     }
 
     @Override
@@ -285,7 +304,7 @@ public class CoinsFragment extends Fragment {
                     Log.e("ERROR_CODE", String.valueOf(statusCode));
                     assert response.errorBody() != null;
                     Log.d("ERR_RES", response.errorBody().toString());
-                    
+
                     ProgressDialogManager.close();
                     if (pullDown != null) {
                         pullDown.setRefreshing(false);
@@ -356,9 +375,9 @@ public class CoinsFragment extends Fragment {
     private void resetSpinner() {
         if (this.spinnerCurrency != null) {
             int position;
-            if (currency.equals("EUR")) {
+            if (currency.equals(CoinsFragment.CURRENCY_EUR)) {
                 position = 1;
-            } else if (currency.equals("BTC")) {
+            } else if (currency.equals(CoinsFragment.CURRENCY_BTC)) {
                 position = 2;
             } else {
                 position = 0;

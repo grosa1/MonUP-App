@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name" translatable="false">MonUP</string>
 
-    <!-- calcualtor -->
+    <!-- calculator -->
     <string name="title_calculator" translatable="false">Tools</string>
     <string name="calculator_error">Please fill in all the fields</string>
+    <string name="calculator_title">Revenue Calculator</string>
     <string name="calculator_net_revenue">Revenue:</string>
     <string name="calculator_income">Income: </string>
     <string name="calculator_calculate">Calculate</string>
@@ -20,7 +21,7 @@
 
     <!-- coins list -->
     <string name="title_dashboard" translatable="false">Market Prices</string>
-    <string name="coins_request_error">Error: Unable to fetch coin list, please try later</string>
+    <string name="coins_request_error">Unable to fetch coin list, please try later</string>
     <string name="daily" translatable="false">Day</string>
     <string name="weekly" translatable="false">Week</string>
     <string name="list_position_place_holder" translatable="false">n.</string>
@@ -41,16 +42,16 @@
     <!-- about -->
     <string name="action_settings" translatable="false">About</string>
     <string name="title_activity_about" translatable="false">MonUP - v2.4</string>
-    <string name="github" translatable="false">https://github.com/grosa1/crypto-trading-toolkit-android</string>
+    <string name="github" translatable="false">https://github.com/grosa1/MonUP-App</string>
     <string name="about_thanks">Thanks to:</string>
     <string name="about_support">Support the app!</string>
-    <string name="developed_by">Developed by</string>
+    <string name="developed_by" translatable="false">Contributors</string>
 
     <!-- widget -->
     <string name="appwidget_text">MonUP</string>
     <string name="configure_widget">Configure Widget</string>
     <string name="reset_widget">Reset Widget</string>
-    <string name="widget_resetted">Resetted Widget</string>
+    <string name="widget_resetted">Widget has been reset</string>
     <string name="add_widget">Add widget</string>
     <string name="add_coin">Add</string>
     <string name="configure_description">Look for a coin to add:</string>
@@ -68,9 +69,10 @@
     <!-- news and article -->
     <string name="news_text">News</string>
     <string name="news_title_place_holder">News title</string>
-    <string name="news_date_place_holder" />
+    <string name="news_date_place_holder">News Date</string>
     <string name="article_url">Go to original post</string>
     <string name="news_refreshed">News refreshed</string>
+    <string name="news_source">Source:</string>
 
     <!--  settings  -->
     <string name="title_activity_settings">Settings</string>

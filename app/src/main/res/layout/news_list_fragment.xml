@@ -17,14 +17,17 @@
             android:id="@+id/text_news"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="8dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_toStartOf="@id/refresh_news"
             android:contentDescription="@string/appwidget_text"
             android:text="@string/news_text"
             android:textColor="@color/widgetTextColor"
             android:textSize="18sp"
-            android:textStyle=""
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@id/refresh_news" />
+            android:textStyle="" />
 
         <Button
             android:id="@+id/refresh_news"

@@ -1,5 +1,5 @@
 
-package giovanni.tradingtoolkit.data.model.coin_response;
+package giovanni.tradingtoolkit.marketprices.remote.model.coin_response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

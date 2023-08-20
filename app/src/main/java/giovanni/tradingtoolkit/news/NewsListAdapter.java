@@ -15,8 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -25,15 +23,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.main.ResourcesLoader;
-import io.cryptocontrol.cryptonewsapi.models.Article;
+import giovanni.tradingtoolkit.news.remote.model.NewsArticle;
 
-public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolkit.news.NewsListAdapter.ViewHolder> {
+public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHolder> {
     public static final int NEWS_TITLE_MAX_LENGTH = 18;
-    private List<Article> news;
+    public static final int NEWS_IMAGE_TARGET_WIDTH = 512;
+    public static final int NEWS_IMAGE_TARGET_HEIGHT = 512;
+    private List<NewsArticle> news;
     private Context context;
     private ArticleItemListener itemListener;
 
-    NewsListAdapter(Context context, List<Article> news, ArticleItemListener itemListener) {
+    NewsListAdapter(Context context, List<NewsArticle> news, ArticleItemListener itemListener) {
         this.news = news;
         this.context = context;
         this.itemListener = itemListener;
@@ -41,18 +41,24 @@ public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolki
 
     @NonNull
     @Override
-    public giovanni.tradingtoolkit.news.NewsListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.news_list_item, parent, false);
-        return new giovanni.tradingtoolkit.news.NewsListAdapter.ViewHolder(view, this.itemListener);
+        return new ViewHolder(view, this.itemListener);
     }
 
     @Override
-    public void onBindViewHolder(giovanni.tradingtoolkit.news.NewsListAdapter.ViewHolder holder, int position) {
-        Article article = news.get(position);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        NewsArticle article = news.get(position);
 
-        Picasso.get().load(article.getThumbnail()).into(holder.icon);
+        Picasso.get()
+                .load(article.getImageUrl())
+                .resize(NEWS_IMAGE_TARGET_WIDTH, NEWS_IMAGE_TARGET_HEIGHT)
+                .centerCrop()
+                .error(R.drawable.trading_toolkit)
+                .placeholder(R.drawable.trading_toolkit)
+                .into(holder.icon);
 
         String title = article.getTitle();
         String[] titleTrimmed = title.split(" ");
@@ -61,6 +67,9 @@ public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolki
             title = TextUtils.join(" ", titleTrimmed) + "...";
         }
         holder.title.setText(title);
+
+        String sourcePrefix = context.getResources().getString(R.string.news_source);
+        holder.sourceSite.setText(String.format("%s %s", sourcePrefix, article.getSourceSite()));
 
         holder.date.setText(this.formatArticleDate(article.getPublishedAt()));
 
@@ -87,17 +96,17 @@ public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolki
         return 0;
     }
 
-    void updateNewsList(List<Article> items) {
+    void updateNewsList(List<NewsArticle> items) {
         news = items;
         notifyDataSetChanged();
     }
 
-    private Article getItem(int adapterPosition) {
+    private NewsArticle getItem(int adapterPosition) {
         return news.get(adapterPosition);
     }
 
     public interface ArticleItemListener {
-        void onArticleClick(Article article);
+        void onArticleClick(NewsArticle article);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -107,10 +116,12 @@ public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolki
         public TextView title;
         @BindView(R.id.article_date)
         public TextView date;
+        @BindView(R.id.article_source)
+        public TextView sourceSite;
         @BindView(R.id.news_list_item)
         public LinearLayout layout;
 
-        ViewHolder(View itemView, giovanni.tradingtoolkit.news.NewsListAdapter.ArticleItemListener articleItemListener) {
+        ViewHolder(View itemView, ArticleItemListener articleItemListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemListener = articleItemListener;
@@ -119,20 +130,18 @@ public class NewsListAdapter extends RecyclerView.Adapter<giovanni.tradingtoolki
 
         @Override
         public void onClick(View view) {
-            Article article = getItem(getAdapterPosition());
+            NewsArticle article = getItem(getAdapterPosition());
             itemListener.onArticleClick(article);
         }
     }
 
-    private String formatArticleDate(String articleDate) {
+    private String formatArticleDate(Date articleDate) {
         String dateText = "";
 
         try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            Date artDate = format.parse(articleDate);
-            assert artDate != null;
-            dateText = DateFormat.getDateInstance(DateFormat.MEDIUM).format(artDate);
-        } catch (ParseException e) {
+            assert articleDate != null;
+            dateText = DateFormat.getDateInstance(DateFormat.MEDIUM).format(articleDate);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

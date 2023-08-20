@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Locale;
 
 import giovanni.tradingtoolkit.R;
-import giovanni.tradingtoolkit.data.model.coin_response.Coin;
-import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
+import giovanni.tradingtoolkit.marketprices.remote.model.coin_response.Coin;
+import giovanni.tradingtoolkit.marketprices.remote.LoadCoinReceiver;
 import giovanni.tradingtoolkit.main.ResourcesLoader;
 import giovanni.tradingtoolkit.main.SharedPrefs;
 import giovanni.tradingtoolkit.marketprices.CoinsListAdapter;

@@ -1,4 +1,4 @@
-package giovanni.tradingtoolkit.data.model;
+package giovanni.tradingtoolkit.marketprices.remote.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

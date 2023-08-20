@@ -123,7 +123,7 @@
                 android:layout_above="@+id/textView113"
                 android:layout_alignParentStart="true"
                 android:gravity="center"
-                android:text="CryptoControl API" />
+                android:text="GNews API" />
 
             <TextView
                 android:id="@+id/textView113"
@@ -132,7 +132,7 @@
                 android:layout_alignParentBottom="true"
                 android:autoLink="web"
                 android:gravity="center"
-                android:text="https://api-docs.cryptocontrol.io/" />
+                android:text="https://gnews.io/" />
 
         </RelativeLayout>
 
@@ -140,7 +140,7 @@
             android:id="@+id/textView9"
             android:layout_below="@id/textView7"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="48dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:gravity="center"
@@ -189,18 +189,8 @@
                 android:layout_alignParentBottom="true"
                 android:textColor="@color/colorPrimary"
                 android:gravity="center"
-                android:text="Giovanni Rosa:"
-                android:textStyle="italic"
+                android:text="G. Rosa"
                 android:layout_marginEnd="10dp"/>
-
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:autoLink="email"
-                android:gravity="center"
-                android:text="g.rosa1@studenti.unimol.it" />
         </LinearLayout>
 
         <LinearLayout
@@ -217,18 +207,8 @@
                 android:layout_alignParentBottom="true"
                 android:textColor="@color/colorPrimary"
                 android:gravity="center"
-                android:text="Federico Zappone:"
-                android:textStyle="italic"
+                android:text="F. Zappone"
                 android:layout_marginEnd="10dp"/>
-
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:autoLink="email"
-                android:gravity="center"
-                android:text="f.zappone1@studenti.unimol.it" />
         </LinearLayout>
 
         <LinearLayout
@@ -245,7 +225,7 @@
                 android:layout_alignParentBottom="true"
                 android:textColor="@color/colorPrimary"
                 android:gravity="center"
-                android:text="Stefano Dalla Palma"
+                android:text="S. Dalla Palma"
                 android:textStyle="italic"
                 android:layout_marginEnd="10dp" />
         </LinearLayout>

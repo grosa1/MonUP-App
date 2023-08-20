@@ -29,10 +29,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import giovanni.tradingtoolkit.R;
 import giovanni.tradingtoolkit.calculator.CalculatorFragment;
-import giovanni.tradingtoolkit.data.remote.LoadCoinReceiver;
-import giovanni.tradingtoolkit.data.remote.LoadCoinService;
-import giovanni.tradingtoolkit.data.remote.LoadNewsReceiver;
-import giovanni.tradingtoolkit.data.remote.LoadNewsService;
+import giovanni.tradingtoolkit.marketprices.remote.LoadCoinReceiver;
+import giovanni.tradingtoolkit.marketprices.remote.LoadCoinService;
 import giovanni.tradingtoolkit.home_widget.CoinListWidgetConfigureActivity;
 import giovanni.tradingtoolkit.marketprices.CoinsFragment;
 import giovanni.tradingtoolkit.news.NewsFragment;
@@ -55,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
     Intent mServiceIntent;
     LoadCoinService CoinService;
-    LoadNewsService NewsService;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,13 +90,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void loadNews() { //TODO: make static
-        NewsService = new LoadNewsService();
-        mServiceIntent = new Intent(MainActivity.this, NewsService.getClass());
-        if (!isLoadServiceRunning(NewsService.getClass())) {
-            Intent i = new Intent(this, LoadNewsReceiver.class);
-            this.sendBroadcast(i);
-        }
+    public void loadNews() {
+        // TODO: fix for new API
+//        NewsService = new LoadNewsService();
+//        mServiceIntent = new Intent(MainActivity.this, NewsService.getClass());
+//        if (!isLoadServiceRunning(NewsService.getClass())) {
+//            Intent i = new Intent(this, LoadNewsReceiver.class);
+//            this.sendBroadcast(i);
+//        }
     }
 
     private boolean isLoadServiceRunning(Class<?> serviceClass) { //TODO: make static
@@ -108,11 +105,11 @@ public class MainActivity extends AppCompatActivity {
         assert manager != null;
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
-                Log.i("isLoadCoinServiceRunn?", true + "");
+                Log.i("isLoadCoinServiceRun?", true + "");
                 return true;
             }
         }
-        Log.i("isLoadCoinServiceRunn?", false + "");
+        Log.i("isLoadCoinServiceRun?", false + "");
         return false;
     }
 

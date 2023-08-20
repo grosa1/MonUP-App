@@ -6,13 +6,12 @@
     <string name="chart_button_30gg">30 giorni</string>
     <string name="chart_button_7gg">7 giorni</string>
     <string name="chart_button_90gg">90 giorni</string>
-    <string name="coins_request_error">Errore: Impossibile caricare la lista delle monete, riprova più tardi</string>
+    <string name="coins_request_error">Impossibile caricare la lista delle monete, riprova più tardi</string>
     <string name="percentage_variation_title">Variazione</string>
     <string name="price_title">Prezzo</string>
     <string name="coin_name">Moneta</string>
     <string name="about_thanks">Grazie a:</string>
     <string name="about_support">Se l\'app ti piace, supportala con una piccola donazione!</string>
-    <string name="developed_by">Sviluppata da</string>
     <string name="calculator_net_revenue">Guadagno netto:</string>
     <string name="calculator_income">Lordo: </string>
     <string name="calculator_calculate">Calcola</string>
@@ -43,4 +42,6 @@
     <string name="settings">Impostazioni</string>
     <string name="setting_color_mode">Tema scuro</string>
     <string name="title_activity_settings">Impostazioni</string>
+    <string name="calculator_title">Calcolatrice</string>
+    <string name="news_source">Fonte:</string>
 </resources>
