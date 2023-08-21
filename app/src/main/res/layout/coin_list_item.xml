@@ -63,7 +63,8 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:gravity="center"
                 android:text="@string/percentage_variation_1h_text"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textColor="@android:color/white"/>
 
             <TextView
                 android:id="@+id/percentage_variation_1h"
@@ -73,7 +74,8 @@
                 android:layout_marginStart="3dp"
                 android:gravity="center"
                 android:text="@string/percentage_variation_place_holder"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textColor="@android:color/white"/>
 
         </LinearLayout>
 
@@ -90,7 +92,8 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:gravity="center"
                 android:text="@string/percentage_variation_1d_text"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textColor="@android:color/white"/>
 
             <TextView
                 android:id="@+id/percentage_variation_1d"
@@ -100,7 +103,8 @@
                 android:layout_marginStart="3dp"
                 android:gravity="center"
                 android:text="@string/percentage_variation_place_holder"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textColor="@android:color/white"/>
 
         </LinearLayout>
 
@@ -117,7 +121,8 @@
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:gravity="center"
                 android:text="@string/percentage_variation_1w_text"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textColor="@android:color/white"/>
 
             <TextView
                 android:id="@+id/percentage_variation_1w"
@@ -127,7 +132,8 @@
                 android:layout_marginStart="3dp"
                 android:gravity="center"
                 android:text="@string/percentage_variation_place_holder"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textColor="@android:color/white"/>
 
         </LinearLayout>
 

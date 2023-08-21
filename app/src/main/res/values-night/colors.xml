@@ -24,6 +24,8 @@
     <color name="widgetGreen">#2E7D32</color>
 
     <color name="marketpricesHeaderColor">@color/colorPrimary</color>
+    <color name="marketpricesPercentagesTextColor">#FAFAFA</color>
+    <color name="marketpricesTextColor">#FAFAFA</color>
 
     <color name="calculatorTextColor">#FAFAFA</color>
     <color name="calculatorHintColor">#9D9D9D</color>

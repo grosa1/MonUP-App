@@ -123,14 +123,15 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         holder.listItem.setBackgroundColor(background);
 
         // Setting Text Color
-        colorId = R.color.textColorSecondary;
+        colorId = R.color.marketpricesTextColor;
         holder.coinPosition.setTextColor(context.getResources().getColor(colorId));
         holder.coinName.setTextColor(context.getResources().getColor(colorId));
         holder.coinPrice.setTextColor(context.getResources().getColor(colorId));
         holder.percentageVariation1hText.setTextColor(context.getResources().getColor(colorId));
         holder.percentageVariation1dText.setTextColor(context.getResources().getColor(colorId));
         holder.percentageVariation1wText.setTextColor(context.getResources().getColor(colorId));
-        colorId = R.color.textColorPrimary;
+
+        colorId = R.color.marketpricesPercentagesTextColor;
         holder.percentageVariation1h.setTextColor(context.getResources().getColor(colorId));
         holder.percentageVariation1d.setTextColor(context.getResources().getColor(colorId));
         holder.percentageVariation1w.setTextColor(context.getResources().getColor(colorId));
