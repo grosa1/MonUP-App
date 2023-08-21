@@ -26,8 +26,8 @@
 
     <style name="FragmentCalculator">
         <item name="android:background">@color/calculatorColorBackground</item>
-        <item name="android:textColor">@color/textColorPrimary</item>
-        <item name="android:textColorHint">@color/textColorPrimary</item>
+        <item name="android:textColor">@color/calculatorTextColor</item>
+        <item name="android:textColorHint">@color/calculatorHintColor</item>
     </style>
 
 </resources>

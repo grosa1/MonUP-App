@@ -5,7 +5,7 @@
     <color name="colorPrimaryDark">#689F38</color>
     <color name="colorAccent">#689F38</color>
     <color name="textColorPrimary">#000000</color>
-    <color name="textColorSecondary">#000000</color>
+    <color name="textColorSecondary">#808080</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
 
@@ -27,6 +27,8 @@
 
     <color name="marketpricesHeaderColor">@color/colorPrimary</color>
 
+    <color name="calculatorTextColor">#737373</color>
+    <color name="calculatorHintColor">#9D9D9D</color>
     <color name="calculatorColorBackground">@color/materialWhite</color>
 
     <color name="settingsThumbColor">#ECECEC</color>

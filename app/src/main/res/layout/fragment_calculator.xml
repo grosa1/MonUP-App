@@ -46,8 +46,8 @@
             android:layout_below="@+id/textView1"
             android:layout_alignParentStart="true"
             android:autofillHints=""
-            android:textColor="@color/textColorPrimary"
-            android:backgroundTint="@color/textColorSecondary" />
+            android:textColor="@color/calculatorTextColor"
+            android:backgroundTint="@color/calculatorHintColor" />
 
         <EditText
             android:id="@+id/editExpectedUnitPrice"
@@ -60,8 +60,8 @@
             android:layout_below="@+id/textView2"
             android:layout_alignParentEnd="true"
             android:autofillHints=""
-            android:textColor="@color/textColorPrimary"
-            app:backgroundTint="@color/textColorSecondary" />
+            android:textColor="@color/calculatorTextColor"
+            android:backgroundTint="@color/calculatorHintColor" />
 
         <EditText
             android:id="@+id/editBudget"
@@ -74,8 +74,8 @@
             android:layout_below="@+id/editCurrentUnitPrice"
             android:layout_alignStart="@+id/editCurrentUnitPrice"
             android:autofillHints=""
-            android:textColor="@color/textColorPrimary"
-            app:backgroundTint="@color/textColorSecondary" />
+            android:textColor="@color/calculatorTextColor"
+            android:backgroundTint="@color/calculatorHintColor" />
 
         <TextView
             android:id="@+id/textViewRevenue"

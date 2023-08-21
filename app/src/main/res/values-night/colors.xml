@@ -25,6 +25,8 @@
 
     <color name="marketpricesHeaderColor">@color/colorPrimary</color>
 
+    <color name="calculatorTextColor">#FAFAFA</color>
+    <color name="calculatorHintColor">#9D9D9D</color>
     <color name="calculatorColorBackground">#383037</color>
 
     <color name="settingsThumbColor">#7CB342</color>
