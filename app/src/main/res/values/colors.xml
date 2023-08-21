@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#7CB342</color>
+    <color name="colorPrimaryBackground">#FAFAFA</color>
     <color name="colorPrimaryDark">#689F38</color>
     <color name="colorAccent">#689F38</color>
-    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="textColorPrimary">#000000</color>
     <color name="textColorSecondary">#000000</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
@@ -23,5 +24,12 @@
     <color name="widgetItemSecondaryColorDark">#383037</color>
     <color name="widgetRed">#FF1744</color>
     <color name="widgetGreen">#689F38</color>
+
+    <color name="marketpricesHeaderColor">@color/colorPrimary</color>
+
+    <color name="calculatorColorBackground">@color/materialWhite</color>
+
+    <color name="settingsThumbColor">#ECECEC</color>
+    <color name="settingsThumbTrackColor">#B9B9B9</color>
 
 </resources>

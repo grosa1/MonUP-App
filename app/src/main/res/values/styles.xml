@@ -17,11 +17,17 @@
     <style name="MyMaterialTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="SettingsTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:background">@color/materialWhite</item>
     </style>
 
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:background">@color/windowBackground</item>
+    </style>
+
+    <style name="FragmentCalculator">
+        <item name="android:background">@color/calculatorColorBackground</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textColorHint">@color/textColorPrimary</item>
     </style>
 
 </resources>

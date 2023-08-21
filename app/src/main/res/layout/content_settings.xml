@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@color/colorPrimaryBackground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="giovanni.tradingtoolkit.settings.SettingsActivity"
     tools:showIn="@layout/activity_settings">
@@ -26,6 +26,9 @@
             android:switchMinWidth="56dp"
             android:text="@string/setting_color_mode"
             android:textColor="@color/textColorPrimary"
+
+            android:thumbTint="@color/settingsThumbColor"
+            android:trackTint="@color/settingsThumbTrackColor"
             android:textOff="@string/setting_disabled"
             android:textOn="@string/setting_enabled"
             android:textSize="20sp" />

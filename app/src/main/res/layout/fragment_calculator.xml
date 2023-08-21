@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/FragmentCalculator"
     tools:context="giovanni.tradingtoolkit.calculator.CalculatorFragment">
 
     <LinearLayout
@@ -17,19 +18,15 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/text_news"
+            android:id="@+id/title_calculator"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:contentDescription="@string/appwidget_text"
+            android:layout_margin="8dp"
             android:text="@string/calculator_title"
             android:textColor="@color/widgetTextColor"
-            android:textSize="18sp"
-            android:textStyle="" />
+            android:background="@color/colorPrimary"
+            android:textSize="18sp"/>
 
     </RelativeLayout>
 
@@ -43,21 +40,21 @@
             android:layout_width="154dp"
             android:layout_height="42dp"
             android:ems="10"
-            android:hint="ex. BTC= 15000"
+            android:hint="15000 BTC"
             android:inputType="numberDecimal"
             android:layout_marginStart="21dp"
             android:layout_below="@+id/textView1"
             android:layout_alignParentStart="true"
             android:autofillHints=""
             android:textColor="@color/textColorPrimary"
-            app:backgroundTint="@color/textColorSecondary" />
+            android:backgroundTint="@color/textColorSecondary" />
 
         <EditText
             android:id="@+id/editExpectedUnitPrice"
             android:layout_width="154dp"
             android:layout_height="42dp"
             android:ems="10"
-            android:hint="ex. BTC= 17000"
+            android:hint="e.g., 17000 BTC"
             android:inputType="numberDecimal"
             android:layout_marginEnd="16dp"
             android:layout_below="@+id/textView2"
@@ -71,7 +68,7 @@
             android:layout_width="154dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="ex. 1000€"
+            android:hint="e.g., 1000€"
             android:inputType="numberDecimal"
             android:layout_marginTop="53dp"
             android:layout_below="@+id/editCurrentUnitPrice"
@@ -84,7 +81,7 @@
             android:id="@+id/textViewRevenue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="TOT."
+            android:hint="Total"
             android:textAlignment="center"
             android:textSize="20dp"
             android:gravity="center"
