@@ -40,7 +40,7 @@
             android:layout_width="154dp"
             android:layout_height="42dp"
             android:ems="10"
-            android:hint="15000 BTC"
+            android:hint="e.g., 15000 BTC"
             android:inputType="numberDecimal"
             android:layout_marginStart="21dp"
             android:layout_below="@+id/textView1"
