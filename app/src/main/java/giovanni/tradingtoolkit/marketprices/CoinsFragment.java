@@ -27,19 +27,18 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import giovanni.tradingtoolkit.R;
-import giovanni.tradingtoolkit.marketprices.remote.model.Variation;
-import giovanni.tradingtoolkit.marketprices.remote.model.coin_response.Coin;
-import giovanni.tradingtoolkit.marketprices.remote.model.coin_response.ResponseData;
-import giovanni.tradingtoolkit.marketprices.remote.CoinMarketCapService;
-import giovanni.tradingtoolkit.marketprices.remote.RetrofitClient;
 import giovanni.tradingtoolkit.main.ProgressDialogManager;
 import giovanni.tradingtoolkit.main.SharedPrefs;
 import giovanni.tradingtoolkit.main.ToastManager;
+import giovanni.tradingtoolkit.marketprices.remote.CoinMarketCapService;
+import giovanni.tradingtoolkit.marketprices.remote.RetrofitClient;
+import giovanni.tradingtoolkit.marketprices.remote.model.Variation;
+import giovanni.tradingtoolkit.marketprices.remote.model.coin_response.Coin;
+import giovanni.tradingtoolkit.marketprices.remote.model.coin_response.ResponseData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -100,7 +99,7 @@ public class CoinsFragment extends Fragment {
         View view = inflater.inflate(R.layout.coins_list_fragment, container, false);
         ButterKnife.bind(this, view);
 
-        currency = SharedPrefs.restoreString(Objects.requireNonNull(getContext()), SharedPrefs.KEY_CURRENCY);
+        currency = SharedPrefs.restoreString(requireContext(), SharedPrefs.KEY_CURRENCY);
         if (currency.isEmpty()) {
             currency = DEFAULT_CURRENCY;
         }
@@ -134,7 +133,7 @@ public class CoinsFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (isConnected) {
                     CoinsFragment.currency = spinnerCurrency.getItemAtPosition(position).toString().trim();
-                    SharedPrefs.storeString(Objects.requireNonNull(getContext()), SharedPrefs.KEY_CURRENCY, CoinsFragment.currency);
+                    SharedPrefs.storeString(requireContext(), SharedPrefs.KEY_CURRENCY, CoinsFragment.currency);
                     updateList(CoinsFragment.currency);
                 } else {
                     resetSpinner();
@@ -262,7 +261,7 @@ public class CoinsFragment extends Fragment {
         tvCoin.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
         tvPrice.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
         tvVariation.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
-        tvVariation.setText((Objects.requireNonNull(getContext()).getString(R.string.percentage_variation_title)));
+        tvVariation.setText((requireContext().getString(R.string.percentage_variation_title)));
     }
 
     @Override
@@ -347,7 +346,7 @@ public class CoinsFragment extends Fragment {
 
     private void updateList(final String setCurrency) {
         try {
-            tvVariation.setText((Objects.requireNonNull(getContext()).getString(R.string.percentage_variation_title)));
+            tvVariation.setText((requireContext().getString(R.string.percentage_variation_title)));
             loadCoinList(setCurrency, LIST_LIMIT);
         } catch (IOException e) {
             e.printStackTrace();
@@ -355,7 +354,7 @@ public class CoinsFragment extends Fragment {
     }
 
     private boolean restoreCache() {
-        String serialCoins = SharedPrefs.restoreString(Objects.requireNonNull(getContext()), SharedPrefs.KEY_COINS_CACHE);
+        String serialCoins = SharedPrefs.restoreString(requireContext(), SharedPrefs.KEY_COINS_CACHE);
         if (!serialCoins.isEmpty()) {
             Type listType = new TypeToken<ArrayList<Coin>>() {
             }.getType();
@@ -369,7 +368,7 @@ public class CoinsFragment extends Fragment {
 
     private void storeCache(final List<Coin> updatedCoins) {
         String serialCoins = (new Gson()).toJson(updatedCoins);
-        SharedPrefs.storeString(Objects.requireNonNull(getContext()), SharedPrefs.KEY_COINS_CACHE, serialCoins);
+        SharedPrefs.storeString(requireContext(), SharedPrefs.KEY_COINS_CACHE, serialCoins);
     }
 
     private void resetSpinner() {

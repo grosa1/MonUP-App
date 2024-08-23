@@ -3,7 +3,6 @@ package giovanni.tradingtoolkit.news;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,7 +99,7 @@ public class NewsFragment extends Fragment {
     void fetchNews() {
         long lastUpdate = 0;
         try {
-            lastUpdate = Long.parseLong(SharedPrefs.restoreString(Objects.requireNonNull(getContext()), SharedPrefs.KEY_NEWS_LAST_UPDATE));
+            lastUpdate = Long.parseLong(SharedPrefs.restoreString(requireContext(), SharedPrefs.KEY_NEWS_LAST_UPDATE));
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
@@ -188,15 +185,13 @@ public class NewsFragment extends Fragment {
 
         assert getFragmentManager() != null;
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        if (Build.VERSION.SDK_INT >= 26) {
-            ft.setReorderingAllowed(false);
-        }
+        ft.setReorderingAllowed(false);
         ft.detach(this).attach(this).commit();
         listAdapter.notifyDataSetChanged();
     }
 
     private boolean restoreCache() {
-        String serialNews = SharedPrefs.restoreString(Objects.requireNonNull(getContext()), SharedPrefs.KEY_NEWS_CACHE);
+        String serialNews = SharedPrefs.restoreString(requireContext(), SharedPrefs.KEY_NEWS_CACHE);
         if (!serialNews.isEmpty()) {
             Type listType = new TypeToken<ArrayList<NewsArticle>>() {
             }.getType();
@@ -210,7 +205,7 @@ public class NewsFragment extends Fragment {
 
     private void storeCache(final List<NewsArticle> updatedNews) {
         String serialCoins = (new Gson()).toJson(updatedNews);
-        SharedPrefs.storeString(Objects.requireNonNull(getContext()), SharedPrefs.KEY_NEWS_CACHE, serialCoins);
+        SharedPrefs.storeString(requireContext(), SharedPrefs.KEY_NEWS_CACHE, serialCoins);
     }
 
     public void loadNewsList(String newsCountry, String newsLang) throws IOException {
@@ -237,7 +232,7 @@ public class NewsFragment extends Fragment {
                         news = body.getArticles();
                         storeCache(news);
                         listAdapter.updateNewsList(news);
-                        SharedPrefs.storeString(Objects.requireNonNull(getContext()), SharedPrefs.KEY_NEWS_LAST_UPDATE, String.valueOf(new Date().getTime()));
+                        SharedPrefs.storeString(requireContext(), SharedPrefs.KEY_NEWS_LAST_UPDATE, String.valueOf(new Date().getTime()));
                     }
 
                     // Close progress dialog

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import java.util.Objects;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,13 +68,13 @@ public class CalculatorFragment extends Fragment {
                     calc.setCurrentUnitPrice(Float.parseFloat(currentUnitPrice.getText().toString()));
                     calc.setExpectedUnitPrice(Float.parseFloat(expectedUnitPrice.getText().toString()));
 
-                    String strGrossResult = String.format("%.2f", calc.getGrossResult());
+                    String strGrossResult = String.format(Locale.getDefault(), "%.2f", calc.getGrossResult());
                     grossResult.setText(strGrossResult);
 
-                    String strCurrentQt = String.format("%.8f", calc.getCurrentQuantity());
+                    String strCurrentQt = String.format(Locale.getDefault(), "%.8f", calc.getCurrentQuantity());
                     currentQuantity.setText(strCurrentQt);
 
-                    String strExpectedQt = String.format("%.8f", calc.getExpectedQuantity());
+                    String strExpectedQt = String.format(Locale.getDefault(), "%.8f", calc.getExpectedQuantity());
                     expectedQuantity.setText(strExpectedQt);
 
                     if (calc.getRevenue() < 0) {
@@ -83,13 +83,13 @@ public class CalculatorFragment extends Fragment {
                         revenue.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                     }
 
-                    String strRevenue = String.format("%.2f", calc.getRevenue());
+                    String strRevenue = String.format(Locale.getDefault(), "%.2f", calc.getRevenue());
                     revenue.setText(strRevenue);
                     int colorId = R.color.textColorPrimary;
-                    revenue.setTextColor(Objects.requireNonNull(getContext()).getResources().getColor((colorId)));
-                    expectedQuantity.setTextColor(Objects.requireNonNull(getContext()).getResources().getColor((colorId)));
-                    currentQuantity.setTextColor(Objects.requireNonNull(getContext()).getResources().getColor((colorId)));
-                    grossResult.setTextColor(Objects.requireNonNull(getContext()).getResources().getColor((colorId)));
+                    revenue.setTextColor(requireContext().getResources().getColor((colorId)));
+                    expectedQuantity.setTextColor(requireContext().getResources().getColor((colorId)));
+                    currentQuantity.setTextColor(requireContext().getResources().getColor((colorId)));
+                    grossResult.setTextColor(requireContext().getResources().getColor((colorId)));
 
                 } catch (NullValueException | NumberFormatException e) {
                     showValuesError();

@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ServiceInfo;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
@@ -22,10 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import giovanni.tradingtoolkit.marketprices.remote.model.coin_response.Coin;
-import giovanni.tradingtoolkit.marketprices.remote.model.coin_response.ResponseData;
 import giovanni.tradingtoolkit.home_widget.CoinListWidget;
 import giovanni.tradingtoolkit.main.SharedPrefs;
+import giovanni.tradingtoolkit.marketprices.remote.model.coin_response.Coin;
+import giovanni.tradingtoolkit.marketprices.remote.model.coin_response.ResponseData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,7 +54,7 @@ public class LoadCoinService extends Service {
         context = getApplicationContext();
         String CHANNEL_ID = "my_channel_01";
         NotificationChannel channel = null;
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             channel = new NotificationChannel(CHANNEL_ID,
                     "Channel human readable title",
                     NotificationManager.IMPORTANCE_DEFAULT);
@@ -62,7 +63,9 @@ public class LoadCoinService extends Service {
             Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setContentTitle("")
                     .setContentText("").build();
-            startForeground(1, notification);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                startForeground(1, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+            }
         }
         super.onCreate();
     }
