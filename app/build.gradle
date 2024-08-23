@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'checkstyle'
+apply plugin: 'com.jakewharton.butterknife'
 
 // checkstyle tasks setup
 checkstyle {
     toolVersion = "6.5"
 }
 
-task checkstyle(type: Checkstyle) {
+tasks.register('checkstyle', Checkstyle) {
     description 'Runs Checkstyle inspection'
     group = 'verification'
 
@@ -26,14 +27,23 @@ task checkstyle(type: Checkstyle) {
 
 // android tasks
 android {
-    compileSdkVersion 29
+    namespace 'giovanni.tradingtoolkit'
+
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         applicationId "giovanni.tradingtoolkit"
-        minSdkVersion 19
-        targetSdkVersion 29
+        minSdkVersion 31
+        targetSdkVersion 34
         versionCode 24
         versionName "3.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
+        defaultConfig {
+            compileSdk 34
+        }
 
         // setup env vars
         Properties properties = new Properties()
@@ -51,6 +61,7 @@ android {
         def SYSTEM_NEWS_API_KEY = System.getenv("NEWS_API_KEY")
         ext.NEWS_API_KEY = LOCAL_NEWS_API_KEY != null ? LOCAL_NEWS_API_KEY : SYSTEM_NEWS_API_KEY
         buildConfigField "String", "NEWS_API_KEY", "\"" + ext.NEWS_API_KEY + "\""
+
     }
     buildTypes {
         release {
@@ -71,7 +82,7 @@ android {
         }
     }
 
-    configurations.all {
+    configurations.configureEach {
         //Enforces Gradle to only compile the version number you state for all dependencies, no matter which version number the dependencies have stated.
         resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
     }
@@ -79,39 +90,34 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
-    lintOptions {
-        checkReleaseBuilds false // Add this
-        abortOnError false
-    }
     packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/ASL2.0'
+        resources {
+            excludes += ['META-INF/DEPENDENCIES', 'META-INF/LICENSE', 'META-INF/LICENSE.txt', 'META-INF/license.txt', 'META-INF/NOTICE', 'META-INF/NOTICE.txt', 'META-INF/notice.txt', 'META-INF/ASL2.0']
+        }
+    }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
     }
 
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.2'
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
-    implementation 'com.google.guava:guava:24.1-jre'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.google.guava:guava:32.0.1-jre'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'io.cryptocontrol:crypto-news-api:2.5.0'
     implementation 'com.squareup.picasso:picasso:2.71828'

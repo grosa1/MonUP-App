@@ -30,7 +30,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     public static final int NEWS_IMAGE_TARGET_WIDTH = 512;
     public static final int NEWS_IMAGE_TARGET_HEIGHT = 512;
     private List<NewsArticle> news;
-    private Context context;
+    private final Context context;
     private ArticleItemListener itemListener;
 
     NewsListAdapter(Context context, List<NewsArticle> news, ArticleItemListener itemListener) {

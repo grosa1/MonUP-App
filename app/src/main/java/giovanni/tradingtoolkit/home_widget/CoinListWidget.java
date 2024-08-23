@@ -9,9 +9,9 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import giovanni.tradingtoolkit.R;
+import giovanni.tradingtoolkit.main.ToastManager;
 import giovanni.tradingtoolkit.marketprices.remote.LoadCoinReceiver;
 import giovanni.tradingtoolkit.marketprices.remote.LoadCoinService;
-import giovanni.tradingtoolkit.main.ToastManager;
 
 /**
  * Implementation of App Widget functionality.
@@ -63,7 +63,7 @@ public class CoinListWidget extends AppWidgetProvider {
     protected PendingIntent getPendingSelfIntent(Context context, String action) {
         Intent intent = new Intent(context, getClass());
         intent.setAction(action);
-        return PendingIntent.getBroadcast(context, 0, intent, 0);
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
     }
 
     public static void refresh(Context context) {

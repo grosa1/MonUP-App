@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="giovanni.tradingtoolkit">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <application
-        android:allowBackup="true"
         android:icon="@drawable/trading_toolkit"
         android:label="@string/app_name"
         android:roundIcon="@drawable/trading_toolkit"
@@ -17,14 +16,16 @@
         android:theme="@style/MyMaterialTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".home_widget.CoinListWidgetConfigureActivity">
+        <activity
+            android:name=".home_widget.CoinListWidgetConfigureActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
         <activity
             android:name=".main.MainActivity"
-            android:label="@string/app_name">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -48,7 +49,9 @@
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-        <receiver android:name=".home_widget.CoinListWidget">
+        <receiver
+            android:name=".home_widget.CoinListWidget"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -61,18 +64,13 @@
         <service
             android:name=".marketprices.remote.LoadCoinService"
             android:enabled="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service
-            android:name=".marketprices.remote.LoadNewsService"
-            android:enabled="true"
+            android:foregroundServiceType="dataSync"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <receiver android:name=".marketprices.remote.LoadCoinReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".marketprices.remote.LoadNewsReceiver">
+
+        <receiver
+            android:name=".marketprices.remote.LoadCoinReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
