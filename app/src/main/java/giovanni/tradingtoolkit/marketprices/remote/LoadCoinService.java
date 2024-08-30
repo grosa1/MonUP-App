@@ -35,6 +35,7 @@ import retrofit2.Response;
 public class LoadCoinService extends Service {
 
     public static final String LIST_LIMIT = "200";
+    public static final String DEFAULT_CURRENCY = "USD";
 
     public static String currency;
     private List<Coin> coins;
@@ -94,6 +95,10 @@ public class LoadCoinService extends Service {
     }
 
     public void loadCoinList(String currencyType, String limit) throws IOException {
+        if (currencyType.isEmpty() || currencyType.isBlank()) {
+            currencyType = DEFAULT_CURRENCY;
+        }
+
         this.coinDataService.getList(currencyType, limit).enqueue(new Callback<ResponseData>() {
             @Override
             public void onResponse(@NonNull Call<ResponseData> call, @NonNull Response<ResponseData> response) {
@@ -107,8 +112,12 @@ public class LoadCoinService extends Service {
                     }
                 } else {
                     restoreCache();
-                    int statusCode = response.code();
-                    Log.e("ERROR_CODE", String.valueOf(statusCode));
+
+                    String error_msg = "";
+                    if (response.message() != null) {
+                        error_msg = "\n" + response.message();
+                    }
+                    Log.e("API_ERROR", "Error calling coin list API with code " + response.code() + error_msg);
                 }
             }
 

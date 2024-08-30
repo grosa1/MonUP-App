@@ -68,8 +68,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         }
         holder.title.setText(title);
 
-        String sourcePrefix = context.getResources().getString(R.string.news_source);
-        holder.sourceSite.setText(String.format("%s %s", sourcePrefix, article.getSourceSite()));
+        holder.sourceSite.setText(article.getSourceSite());
 
         holder.date.setText(this.formatArticleDate(article.getPublishedAt()));
 

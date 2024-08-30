@@ -272,10 +272,14 @@ public class CoinsFragment extends Fragment {
     }
 
     public void loadCoinList(String currencyType, String limit) throws IOException {
+        if (currencyType.isEmpty() || currencyType.isBlank()) {
+            currencyType = DEFAULT_CURRENCY;
+        }
+
         this.coinDataService.getList(currencyType, limit).enqueue(new Callback<ResponseData>() {
             @Override
             public void onResponse(@NonNull Call<ResponseData> call, @NonNull Response<ResponseData> response) {
-
+                // TODO: refactor using try-with-resources
                 if (response.body() != null) {
                     Log.d("RES", response.body().toString());
                 }
@@ -297,19 +301,19 @@ public class CoinsFragment extends Fragment {
 
                 } else {
                     isConnected = false;
-                    boolean isCache = restoreCache();
 
-                    int statusCode = response.code();
-                    Log.e("ERROR_CODE", String.valueOf(statusCode));
-                    assert response.errorBody() != null;
-                    Log.d("ERR_RES", response.errorBody().toString());
+                    String error_msg = "";
+                    if (response.message() != null) {
+                        error_msg = "\n" + response.message();
+                    }
+                    Log.e("API_ERROR", "Error calling coin list API with code " + response.code() + error_msg);
 
                     ProgressDialogManager.close();
                     if (pullDown != null) {
                         pullDown.setRefreshing(false);
                     }
 
-                    if (isCache) {
+                    if (restoreCache()) {
                         ToastManager.create(getContext(), R.string.coins_request_error);
                     } else {
                         ToastManager.makeAlert(getContext(), "Error", getResources().getString(R.string.coins_request_error));
@@ -344,10 +348,10 @@ public class CoinsFragment extends Fragment {
         startActivity(intent);
     }
 
-    private void updateList(final String setCurrency) {
+    private void updateList(String currencyName) {
         try {
             tvVariation.setText((requireContext().getString(R.string.percentage_variation_title)));
-            loadCoinList(setCurrency, LIST_LIMIT);
+            loadCoinList(currencyName, LIST_LIMIT);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -367,6 +371,11 @@ public class CoinsFragment extends Fragment {
     }
 
     private void storeCache(final List<Coin> updatedCoins) {
+        if (getContext() == null) {
+            Log.e("storeCache", "Unable to store cache for current fragment");
+            return;
+        }
+
         String serialCoins = (new Gson()).toJson(updatedCoins);
         SharedPrefs.storeString(requireContext(), SharedPrefs.KEY_COINS_CACHE, serialCoins);
     }

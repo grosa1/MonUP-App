@@ -244,12 +244,12 @@ public class NewsFragment extends Fragment {
 
                 } else {
 //                    isConnected = false;
-                    boolean isCache = restoreCache();
 
-                    int statusCode = response.code();
-                    Log.e("ERROR_CODE", String.valueOf(statusCode));
-                    assert response.errorBody() != null;
-                    Log.d("ERR_RES", response.errorBody().toString());
+                    String error_msg = "";
+                    if (response.message() != null) {
+                        error_msg = "\n" + response.message();
+                    }
+                    Log.e("API_ERROR", "Error calling news list API with code " + response.code() + error_msg);
 
                     // Close progress dialog
                     ProgressDialogManager.close();
@@ -257,7 +257,7 @@ public class NewsFragment extends Fragment {
                         pullDown.setRefreshing(false);
                     }
 
-                    if (isCache) {
+                    if (restoreCache()) {
                         ToastManager.create(getContext(), "Unable to fetch the latest News list, please try again later");
                     } else {
                         ToastManager.makeAlert(getContext(), "Error", "Unable to fetch the latest News list, please try again later");
